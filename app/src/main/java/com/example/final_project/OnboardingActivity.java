@@ -1,6 +1,5 @@
 package com.example.final_project;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,42 +7,32 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-//public class OnboardingActivity extends AppCompatActivity {
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_onboarding);
-//
-//        Button startButton = findViewById(R.id.btn_start_onboard);
-//        startButton.setOnClickListener(v -> {
-//            // Lưu trạng thái đã hoàn thành onboarding
-//            SharedPreferences preferences = getSharedPreferences("my_preferences", MODE_PRIVATE);
-//            SharedPreferences.Editor editor = preferences.edit();
-//            editor.putBoolean("onboarding_complete", true);
-//            editor.apply();
-//
-//            // Chuyển đến MainActivity sau khi onboarding hoàn tất
-//            Intent intent = new Intent(OnboardingActivity.this, MainActivity.class);
-//            startActivity(intent);
-//            finish();
-//        });
-//    }
-//}
-
 public class OnboardingActivity extends AppCompatActivity {
+
+    private SharedPreferences sharedPreferences;
+    private Button btnFinishOnboarding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
 
-        Button startButton = findViewById(R.id.btn_start_onboard);
-        startButton.setOnClickListener(v -> {
-            // Chuyển đến MainActivity hoặc LoginActivity
-            Intent intent = new Intent(OnboardingActivity.this, LogInActivity.class);
-            startActivity(intent);
-            finish();
-        });
+        // Khởi tạo SharedPreferences
+        sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
+
+        // Khi hoàn thành onboarding, đánh dấu là đã hoàn thành và chuyển sang màn hình chính
+        btnFinishOnboarding = findViewById(R.id.btn_start_onboard);
+        btnFinishOnboarding.setOnClickListener(v -> finishOnboarding());
+    }
+
+    private void finishOnboarding() {
+        // Đánh dấu người dùng đã hoàn thành onboarding
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isOnboarded", true);  // Đánh dấu đã hoàn thành onboarding
+        editor.apply();
+
+        // Chuyển sang màn hình đăng nhập
+        startActivity(new Intent(OnboardingActivity.this, LogInActivity.class));
+        finish();
     }
 }
-
-
