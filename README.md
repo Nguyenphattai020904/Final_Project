@@ -1,3 +1,4 @@
+NOTE: Use android 12 API 31+
 Step 1: Open Android Studio.
 
 Step 2: Open Terminal in interface Android Studio.
