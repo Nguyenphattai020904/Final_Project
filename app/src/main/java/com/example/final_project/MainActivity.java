@@ -3,16 +3,21 @@ package com.example.final_project;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextView txtFullName;
-    private Button btnLogout;
     private SharedPreferences sharedPreferences;
+    private BottomNavigationView bottomNavigationView;
+    private float dX, dY;
+    private int lastAction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +27,6 @@ public class MainActivity extends AppCompatActivity {
         // Khởi tạo SharedPreferences
         sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
 
-        // Kiểm tra nếu người dùng chưa hoàn thành onboarding
-        boolean isOnboarded = sharedPreferences.getBoolean("isOnboarded", false);
-        if (!isOnboarded) {
-            // Nếu chưa hoàn thành onboarding, chuyển về màn hình onboarding
-            startActivity(new Intent(MainActivity.this, OnboardingActivity.class));
-            finish();
-            return;
-        }
-
         // Kiểm tra nếu người dùng chưa đăng nhập, chuyển về màn hình đăng nhập
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
         if (!isLoggedIn) {
@@ -39,26 +35,72 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Lấy tên người dùng từ SharedPreferences
-        String fullName = sharedPreferences.getString("fullName", "User");
-        txtFullName = findViewById(R.id.txt_full_name);
-        txtFullName.setText(fullName);  // Hiển thị tên đầy đủ người dùng
+        // Xử lý Bottom Navigation
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
+            if (item.getItemId() == R.id.nav_home) {
+                selectedFragment = new HomeFragment();
+            } else if (item.getItemId() == R.id.nav_discount) {
+                selectedFragment = new DiscountFragment();
+            } else if (item.getItemId() == R.id.nav_qr) {
+                selectedFragment = new QRFragment();
+            } else if (item.getItemId() == R.id.nav_cart) {
+                selectedFragment = new CartFragment();
+            } else if (item.getItemId() == R.id.nav_profile) {
+                selectedFragment = new ProfileFragment();
+            }
 
-        // Xử lý sự kiện đăng xuất
-        btnLogout = findViewById(R.id.btn_log_out);
-        btnLogout.setOnClickListener(v -> logoutUser());  // Gọi hàm logoutUser khi nhấn nút
+            if (selectedFragment != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, selectedFragment)
+                        .commit();
+            }
+
+            return true;
+        });
+
+        // Mặc định mở HomeFragment khi vào app
+        if (savedInstanceState == null) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        }
+
+        // Xử lý sự kiện nhấp và di chuyển nút chatbot
+        ImageView chatBotIcon = findViewById(R.id.chat_bot_icon);
+        chatBotIcon.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        dX = view.getX() - event.getRawX();
+                        dY = view.getY() - event.getRawY();
+                        lastAction = MotionEvent.ACTION_DOWN;
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        view.setY(event.getRawY() + dY);
+                        view.setX(event.getRawX() + dX);
+                        lastAction = MotionEvent.ACTION_MOVE;
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        if (lastAction == MotionEvent.ACTION_DOWN) {
+                            // Xử lý sự kiện nhấp vào nút chatbot
+                            showChatBot();
+                        }
+                        break;
+
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
     }
 
-    // Hàm xử lý đăng xuất
-    private void logoutUser() {
-        // Xóa trạng thái đăng nhập khỏi SharedPreferences
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("isLoggedIn", false);  // Đánh dấu là chưa đăng nhập
-        editor.putString("fullName", "");  // Xóa tên người dùng
-        editor.apply();
-
-        // Chuyển về màn hình đăng nhập sau khi logout
-        startActivity(new Intent(MainActivity.this, LogInActivity.class));
-        finish();
+    // Hiển thị chatbot
+    public void showChatBot() {
+        ChatBotFragment chatBotFragment = new ChatBotFragment();
+        chatBotFragment.show(getSupportFragmentManager(), "chat_bot");
     }
 }
