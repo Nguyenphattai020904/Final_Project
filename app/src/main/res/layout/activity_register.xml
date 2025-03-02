@@ -1,183 +1,188 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/back_ground"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_height="match_parent">
 
-
-        <ImageView
-            android:id="@+id/imageView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/green_smoke"
-            app:srcCompat="@drawable/logo_main" />
-
-        <TextView
-            android:id="@+id/textViewFullName"
-            android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Full Name:"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:background="@color/back_ground"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
 
-        <EditText
-            android:id="@+id/txt_full_name"
-            android:layout_width="400dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:background="@drawable/border"
-            android:ems="10"
-            android:hint="Enter your full name"
-            android:inputType="text" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/green_smoke"
+                app:srcCompat="@drawable/logo_main" />
 
-        <TextView
-            android:id="@+id/textViewEmail"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Email:"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewFullName"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Full Name:"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/txt_email"
-            android:layout_width="400dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:background="@drawable/border"
-            android:ems="10"
-            android:hint="Enter your email"
-            android:inputType="textEmailAddress" />
+            <EditText
+                android:id="@+id/txt_full_name"
+                android:layout_width="400dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:ems="10"
+                android:hint="Enter your full name"
+                android:inputType="text" />
 
-        <TextView
-            android:id="@+id/textViewPhone"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Phone:"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewEmail"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Email:"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/txt_phone"
-            android:layout_width="400dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:background="@drawable/border"
-            android:ems="10"
-            android:hint="Enter your phone number"
-            android:inputType="phone" />
+            <EditText
+                android:id="@+id/txt_email"
+                android:layout_width="400dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:ems="10"
+                android:hint="Enter your email"
+                android:inputType="textEmailAddress" />
 
-        <TextView
-            android:id="@+id/textViewPassword"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Password:"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewPhone"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Phone:"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/txt_create_password"
-            android:layout_width="400dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:background="@drawable/border"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:drawableEnd="@drawable/ic_eye"
-            android:paddingEnd="10dp" />
+            <EditText
+                android:id="@+id/txt_phone"
+                android:layout_width="400dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:ems="10"
+                android:hint="Enter your phone number"
+                android:inputType="phone" />
 
-        <TextView
-            android:id="@+id/textViewConfirmPassword"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Confirm Password:"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewPassword"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Password:"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/txt_confirm_password"
-            android:layout_width="400dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:background="@drawable/border"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:drawableEnd="@drawable/ic_eye"
-            android:paddingEnd="10dp" />
+            <EditText
+                android:id="@+id/txt_create_password"
+                android:layout_width="400dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:drawableEnd="@drawable/ic_eye"
+                android:paddingEnd="10dp" />
 
-        <TextView
-            android:id="@+id/textViewSecurityQuestion"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Security Question:"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewConfirmPassword"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Confirm Password:"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/txt_security_question"
-            android:layout_width="400dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:background="@drawable/border"
-            android:ems="10"
-            android:hint="Enter your security question"
-            android:inputType="text" />
+            <EditText
+                android:id="@+id/txt_confirm_password"
+                android:layout_width="400dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:drawableEnd="@drawable/ic_eye"
+                android:paddingEnd="10dp" />
 
-        <TextView
-            android:id="@+id/textViewSecurityAnswer"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Security Answer:"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewSecurityQuestion"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Security Question:"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/txt_security_answer"
-            android:layout_width="400dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:background="@drawable/border"
-            android:ems="10"
-            android:hint="Enter your security answer"
-            android:inputType="text" />
+            <EditText
+                android:id="@+id/txt_security_question"
+                android:layout_width="400dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:ems="10"
+                android:hint="Enter your security question"
+                android:inputType="text" />
 
-        <Button
-            android:id="@+id/btn_register"
-            android:layout_width="400dp"
-            android:layout_height="61dp"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/green_smoke"
-            android:insetTop="10dp"
-            android:text="Register"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewSecurityAnswer"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Security Answer:"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_back_to_login"
-            android:layout_width="400dp"
-            android:layout_height="61dp"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/green_smoke"
-            android:insetTop="10dp"
-            android:text="Back to Log In"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            <EditText
+                android:id="@+id/txt_security_answer"
+                android:layout_width="400dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:ems="10"
+                android:hint="Enter your security answer"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="400dp"
+                android:layout_height="61dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/green_smoke"
+                android:insetTop="10dp"
+                android:text="Register"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_back_to_login"
+                android:layout_width="400dp"
+                android:layout_height="61dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/green_smoke"
+                android:insetTop="10dp"
+                android:text="Back to Log In"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

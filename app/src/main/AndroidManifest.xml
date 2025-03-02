@@ -33,5 +33,19 @@
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:exported="false"/>
+        <activity android:name=".HomeFragment"/>
+        <activity android:name=".DiscountFragment"/>
+        <activity android:name=".QRFragment"/>
+        <activity android:name=".CartFragment"/>
+        <activity android:name=".ProfileFragment"/>
+        <activity android:name=".ChatBotFragment"/>
+        <activity android:name=".RetrofitClient"/>
+        <activity android:name=".ApiService"/>
+        <activity android:name=".GeminiRequest"/>
+        <activity android:name=".GeminiResponse"/>
+        <activity android:name=".Product"/>
+        <activity android:name=".ProductData"/>
+        <activity android:name=".ProductAdapter"/>
+        <activity android:name=".Message"/>
     </application>
 </manifest>
