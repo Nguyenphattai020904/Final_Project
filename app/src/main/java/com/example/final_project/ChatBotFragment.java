@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,20 +152,42 @@ public class ChatBotFragment extends DialogFragment {
         messageTextView.setText(formattedMessage);
         messageTextView.setPadding(16, 12, 16, 12);
 
+        // LayoutParams cho tin nhắn
+        LinearLayout.LayoutParams messageParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        messageParams.setMargins(0, 0, 0, 24); // Khoảng cách giữa các tin nhắn
+
+        // Layout chứa tin nhắn để căn chỉnh
+        LinearLayout messageLayout = new LinearLayout(getContext());
+        messageLayout.setOrientation(LinearLayout.HORIZONTAL);
+        messageLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+
         if (isUser) {
             messageTextView.setBackgroundResource(R.drawable.user_message_background);
-            messageTextView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+            messageParams.gravity = Gravity.END; // Đẩy user về bên phải
+            messageLayout.setGravity(Gravity.END);
         } else {
             messageTextView.setBackgroundResource(R.drawable.bot_message_background);
-            messageTextView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+            messageParams.gravity = Gravity.START; // Đẩy bot về bên trái
+            messageLayout.setGravity(Gravity.START);
         }
 
-        messageContainer.addView(messageTextView);
+        messageTextView.setLayoutParams(messageParams);
+        messageLayout.addView(messageTextView);
+        messageContainer.addView(messageLayout);
+
         messageList.add(new Message(message, isUser));
         saveMessageHistory();
 
         scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
     }
+
+
 
     private void removeProcessingMessage() {
         if (!messageList.isEmpty() && "⏳ Đang xử lý...".equals(messageList.get(messageList.size() - 1).getText())) {
