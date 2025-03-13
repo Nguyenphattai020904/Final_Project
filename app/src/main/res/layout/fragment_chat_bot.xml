@@ -46,9 +46,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/input_background"
+            android:gravity="bottom"
             android:hint="Type a message..."
-            android:padding="8dp"
-            android:background="@drawable/input_background" />
+            android:padding="8dp" />
 
         <Button
             android:id="@+id/send_button"
@@ -56,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:backgroundTint="@color/green_smoke"
-            android:text="Send" />
+            android:text="Sent" />
     </LinearLayout>
 
     <Button
