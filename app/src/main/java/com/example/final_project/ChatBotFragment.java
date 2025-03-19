@@ -1,5 +1,6 @@
 package com.example.final_project;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -36,13 +38,15 @@ public class ChatBotFragment extends DialogFragment {
     private LinearLayout messageContainer;
     private ScrollView scrollView;
     private EditText messageInput;
-    private Button sendButton, cleanButton;
+    private Button cleanButton;
     private ApiService apiService;
     private List<Message> messageList = new ArrayList<>();
+    private ImageView sendButton;
     private boolean isFragmentAlive = true;
 
     public ChatBotFragment() {}
 
+    @SuppressLint("WrongViewCast")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
