@@ -1,133 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/back_ground"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/back_ground"
+    android:padding="12dp">
 
-    <!-- Thanh tìm kiếm và biểu tượng menu -->
+    <!-- Header: Thanh tìm kiếm + Chuông thông báo -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:gravity="center_vertical"
+        android:padding="12dp"
+        android:background="@color/green"
+        android:elevation="4dp"
+        android:layout_marginBottom="12dp">
 
-        <ImageView
-            android:id="@+id/menu_icon"
-            android:layout_width="30dp"
-            android:layout_height="40dp"
-            android:contentDescription="Menu Icon"
-            android:src="@drawable/ic_menu" />
-
+        <!-- Thanh tìm kiếm -->
         <EditText
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
-            android:hint="What are you looking for?"
-            android:padding="8dp"
             android:background="@drawable/search_bar_background"
             android:drawableLeft="@drawable/ic_search"
-            android:contentDescription="Search Bar" />
-    </LinearLayout>
+            android:drawablePadding="8dp"
+            android:hint="What are you looking for?"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textSize="14sp" />
 
-    <!-- Các nút danh mục -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:weightSum="4">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/green_smoke"
-            android:text="Fresh Food"
-            android:textSize="14sp"
-            app:cornerRadius="20px" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="8dp"
-            android:backgroundTint="@color/green_smoke"
-            android:text="Dry Food"
-            app:cornerRadius="20px" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginHorizontal="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/green_smoke"
-            android:text="Beverages"
-            android:textSize="14sp"
-            app:cornerRadius="20px" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginHorizontal="8dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/green_smoke"
-            android:text="Spices"
-            app:cornerRadius="14px" />
-    </LinearLayout>
-
-
-    <!-- Image carousel placeholder -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/image_carousel_background"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
+        <!-- Chuông thông báo -->
+        <FrameLayout
+            android:id="@+id/frame_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Image Carousel"
-            android:textSize="24sp" />
+            android:layout_marginEnd="16dp">
 
+            <!-- Icon notification -->
+            <ImageButton
+                android:id="@+id/btnNotification"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/notification"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/notifications"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <!-- Số lượng thông báo -->
+            <TextView
+                android:id="@+id/tvNotificationBadge"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end|top"
+                android:background="@drawable/badge_background"
+                android:text="3"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Main content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Danh mục sản phẩm -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:weightSum="4"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:text="Fresh Food"
+                android:textSize="13sp"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/green"
+                android:layout_margin="4dp"
+                app:cornerRadius="16dp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:text="Dry Food"
+                android:textSize="13sp"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/green"
+                android:layout_margin="4dp"
+                app:cornerRadius="16dp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:text="Beverages"
+                android:textSize="13sp"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/green"
+                android:layout_margin="4dp"
+                app:cornerRadius="16dp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:text="Spices"
+                android:textSize="13sp"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/green"
+                android:layout_margin="4dp"
+                app:cornerRadius="16dp" />
+        </LinearLayout>
+
+        <!-- Banner quảng cáo / Image Carousel -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@drawable/image_carousel_background"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Image Carousel"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
 
             <!-- Navigation dots -->
-            <View
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:background="@drawable/nav_dot"
-                android:layout_margin="4dp" />
-            <!-- Thêm các View khác cho các dots -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/nav_dot"
+                    android:layout_margin="4dp" />
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+
+                    android:layout_margin="4dp" />
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+
+                    android:layout_margin="4dp" />
+            </LinearLayout>
         </LinearLayout>
+
+        <!-- Tiêu đề danh sách sản phẩm -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Best Sales"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/red"
+            android:paddingHorizontal="4dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- RecyclerView danh sách sản phẩm -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingHorizontal="4dp"
+            android:paddingBottom="16dp"
+            android:background="@color/white"
+            android:scrollbars="vertical" />
     </LinearLayout>
-
-    <!-- Danh sách sản phẩm -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="Best Sales"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:scrollbars="vertical" />
-
-
-
 </LinearLayout>

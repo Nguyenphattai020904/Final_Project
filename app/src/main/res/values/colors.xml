@@ -5,4 +5,7 @@
     <color name="green_smoke">#8AA12A</color>
     <color name="back_ground">#F2FAE0</color>
     <color name="yellow">#F8E806</color>
+    <color name="red">#F44336</color>
+    <color name="green">#4CAF50</color>
+    <color name="gray">#C3C0C0</color>
 </resources>
