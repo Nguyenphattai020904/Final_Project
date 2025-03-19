@@ -1,27 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
+    android:background="@color/back_ground"
     android:padding="16dp">
 
-    <!-- TextView hiển thị tên user -->
-    <TextView
-        android:id="@+id/txt_full_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="User"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"/>
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:divider="@android:color/transparent"
+        android:showDividers="middle"
+        android:dividerPadding="8dp">
 
-    <!-- Nút Logout -->
-    <Button
-        android:id="@+id/btn_log_out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log Out"
-        android:layout_below="@id/txt_full_name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
-</LinearLayout>
+        <!-- Personal Information -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personal Information"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="8dp"
+            android:textColor="@color/black"
+            android:background="@color/back_ground" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="12dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="2dp"
+            android:backgroundTint="@color/white">
+
+            <!-- Edit Personal Info -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/edit" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Personal Information"
+                    android:layout_marginStart="12dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+
+            <!-- Shipping Address -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/address" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shipping Address"
+                    android:layout_marginStart="12dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+
+            <!-- Purchase History -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/history" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Purchase History"
+                    android:layout_marginStart="12dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Accumulation -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Accumulation"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="8dp"
+            android:textColor="@color/black"
+            android:background="@color/back_ground" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="12dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="2dp">
+
+            <!-- My Vouchers -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/discount" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Vouchers"
+                    android:layout_marginStart="12dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+
+            <!-- My Reward Points -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/rewward" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Reward Points"
+                    android:layout_marginStart="12dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Customer Support -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Customer Support"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="8dp"
+            android:textColor="@color/black"
+            android:background="@color/back_ground" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="12dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="2dp">
+
+            <!-- Feedback / Contact -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/contact" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Feedback / Contact"
+                    android:layout_marginStart="12dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Log out Button -->
+        <Button
+            android:id="@+id/btn_log_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log Out"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/black"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="8dp"
+            android:paddingVertical="14dp"
+            android:textSize="16sp"
+            android:gravity="center" />
+    </LinearLayout>
+</ScrollView>
