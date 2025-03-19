@@ -47,5 +47,7 @@
         <activity android:name=".ProductData"/>
         <activity android:name=".ProductAdapter"/>
         <activity android:name=".Message"/>
+        <activity android:name=".EditProfileActivity"/>
+
     </application>
 </manifest>

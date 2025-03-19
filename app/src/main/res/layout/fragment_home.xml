@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/back_ground"
-    android:padding="12dp">
+    >
 
     <!-- Header: Thanh tìm kiếm + Chuông thông báo -->
     <LinearLayout
