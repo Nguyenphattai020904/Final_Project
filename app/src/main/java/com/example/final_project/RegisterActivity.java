@@ -1,5 +1,6 @@
 package com.example.final_project;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -16,19 +17,18 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnRegister, btnBackToLogin;
     private DatabaseHelper databaseHelper;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         // Ánh xạ ID
-        edtFullName = findViewById(R.id.txt_full_name);
-        edtEmail = findViewById(R.id.txt_email);
-        edtPhone = findViewById(R.id.txt_phone);
-        edtPassword = findViewById(R.id.txt_create_password);
-        edtConfirmPassword = findViewById(R.id.txt_confirm_password);
-        edtSecurityQuestion = findViewById(R.id.txt_security_question);
-        edtSecurityAnswer = findViewById(R.id.txt_security_answer);
+        edtFullName = findViewById(R.id.edt_fullname);
+        edtEmail = findViewById(R.id.edt_email);
+        edtPhone = findViewById(R.id.edt_phone_number);
+        edtPassword = findViewById(R.id.edt_password);
+        edtConfirmPassword = findViewById(R.id.edt_confirm_password);
         btnRegister = findViewById(R.id.btn_register);
         btnBackToLogin = findViewById(R.id.btn_back_to_login);
 

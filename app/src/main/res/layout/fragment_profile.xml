@@ -232,6 +232,13 @@
         </LinearLayout>
 
         <!-- Log out Button -->
+        <TextView
+            android:id="@+id/txt_full_name"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="TextView"
+            android:textSize="20sp" />
+
         <Button
             android:id="@+id/btn_log_out"
             android:layout_width="match_parent"

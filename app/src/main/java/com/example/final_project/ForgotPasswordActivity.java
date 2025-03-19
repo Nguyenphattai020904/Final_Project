@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
-    private EditText edtUsername, edtSecurityQuestion, edtSecurityAnswer;
+    private EditText edtEmail, edtOTP;
     private Button btnRecover, btnBackToLogin;
     private DatabaseHelper databaseHelper;
 
@@ -20,9 +20,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password); // Thay đổi thành layout của bạn
 
         // Ánh xạ ID
-        edtUsername = findViewById(R.id.txt_username);
-        edtSecurityQuestion = findViewById(R.id.txt_security_question);
-        edtSecurityAnswer = findViewById(R.id.txt_security_answer);
+        edtEmail = findViewById(R.id.edt_email);
+        edtOTP = findViewById(R.id.edt_otp);
         btnRecover = findViewById(R.id.btn_recover);
         btnBackToLogin = findViewById(R.id.btn_back_to_login);
 
@@ -41,44 +40,17 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
 
     private void recoverPassword() {
-        String username = edtUsername.getText().toString().trim();
-        String securityQuestion = edtSecurityQuestion.getText().toString().trim();
-        String securityAnswer = edtSecurityAnswer.getText().toString().trim();
+        String username = edtEmail.getText().toString().trim();
 
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(securityQuestion) || TextUtils.isEmpty(securityAnswer)) {
+        if (TextUtils.isEmpty(username) ) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Bỏ việc mã hóa ở đây
-        if (isEmail(username)) {
-            if (databaseHelper.isEmailExists(username)) {
-                checkSecurityQuestion(username, securityQuestion, securityAnswer);
-            } else {
-                Toast.makeText(this, "Email không tồn tại!", Toast.LENGTH_SHORT).show();
-            }
-        } else if (isPhoneNumber(username)) {
-            if (databaseHelper.isPhoneExists(username)) {
-                checkSecurityQuestion(username, securityQuestion, securityAnswer);
-            } else {
-                Toast.makeText(this, "Số điện thoại không tồn tại!", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(this, "Email hoặc số điện thoại không hợp lệ!", Toast.LENGTH_SHORT).show();
-        }
-    }
 
 
-    private void checkSecurityQuestion(String username, String securityQuestion, String securityAnswer) {
-        if (databaseHelper.checkSecurityQuestionAnswer(username, securityQuestion, securityAnswer)) {
-            Intent intent = new Intent(ForgotPasswordActivity.this, NewPassWordActivity.class);
-            intent.putExtra("username", username);
-            startActivity(intent);
-            finish();
-        } else {
-            Toast.makeText(this, "Câu trả lời bảo mật không đúng!", Toast.LENGTH_SHORT).show();
-        }
-    }
+
+   }
 
 
 

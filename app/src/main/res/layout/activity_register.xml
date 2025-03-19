@@ -32,7 +32,7 @@
             android:layout_marginBottom="5dp" />
 
         <EditText
-            android:id="@+id/txt_fullname"
+            android:id="@+id/edt_fullname"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
@@ -52,7 +52,7 @@
             android:layout_marginBottom="5dp" />
 
         <EditText
-            android:id="@+id/txt_email"
+            android:id="@+id/edt_email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
@@ -65,18 +65,18 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Username:"
+            android:text="Phone Number:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_marginBottom="5dp" />
 
         <EditText
-            android:id="@+id/txt_username"
+            android:id="@+id/edt_phone"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
-            android:hint="Choose a username"
+            android:hint="Enter your phonenumber"
             android:inputType="text"
             android:padding="12dp"
             android:layout_marginBottom="15dp" />
@@ -92,12 +92,13 @@
             android:layout_marginBottom="5dp" />
 
         <EditText
-            android:id="@+id/txt_password"
+            android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
             android:hint="Enter your password"
             android:inputType="textPassword"
+            android:drawableEnd="@drawable/ic_eye"
             android:padding="12dp"
             android:layout_marginBottom="15dp" />
 
@@ -112,11 +113,12 @@
             android:layout_marginBottom="5dp" />
 
         <EditText
-            android:id="@+id/txt_confirm_password"
+            android:id="@+id/edt_confirm_password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
             android:hint="Re-enter your password"
+            android:drawableEnd="@drawable/ic_eye"
             android:inputType="textPassword"
             android:padding="12dp"
             android:layout_marginBottom="20dp" />

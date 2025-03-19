@@ -1,5 +1,6 @@
 package com.example.final_project;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +34,33 @@ public class HomeFragment extends Fragment {
         // Khởi tạo adapter và gán vào RecyclerView
         productAdapter = new ProductAdapter(productList);
         recyclerView.setAdapter(productAdapter);
+        int spacingInDp = 1; // Khoảng cách 1dp
+        int spacingInPx = Math.round(spacingInDp * getResources().getDisplayMetrics().density);
+
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(spacingInPx));
+
 
         return view;
+    }
+    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+
+        private final int spacing; // Khoảng cách tính bằng pixel
+
+        public GridSpacingItemDecoration(int spacing) {
+            this.spacing = spacing;
+        }
+
+        @Override
+        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+            outRect.left = spacing;
+            outRect.right = spacing;
+            outRect.bottom = spacing;
+
+            // Thêm khoảng cách phía trên cho hàng đầu tiên
+            if (parent.getChildAdapterPosition(view) < 3) { // Giả sử số cột là 3
+                outRect.top = spacing;
+            }
+        }
     }
 }
 
