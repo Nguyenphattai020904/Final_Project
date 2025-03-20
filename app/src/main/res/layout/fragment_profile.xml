@@ -159,32 +159,6 @@
                     android:textColor="@color/black" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray" />
-
-            <!-- My Reward Points -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingVertical="12dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/rewward" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="My Reward Points"
-                    android:layout_marginStart="12dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/black" />
-            </LinearLayout>
         </LinearLayout>
 
         <!-- Customer Support -->
@@ -232,13 +206,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Log out Button -->
-        <TextView
-            android:id="@+id/txt_full_name"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="TextView"
-            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn_log_out"

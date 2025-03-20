@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:padding="20dp">
+
+    <!-- Close Button -->
+    <ImageButton
+        android:id="@+id/btn_close"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Close"
+        android:src="@drawable/baseline_close_24"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Shipping Address"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="16dp"
+        android:layout_centerHorizontal="true"/>
+
+    <!-- Label + Province/City Dropdown -->
+    <TextView
+        android:id="@+id/txt_province"
+        android:layout_below="@id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Province / City"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:paddingBottom="4dp"/>
+
+    <Spinner
+        android:id="@+id/spinner_province"
+        android:layout_below="@id/txt_province"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/spinner_background"/>
+
+    <!-- Label + District Dropdown -->
+    <TextView
+        android:id="@+id/txt_district"
+        android:layout_below="@id/spinner_province"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="District"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:paddingTop="12dp"
+        android:paddingBottom="4dp"/>
+
+    <Spinner
+        android:id="@+id/spinner_district"
+        android:layout_below="@id/txt_district"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/spinner_background"/>
+
+    <!-- Label + Ward Dropdown -->
+    <TextView
+        android:id="@+id/txt_ward"
+        android:layout_below="@id/spinner_district"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ward"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:paddingTop="12dp"
+        android:paddingBottom="4dp"/>
+
+    <Spinner
+        android:id="@+id/spinner_ward"
+        android:layout_below="@id/txt_ward"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/spinner_background"/>
+
+    <!-- Label + Street Address Input -->
+    <TextView
+        android:id="@+id/txt_street"
+        android:layout_below="@id/spinner_ward"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Street Address *"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:paddingTop="12dp"
+        android:paddingBottom="4dp"/>
+
+    <!-- Complete Button -->
+    <!-- Complete Button -->
+    <EditText
+        android:id="@+id/edt_street"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/txt_street"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:textSize="16sp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/edt_street"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/green_smoke"
+        android:text="Complete"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+
+</RelativeLayout>
