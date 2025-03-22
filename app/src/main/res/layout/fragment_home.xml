@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:padding="12dp"
-        android:background="@color/green"
+        android:background="@color/green_smoke"
         android:elevation="4dp"
         android:layout_marginBottom="12dp">
 
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginRight="-20dp"
-                android:background="@color/green"
+                android:background="@color/green_smoke"
                 android:contentDescription="@string/notification"
                 android:padding="8dp"
                 android:scaleType="centerInside"
@@ -101,7 +101,7 @@
                     android:text="Bread &amp; Flour-Based Foods"
                     android:textSize="13sp"
                     android:textColor="@android:color/white"
-                    android:backgroundTint="@color/green"
+                    android:backgroundTint="@color/green_smoke"
                     android:layout_margin="4dp"
                     android:paddingHorizontal="8dp"
                     app:cornerRadius="16dp" />
@@ -113,7 +113,7 @@
                     android:text="Drinks"
                     android:textSize="13sp"
                     android:textColor="@android:color/white"
-                    android:backgroundTint="@color/green"
+                    android:backgroundTint="@color/green_smoke"
                     android:layout_margin="4dp"
                     android:paddingHorizontal="8dp"
                     app:cornerRadius="16dp" />
@@ -125,7 +125,7 @@
                     android:text="Food &amp; Ingredients"
                     android:textSize="13sp"
                     android:textColor="@android:color/white"
-                    android:backgroundTint="@color/green"
+                    android:backgroundTint="@color/green_smoke"
                     android:layout_margin="4dp"
                     android:paddingHorizontal="8dp"
                     app:cornerRadius="16dp" />
@@ -137,7 +137,7 @@
                     android:text="Others"
                     android:textSize="13sp"
                     android:textColor="@android:color/white"
-                    android:backgroundTint="@color/green"
+                    android:backgroundTint="@color/green_smoke"
                     android:layout_margin="4dp"
                     android:paddingHorizontal="8dp"
                     app:cornerRadius="16dp" />
@@ -149,7 +149,7 @@
                     android:text="Processed &amp; Ready-to-Eat Foods"
                     android:textSize="13sp"
                     android:textColor="@android:color/white"
-                    android:backgroundTint="@color/green"
+                    android:backgroundTint="@color/green_smoke"
                     android:layout_margin="4dp"
                     android:paddingHorizontal="8dp"
                     app:cornerRadius="16dp" />
