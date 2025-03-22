@@ -1,4 +1,4 @@
-package com.example.final_project;
+package com.example.final_project.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +22,22 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.example.final_project.API_Controls.ApiService;
+import com.example.final_project.API_Controls.RetrofitClient;
+import com.example.final_project.API_Reponse.ChatResponse;
+import com.example.final_project.API_Requests.ChatRequest;
+import com.example.final_project.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,8 +53,17 @@ public class ChatBotFragment extends DialogFragment {
     private List<Message> messageList = new ArrayList<>();
     private ImageView sendButton;
     private boolean isFragmentAlive = true;
+    private String userId;
 
     public ChatBotFragment() {}
+
+    public static ChatBotFragment newInstance(String userId) {
+        ChatBotFragment fragment = new ChatBotFragment();
+        Bundle args = new Bundle();
+        args.putString("userId", userId);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @SuppressLint("WrongViewCast")
     @Nullable
@@ -52,13 +71,17 @@ public class ChatBotFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_bot, container, false);
 
+        if (getArguments() != null) {
+            userId = getArguments().getString("userId", "");
+        }
+
         messageContainer = view.findViewById(R.id.message_container);
         scrollView = view.findViewById(R.id.scroll_view);
         messageInput = view.findViewById(R.id.message_input);
         sendButton = view.findViewById(R.id.send_button);
         cleanButton = view.findViewById(R.id.clean_button);
 
-        Retrofit retrofit = RetrofitClient.getClient("");
+        Retrofit retrofit = RetrofitClient.getClient();
         apiService = retrofit.create(ApiService.class);
 
         loadMessageHistory();
@@ -73,13 +96,8 @@ public class ChatBotFragment extends DialogFragment {
                 displayMessage(message, true);
                 messageInput.setText("");
 
-                if (!isValidTopic(message)) {
-                    displayMessage("🚫 <b>NGOÀI PHẠM VI PHỤC VỤ!</b> Hãy hỏi về <i>món ăn, công thức nấu ăn, sức khỏe</i>!", false);
-                    return;
-                }
-
                 displayMessage("⏳ Đang xử lý...", false);
-                callGeminiApi(message);
+                callChatApi(message);
             }
         });
 
@@ -107,31 +125,47 @@ public class ChatBotFragment extends DialogFragment {
         }
     }
 
-    private void callGeminiApi(String userMessage) {
-        GeminiRequest request = new GeminiRequest(userMessage);
-        Call<GeminiResponse> call = apiService.getGeminiResponse(request, BuildConfig.GOOGLE_API_KEY);
+    private void callChatApi(String userMessage) {
+        String token = getUserToken();
+        if (token == null || token.isEmpty()) {
+            Log.e(TAG, "Token is null or empty");
+            removeProcessingMessage();
+            displayMessage("🚫 Bạn cần đăng nhập trước.", false);
+            return;
+        }
 
-        call.enqueue(new Callback<GeminiResponse>() {
+        ChatRequest request = new ChatRequest(userId, userMessage);
+        Call<ChatResponse> call = apiService.sendChatMessage("Bearer " + token, request);
+
+        call.enqueue(new Callback<ChatResponse>() {
             @Override
-            public void onResponse(Call<GeminiResponse> call, Response<GeminiResponse> response) {
+            public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {
                 if (!isFragmentAlive) return;
 
-                removeProcessingMessage(); // XÓA "⏳ Đang xử lý..." ngay khi API phản hồi
+                removeProcessingMessage();
 
                 if (response.isSuccessful() && response.body() != null) {
-                    String botReply = response.body().getResponse();
-                    if (botReply != null && !botReply.isEmpty()) {
-                        displayMessage(botReply, false);
+                    if (response.body().isSuccess()) {
+                        String botReply = response.body().getMessage();
+                        if (botReply != null && !botReply.isEmpty()) {
+                            displayMessage(botReply, false);
+                        } else {
+                            displayMessage("⚠ AI không phản hồi. Vui lòng thử lại.", false);
+                        }
                     } else {
-                        displayMessage("⚠ AI không phản hồi. Vui lòng thử lại.", false);
+                        displayMessage("⚠ " + response.body().getMessage(), false);
                     }
                 } else {
-                    displayMessage("❌ Lỗi API: " + response.code(), false);
+                    if (response.code() == 400) {
+                        displayMessage("🚫 <b>NGOÀI PHẠM VI PHỤC VỤ!</b> Hãy hỏi về <i>món ăn, công thức nấu ăn, sức khỏe</i>!", false);
+                    } else {
+                        displayMessage("❌ Lỗi API: " + response.code(), false);
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<GeminiResponse> call, Throwable t) {
+            public void onFailure(Call<ChatResponse> call, Throwable t) {
                 if (!isFragmentAlive) return;
                 removeProcessingMessage();
                 displayMessage("❌ Lỗi kết nối: " + t.getMessage(), false);
@@ -156,14 +190,12 @@ public class ChatBotFragment extends DialogFragment {
         messageTextView.setText(formattedMessage);
         messageTextView.setPadding(16, 12, 16, 12);
 
-        // LayoutParams cho tin nhắn
         LinearLayout.LayoutParams messageParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        messageParams.setMargins(0, 0, 0, 24); // Khoảng cách giữa các tin nhắn
+        messageParams.setMargins(0, 0, 0, 24);
 
-        // Layout chứa tin nhắn để căn chỉnh
         LinearLayout messageLayout = new LinearLayout(getContext());
         messageLayout.setOrientation(LinearLayout.HORIZONTAL);
         messageLayout.setLayoutParams(new LinearLayout.LayoutParams(
@@ -173,11 +205,11 @@ public class ChatBotFragment extends DialogFragment {
 
         if (isUser) {
             messageTextView.setBackgroundResource(R.drawable.user_message_background);
-            messageParams.gravity = Gravity.END; // Đẩy user về bên phải
+            messageParams.gravity = Gravity.END;
             messageLayout.setGravity(Gravity.END);
         } else {
             messageTextView.setBackgroundResource(R.drawable.bot_message_background);
-            messageParams.gravity = Gravity.START; // Đẩy bot về bên trái
+            messageParams.gravity = Gravity.START;
             messageLayout.setGravity(Gravity.START);
         }
 
@@ -191,8 +223,6 @@ public class ChatBotFragment extends DialogFragment {
         scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
     }
 
-
-
     private void removeProcessingMessage() {
         if (!messageList.isEmpty() && "⏳ Đang xử lý...".equals(messageList.get(messageList.size() - 1).getText())) {
             messageList.remove(messageList.size() - 1);
@@ -200,9 +230,18 @@ public class ChatBotFragment extends DialogFragment {
         }
     }
 
+    private String getUserToken() {
+        SharedPreferences sharedPreferences = getActivity().getApplicationContext()
+                .getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString("access_token", null);
+        Log.d(TAG, "Retrieved token: " + token);
+        return token;
+    }
+
     private void saveMessageHistory() {
         if (getActivity() == null) return;
-        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getApplicationContext()
+                .getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         List<Message> lastMessages = messageList.size() > 50 ? messageList.subList(messageList.size() - 50, messageList.size()) : messageList;
@@ -212,7 +251,8 @@ public class ChatBotFragment extends DialogFragment {
 
     private void loadMessageHistory() {
         if (getActivity() == null) return;
-        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getApplicationContext()
+                .getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString("message_history", null);
         Type type = new TypeToken<ArrayList<Message>>() {}.getType();
@@ -226,79 +266,35 @@ public class ChatBotFragment extends DialogFragment {
         }
     }
 
-    private boolean isValidTopic(String message) {
-        // Danh sách từ khóa tiếng Việt có dấu
-        String[] vietnameseKeywords = {"ăn", "uống", "món", "công thức", "nấu", "dinh dưỡng", "calo", "sức khỏe", "đồ ăn", "ẩm thực", "thực đơn"};
-
-        // Danh sách từ khóa tiếng Việt không dấu (chuẩn hóa)
-        String[] vietnameseNoAccentKeywords = {"an", "uong", "mon", "cong thuc", "nau", "dinh duong", "calo", "suc khoe", "do an", "am thuc", "thuc don"};
-
-        // Danh sách từ khóa tiếng Anh
-        String[] englishKeywords = {"eat", "drink", "food", "recipe", "cook", "nutrition", "calories", "health", "menu", "cuisine"};
-
-        // Chuẩn hóa văn bản nhập vào (chuyển về chữ thường, loại bỏ dấu tiếng Việt)
-        String normalizedMessage = removeVietnameseAccents(message.toLowerCase());
-
-        // Kiểm tra từ khóa tiếng Việt (có dấu)
-        for (String keyword : vietnameseKeywords) {
-            if (message.toLowerCase().contains(keyword)) return true;
-        }
-
-        // Kiểm tra từ khóa tiếng Việt không dấu
-        for (String keyword : vietnameseNoAccentKeywords) {
-            if (normalizedMessage.contains(keyword)) return true;
-        }
-
-        // Kiểm tra từ khóa tiếng Anh
-        for (String keyword : englishKeywords) {
-            if (normalizedMessage.contains(keyword)) return true;
-        }
-
-        return false;
-    }
-
-    // Hàm loại bỏ dấu tiếng Việt
-    private String removeVietnameseAccents(String input) {
-        input = input.replaceAll("[àáạảãâầấậẩẫăằắặẳẵ]", "a");
-        input = input.replaceAll("[èéẹẻẽêềếệểễ]", "e");
-        input = input.replaceAll("[ìíịỉĩ]", "i");
-        input = input.replaceAll("[òóọỏõôồốộổỗơờớợởỡ]", "o");
-        input = input.replaceAll("[ùúụủũưừứựửữ]", "u");
-        input = input.replaceAll("[ỳýỵỷỹ]", "y");
-        input = input.replaceAll("[đ]", "d");
-
-        input = input.replaceAll("[ÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴ]", "A");
-        input = input.replaceAll("[ÈÉẸẺẼÊỀẾỆỂỄ]", "E");
-        input = input.replaceAll("[ÌÍỊỈĨ]", "I");
-        input = input.replaceAll("[ÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠ]", "O");
-        input = input.replaceAll("[ÙÚỤỦŨƯỪỨỰỬỮ]", "U");
-        input = input.replaceAll("[ỲÝỴỶỸ]", "Y");
-        input = input.replaceAll("[Đ]", "D");
-
-        return input;
-    }
-
-
     private String formatBotResponse(String message) {
-        // Xóa dấu sao `*`
         message = message.replaceAll("\\*", "");
-
-        // Chuyển xuống dòng thành HTML `<br>`
         message = message.replace("\n", "<br>");
-
-        // Chuyển danh sách gạch đầu dòng `-`, `•`, `+` thành danh sách HTML
         message = message.replaceAll("(?m)^[\\-•+]\\s*(.*)", "<li>$1</li>");
-        message = message.replaceAll("(?s)(<li>.*?</li>)", "<ul>$1</ul>"); // Bao danh sách vào `<ul>`
-
+        message = message.replaceAll("(?s)(<li>.*?</li>)", "<ul>$1</ul>");
         return message;
     }
-
-
-
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         isFragmentAlive = false;
+    }
+
+    private static class Message {
+        private final String text;
+        private final boolean isUser;
+
+        public Message(String text, boolean isUser) {
+            this.text = text;
+            this.isUser = isUser;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public boolean isUser() {
+            return isUser;
+        }
     }
 }

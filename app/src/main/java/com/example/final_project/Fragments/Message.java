@@ -1,5 +1,6 @@
-package com.example.final_project;
+package com.example.final_project.Fragments;
 
+// Message.java
 public class Message {
     private String text;
     private boolean isUser;
