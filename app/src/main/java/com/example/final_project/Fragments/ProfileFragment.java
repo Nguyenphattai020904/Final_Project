@@ -1,10 +1,11 @@
-package com.example.final_project;
+package com.example.final_project.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.final_project.Log.LogInActivity;
+import com.example.final_project.R;
 
 public class ProfileFragment extends Fragment {
     private TextView txtFullName;
@@ -23,33 +27,34 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        // Khởi tạo SharedPreferences
+        // Retrieve fullname from SharedPreferences
         sharedPreferences = requireActivity().getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
+        String fullName = sharedPreferences.getString("fullname", "User"); // Fallback to "User" if null
+        Log.d("ProfileFragment", "Retrieved Fullname: " + fullName);
 
-        // Hiển thị tên đầy đủ người dùng
-        String fullName = sharedPreferences.getString("fullName", "User");
+        // Display fullname
         txtFullName = view.findViewById(R.id.txt_full_name);
         txtFullName.setText(fullName);
 
-        // Xử lý sự kiện đăng xuất
+        // Logout button handling
         btnLogout = view.findViewById(R.id.btn_log_out);
         btnLogout.setOnClickListener(v -> logoutUser());
 
         return view;
     }
 
-    // Hàm xử lý đăng xuất
+
     private void logoutUser() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("isLoggedIn", false);
-        editor.putString("fullName", "");
+        editor.clear(); // Clear all user-related data
         editor.apply();
 
-        // Chuyển về màn hình đăng nhập
+        // Navigate back to the login screen
         Intent intent = new Intent(getActivity(), LogInActivity.class);
         startActivity(intent);
-        getActivity().finish();
+        requireActivity().finish();
     }
+
 }
 
 

@@ -1,29 +1,30 @@
-package com.example.final_project;
+package com.example.final_project.API_Controls;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 import java.util.concurrent.TimeUnit;
 
 public class RetrofitClient {
-    private static Retrofit retrofit = null;
+    private static Retrofit retrofit;
+    private static final String BASE_URL = "http://172.16.70.102:3000/";
 
-    public static Retrofit getClient(String baseUrl) {
+    public static Retrofit getClient() {
         if (retrofit == null) {
-            // Tạo logging interceptor để theo dõi request/response
-            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             OkHttpClient client = new OkHttpClient.Builder()
-                    .addInterceptor(logging)
+                    .addInterceptor(loggingInterceptor)
                     .connectTimeout(30, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS)
                     .writeTimeout(30, TimeUnit.SECONDS)
                     .build();
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl("https://generativelanguage.googleapis.com/") // Direct base URL
+                    .baseUrl(BASE_URL)
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
