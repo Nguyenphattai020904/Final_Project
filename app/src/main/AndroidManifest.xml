@@ -6,6 +6,7 @@
 
     <application
         android:allowBackup="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -13,41 +14,52 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Final_Project"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".OnboardingActivity" />
-        <activity android:name=".LogInActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".NewPassWordActivity" />
+        <activity android:name=".Log.LogInActivity" />
+        <activity android:name=".Log.RegisterActivity" />
+        <activity android:name=".Log.ForgotPasswordActivity" />
+        <activity android:name=".Log.NewPassWordActivity" />
         <activity android:name=".DatabaseHelper"/>
         <activity android:name=".SecurityUtils"/>
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:exported="false"/>
-        <activity android:name=".HomeFragment"/>
-        <activity android:name=".DiscountFragment"/>
-        <activity android:name=".QRFragment"/>
-        <activity android:name=".CartFragment"/>
-        <activity android:name=".ProfileFragment"/>
-        <activity android:name=".ChatBotFragment"/>
-        <activity android:name=".RetrofitClient"/>
-        <activity android:name=".ApiService"/>
-        <activity android:name=".GeminiRequest"/>
-        <activity android:name=".GeminiResponse"/>
-        <activity android:name=".Product"/>
-        <activity android:name=".ProductData"/>
-        <activity android:name=".ProductAdapter"/>
-        <activity android:name=".Message"/>
-        <activity android:name=".EditProfileActivity"/>
-
+        <activity android:name=".Fragments.HomeFragment"/>
+        <activity android:name=".Fragments.DiscountFragment"/>
+        <activity android:name=".Fragments.QRFragment"/>
+        <activity android:name=".Fragments.CartFragment"/>
+        <activity android:name=".Fragments.ProfileFragment"/>
+        <activity android:name=".Fragments.ChatBotFragment"/>
+        <activity android:name=".API_Controls.RetrofitClient"/>
+        <activity android:name=".API_Controls.ApiService"/>
+        <activity android:name=".API_Requests.GeminiRequest"/>
+        <activity android:name=".API_Reponse.GeminiResponse"/>
+        <activity android:name=".API_Reponse.ProductResponse"/>
+        <activity android:name=".Products.Product"/>
+        <activity android:name=".Products.ProductAdapter"/>
+        <activity android:name=".Fragments.Message"/>
+        <activity android:name=".API_Requests.UserRequest"/>
+        <activity android:name=".API_Reponse.UserResponse"/>
+        <activity android:name=".API_Requests.ChatRequest"/>
+        <activity android:name=".API_Requests.OrderRequest"/>
+        <activity android:name=".API_Reponse.ChatResponse"/>
+        <activity android:name=".API_Reponse.OrderResponse"/>
+        <activity android:name=".API_Reponse.OrderListResponse"/>
+        <activity android:name=".Products.ProductDetailFragment"/>
+        <activity android:name=".Products.CarouselAdapter"/>
+        <activity android:name=".Fragments.CartAdapter"/>
+        <activity android:name=".Fragments.CartManager"/>
+        <activity android:name=".Fragments.PaymentFragment"/>
+        <activity android:name=".API_Reponse.OrderStatusResponse"/>
     </application>
 </manifest>

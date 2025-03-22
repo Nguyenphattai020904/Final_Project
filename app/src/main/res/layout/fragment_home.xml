@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/back_ground"
-    >
+    android:background="@color/back_ground">
 
     <!-- Header: Thanh tìm kiếm + Chuông thông báo -->
     <LinearLayout
@@ -21,16 +20,26 @@
 
         <!-- Thanh tìm kiếm -->
         <EditText
+            android:id="@+id/search_edit_text"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:background="@drawable/search_bar_background"
-            android:drawableLeft="@drawable/ic_search"
             android:drawablePadding="8dp"
-            android:hint="What are you looking for?"
+            android:hint="Search by name, category, or main category"
             android:inputType="text"
             android:padding="10dp"
             android:textSize="14sp" />
+
+        <!-- Nút tìm kiếm -->
+        <ImageButton
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search"
+            android:background="@android:color/transparent"
+            android:contentDescription="Search"
+            android:layout_marginStart="8dp" />
 
         <!-- Chuông thông báo -->
         <FrameLayout
@@ -39,7 +48,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp">
 
-            <!-- Icon notification -->
             <ImageButton
                 android:id="@+id/btnNotification"
                 android:layout_width="wrap_content"
@@ -52,7 +60,6 @@
                 android:src="@drawable/notifications"
                 tools:ignore="TouchTargetSizeCheck" />
 
-            <!-- Số lượng thông báo -->
             <TextView
                 android:id="@+id/tvNotificationBadge"
                 android:layout_width="20dp"
@@ -75,108 +82,92 @@
         android:orientation="vertical">
 
         <!-- Danh mục sản phẩm -->
-        <LinearLayout
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="4"
+            android:scrollbars="none"
             android:layout_marginBottom="16dp">
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:text="Fresh Food"
-                android:textSize="13sp"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/green"
-                android:layout_margin="4dp"
-                app:cornerRadius="16dp" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:text="Dry Food"
-                android:textSize="13sp"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/green"
-                android:layout_margin="4dp"
-                app:cornerRadius="16dp" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:text="Beverages"
-                android:textSize="13sp"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/green"
-                android:layout_margin="4dp"
-                app:cornerRadius="16dp" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:text="Spices"
-                android:textSize="13sp"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/green"
-                android:layout_margin="4dp"
-                app:cornerRadius="16dp" />
-        </LinearLayout>
-
-        <!-- Banner quảng cáo / Image Carousel -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:background="@drawable/image_carousel_background"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginBottom="16dp"
-            android:padding="12dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Image Carousel"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
-
-            <!-- Navigation dots -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="10dp">
+                android:paddingHorizontal="4dp">
 
-                <View
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:background="@drawable/nav_dot"
-                    android:layout_margin="4dp" />
-                <View
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                <Button
+                    android:id="@+id/btn_bread_flour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:text="Bread &amp; Flour-Based Foods"
+                    android:textSize="13sp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/green"
+                    android:layout_margin="4dp"
+                    android:paddingHorizontal="8dp"
+                    app:cornerRadius="16dp" />
 
-                    android:layout_margin="4dp" />
-                <View
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                <Button
+                    android:id="@+id/btn_drinks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:text="Drinks"
+                    android:textSize="13sp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/green"
+                    android:layout_margin="4dp"
+                    android:paddingHorizontal="8dp"
+                    app:cornerRadius="16dp" />
 
-                    android:layout_margin="4dp" />
+                <Button
+                    android:id="@+id/btn_food_ingredients"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:text="Food &amp; Ingredients"
+                    android:textSize="13sp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/green"
+                    android:layout_margin="4dp"
+                    android:paddingHorizontal="8dp"
+                    app:cornerRadius="16dp" />
+
+                <Button
+                    android:id="@+id/btn_others"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:text="Others"
+                    android:textSize="13sp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/green"
+                    android:layout_margin="4dp"
+                    android:paddingHorizontal="8dp"
+                    app:cornerRadius="16dp" />
+
+                <Button
+                    android:id="@+id/btn_processed_foods"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:text="Processed &amp; Ready-to-Eat Foods"
+                    android:textSize="13sp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/green"
+                    android:layout_margin="4dp"
+                    android:paddingHorizontal="8dp"
+                    app:cornerRadius="16dp" />
             </LinearLayout>
-        </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- Banner quảng cáo / Image Carousel -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/carousel_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginBottom="16dp" />
 
         <!-- Tiêu đề danh sách sản phẩm -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Best Sales"
+            android:text="All products"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/red"

@@ -1,4 +1,4 @@
-package com.example.final_project;
+package com.example.final_project.API_Requests;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;

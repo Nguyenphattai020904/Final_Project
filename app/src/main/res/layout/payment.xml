@@ -19,7 +19,35 @@
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="16dp" />
+
+        <!-- Danh sách sản phẩm -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order Items:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:id="@+id/order_items_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Tổng chi phí -->
+        <TextView
+            android:id="@+id/txt_total_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Cost: 0 VND"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp" />
 
         <!-- Full Name -->
         <TextView
@@ -107,10 +135,10 @@
                 android:textColor="@color/black" />
 
             <RadioButton
-                android:id="@+id/rb_bank_transfer"
+                android:id="@+id/rb_zalo_pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bank Transfer"
+                android:text="ZaloPay"
                 android:textSize="16sp"
                 android:textColor="@color/black" />
         </RadioGroup>
@@ -139,5 +167,4 @@
             android:textColor="@color/white" />
 
     </LinearLayout>
-
 </ScrollView>

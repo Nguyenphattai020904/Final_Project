@@ -7,6 +7,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.final_project.Log.LogInActivity;
+
 public class OnboardingActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
