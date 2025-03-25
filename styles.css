@@ -1,0 +1,78 @@
+/* Đặt màu nền chung */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F2FAE0; /* Màu nền */
+}
+
+/* Sidebar */
+#sidebar-wrapper {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    background-color: #8AA12A; /* Màu chủ đạo */
+    padding-top: 20px;
+}
+
+.sidebar-heading {
+    font-size: 1.25rem;
+    color: white;
+    text-align: center;
+}
+
+.list-group-item {
+    border: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    background-color: #8AA12A;
+    color: white;
+}
+
+.list-group-item:hover {
+    background-color: #6e8122; /* Màu đậm hơn khi hover */
+}
+
+/* Nội dung chính */
+#page-content-wrapper {
+    margin-left: 250px;
+    padding: 20px;
+    width: 100%;
+}
+
+/* Navbar */
+.navbar {
+    background-color: white !important;
+}
+
+.navbar img {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #8AA12A;
+}
+
+/* Thẻ card */
+.card {
+    text-align: center;
+    padding: 20px;
+    border: none;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.bg-primary {
+    background-color: #8AA12A !important; /* Thay màu Bootstrap mặc định */
+    border: none;
+}
+
+.bg-success {
+    background-color: #6E8122 !important;
+    border: none;
+}
+
+.bg-warning {
+    background-color: #B5C466 !important;
+    border: none;
+}
