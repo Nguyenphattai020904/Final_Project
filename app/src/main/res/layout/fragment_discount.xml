@@ -22,7 +22,7 @@
         android:text="My Vouchers"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:background=""
+        android:background="@color/back_ground"
         android:layout_gravity="center"/>
 
     <!-- RecyclerView hiển thị danh sách voucher -->

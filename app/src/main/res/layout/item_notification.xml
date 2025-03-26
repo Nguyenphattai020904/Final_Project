@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="12dp"
-    android:background="@drawable/notification_background">
+    android:background="@color/back_ground">
 
     <!-- Tiêu đề thông báo -->
     <TextView
