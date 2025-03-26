@@ -3,7 +3,6 @@ package com.example.final_project;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,7 +13,6 @@ import com.example.final_project.Fragments.ChatBotFragment;
 import com.example.final_project.Fragments.DiscountFragment;
 import com.example.final_project.Fragments.HomeFragment;
 import com.example.final_project.Fragments.ProfileFragment;
-import com.example.final_project.Fragments.QRFragment;
 import com.example.final_project.Log.LogInActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.badge.BadgeDrawable;
@@ -46,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new HomeFragment();
             } else if (item.getItemId() == R.id.nav_discount) {
                 selectedFragment = new DiscountFragment();
-            } else if (item.getItemId() == R.id.nav_qr) {
-                selectedFragment = new QRFragment();
             } else if (item.getItemId() == R.id.nav_cart) {
                 selectedFragment = new CartFragment();
             } else if (item.getItemId() == R.id.nav_profile) {

@@ -36,7 +36,6 @@
             android:exported="false"/>
         <activity android:name=".Fragments.HomeFragment"/>
         <activity android:name=".Fragments.DiscountFragment"/>
-        <activity android:name=".Fragments.QRFragment"/>
         <activity android:name=".Fragments.CartFragment"/>
         <activity android:name=".Fragments.ProfileFragment"/>
         <activity android:name=".Fragments.ChatBotFragment"/>

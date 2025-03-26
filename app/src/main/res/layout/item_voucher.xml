@@ -52,13 +52,5 @@
             android:layout_marginTop="4dp"/>
     </LinearLayout>
 
-    <!-- Remove ImageButton -->
-    <ImageButton
-        android:id="@+id/btnRemoveVoucher"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/delete"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Remove Voucher"
-       />
+
 </LinearLayout>

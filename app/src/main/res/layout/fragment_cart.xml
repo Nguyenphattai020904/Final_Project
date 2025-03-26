@@ -19,9 +19,9 @@
         android:id="@+id/empty_cart_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chưa có sản phẩm nào cả"
-        android:textSize="18sp"
-        android:textColor="@color/black"
+        android:text="There are no products available."
+        android:textSize="20sp"
+        android:textColor="@color/gray"
         android:gravity="center"
         android:layout_gravity="center"
         android:visibility="visible" />
