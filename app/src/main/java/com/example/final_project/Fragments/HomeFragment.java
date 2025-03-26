@@ -1,5 +1,6 @@
 package com.example.final_project.Fragments;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     private ProductAdapter productAdapter;
     private List<Product> productList = new ArrayList<>();
     private List<Product> fullProductList = new ArrayList<>();
-    private Button btnBreadFlour, btnDrinks, btnFoodIngredients, btnOthers, btnProcessedFoods;
+    private Button btnFreshFood, btnDrinks, btnDryFood, btnSpice;
     private Button selectedButton = null;
     private ViewPager2 carouselViewPager;
     private CarouselAdapter carouselAdapter;
@@ -47,6 +48,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     private EditText searchEditText;
     private ImageButton searchButton;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -62,11 +64,10 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(spacingInPx));
 
         // Khởi tạo các button
-        btnBreadFlour = view.findViewById(R.id.btn_bread_flour);
+        btnFreshFood = view.findViewById(R.id.btn_fresh_food);
         btnDrinks = view.findViewById(R.id.btn_drinks);
-        btnFoodIngredients = view.findViewById(R.id.btn_food_ingredients);
-        btnOthers = view.findViewById(R.id.btn_others);
-        btnProcessedFoods = view.findViewById(R.id.btn_processed_foods);
+        btnDryFood = view.findViewById(R.id.btn_dry_food);
+        btnSpice = view.findViewById(R.id.btn_spice);
         setupButtonListeners();
 
         // Khởi tạo ViewPager2 cho carousel
@@ -86,11 +87,10 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     }
 
     private void setupButtonListeners() {
-        btnBreadFlour.setOnClickListener(v -> filterProducts("Bread & Flour-Based Foods", btnBreadFlour));
+        btnFreshFood.setOnClickListener(v -> filterProducts("Fresh Food", btnFreshFood));
         btnDrinks.setOnClickListener(v -> filterProducts("Drinks", btnDrinks));
-        btnFoodIngredients.setOnClickListener(v -> filterProducts("Food & Ingredients", btnFoodIngredients));
-        btnOthers.setOnClickListener(v -> filterProducts("Others", btnOthers));
-        btnProcessedFoods.setOnClickListener(v -> filterProducts("Processed & Ready-to-Eat Foods", btnProcessedFoods));
+        btnDryFood.setOnClickListener(v -> filterProducts("Dry Food", btnDryFood));
+        btnSpice.setOnClickListener(v -> filterProducts("Spices", btnSpice));
     }
 
     private void setupSearchListener() {
@@ -133,9 +133,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
     private void filterProducts(String mainCategory, Button clickedButton) {
         if (selectedButton != null) {
-            selectedButton.setBackgroundTintList(android.content.res.ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            selectedButton.setBackgroundTintList(android.content.res.ColorStateList.valueOf(getResources().getColor(R.color.green_smoke)));
         }
-        clickedButton.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#FFA500")));
+        clickedButton.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#4CAF50")));
         selectedButton = clickedButton;
 
         productList.clear();
