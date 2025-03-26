@@ -35,11 +35,11 @@
         <ImageButton
             android:id="@+id/search_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_search"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
             android:background="@android:color/transparent"
             android:contentDescription="Search"
-            android:layout_marginStart="8dp" />
+            android:src="@drawable/ic_search" />
 
         <!-- Chuông thông báo -->
         <FrameLayout
@@ -95,15 +95,15 @@
                 android:paddingHorizontal="4dp">
 
                 <Button
-                    android:id="@+id/btn_bread_flour"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/btn_fresh_food"
+                    android:layout_width="130dp"
                     android:layout_height="70dp"
-                    android:text="Bread &amp; Flour-Based Foods"
-                    android:textSize="13sp"
-                    android:textColor="@android:color/white"
-                    android:backgroundTint="@color/green_smoke"
                     android:layout_margin="4dp"
+                    android:backgroundTint="@color/green_smoke"
                     android:paddingHorizontal="8dp"
+                    android:text="Fresh Food"
+                    android:textColor="@color/yellow"
+                    android:textSize="13sp"
                     app:cornerRadius="16dp" />
 
                 <Button
@@ -112,43 +112,31 @@
                     android:layout_height="70dp"
                     android:text="Drinks"
                     android:textSize="13sp"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/yellow"
                     android:backgroundTint="@color/green_smoke"
                     android:layout_margin="4dp"
                     android:paddingHorizontal="8dp"
                     app:cornerRadius="16dp" />
 
                 <Button
-                    android:id="@+id/btn_food_ingredients"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/btn_dry_food"
+                    android:layout_width="100dp"
                     android:layout_height="70dp"
-                    android:text="Food &amp; Ingredients"
-                    android:textSize="13sp"
-                    android:textColor="@android:color/white"
-                    android:backgroundTint="@color/green_smoke"
                     android:layout_margin="4dp"
+                    android:backgroundTint="@color/green_smoke"
                     android:paddingHorizontal="8dp"
+                    android:text="Dry Food"
+                    android:textColor="@color/yellow"
+                    android:textSize="13sp"
                     app:cornerRadius="16dp" />
 
                 <Button
-                    android:id="@+id/btn_others"
+                    android:id="@+id/btn_spice"
                     android:layout_width="wrap_content"
                     android:layout_height="70dp"
-                    android:text="Others"
+                    android:text="Spices"
                     android:textSize="13sp"
-                    android:textColor="@android:color/white"
-                    android:backgroundTint="@color/green_smoke"
-                    android:layout_margin="4dp"
-                    android:paddingHorizontal="8dp"
-                    app:cornerRadius="16dp" />
-
-                <Button
-                    android:id="@+id/btn_processed_foods"
-                    android:layout_width="wrap_content"
-                    android:layout_height="70dp"
-                    android:text="Processed &amp; Ready-to-Eat Foods"
-                    android:textSize="13sp"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/yellow"
                     android:backgroundTint="@color/green_smoke"
                     android:layout_margin="4dp"
                     android:paddingHorizontal="8dp"
@@ -180,7 +168,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/white"
+            android:background="@color/back_ground"
             android:clipToPadding="false"
             android:paddingHorizontal="4dp"
             android:paddingBottom="16dp"

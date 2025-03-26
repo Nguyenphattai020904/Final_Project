@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/back_ground"
     android:padding="8dp">
 
     <!-- RecyclerView hiển thị danh sách sản phẩm -->
@@ -28,7 +29,7 @@
     <!-- Button Thanh toán chung -->
     <Button
         android:id="@+id/btnBuyNow"
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="8dp"
