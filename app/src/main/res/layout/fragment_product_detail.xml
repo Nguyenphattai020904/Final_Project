@@ -1,89 +1,101 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="@color/back_ground">
 
-    <LinearLayout
+    <!-- Scrollable content -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/add_to_cart_button"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/detail_product_image"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/detail_product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Product Name"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/detail_product_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="0 VND"
+                android:textColor="@color/green_smoke"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/detail_product_brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Brand: "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/detail_product_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Category: "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/detail_product_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Ingredients: "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/detail_product_nutrients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Nutrients: "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/detail_product_main_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Main Category: "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Fixed button at the bottom -->
+    <Button
+        android:id="@+id/add_to_cart_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/detail_product_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop" />
-
-        <TextView
-            android:id="@+id/detail_product_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Product Name"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp" />
-
-        <TextView
-            android:id="@+id/detail_product_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0 VND"
-            android:textSize="18sp"
-            android:textColor="@color/green_smoke"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/detail_product_brand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Brand: "
-            android:textSize="16sp"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/detail_product_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Category: "
-            android:textSize="16sp"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/detail_product_ingredients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ingredients: "
-            android:textSize="16sp"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/detail_product_nutrients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nutrients: "
-            android:textSize="16sp"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/detail_product_main_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Main Category: "
-            android:textSize="16sp"
-            android:layout_marginTop="8dp" />
-
-        <Button
-            android:id="@+id/add_to_cart_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="Add"
-            android:textColor="@color/yellow"
-            android:backgroundTint="@color/green_smoke"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-</ScrollView>
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/green_smoke"
+        android:text="Add to Cart"
+        android:textColor="@color/yellow"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+</RelativeLayout>
