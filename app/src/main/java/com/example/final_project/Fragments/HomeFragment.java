@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
     private void filterProducts(String mainCategory, Button clickedButton) {
         if (selectedButton != null) {
-            selectedButton.setBackgroundTintList(android.content.res.ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            selectedButton.setBackgroundTintList(android.content.res.ColorStateList.valueOf(getResources().getColor(R.color.green_smoke)));
         }
         clickedButton.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#FFA500")));
         selectedButton = clickedButton;

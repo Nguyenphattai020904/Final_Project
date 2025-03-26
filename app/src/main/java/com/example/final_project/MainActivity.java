@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new HomeFragment();
             } else if (item.getItemId() == R.id.nav_discount) {
                 selectedFragment = new DiscountFragment();
-            } else if (item.getItemId() == R.id.nav_qr) {
-                selectedFragment = new QRFragment();
             } else if (item.getItemId() == R.id.nav_cart) {
                 selectedFragment = new CartFragment();
             } else if (item.getItemId() == R.id.nav_profile) {

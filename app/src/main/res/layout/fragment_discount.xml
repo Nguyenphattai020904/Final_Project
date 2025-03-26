@@ -3,13 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:background="@color/back_ground"
     android:padding="16dp">
 
+    <!-- Search Bar -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search voucher..."
+        android:background="@color/white"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Discount Fragment"
+        android:text="My Vouchers"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:background=""
+        android:layout_gravity="center"/>
+
+    <!-- RecyclerView hiển thị danh sách voucher -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewVouchers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/back_ground"
+        android:layout_marginTop="12dp"/>
 </LinearLayout>

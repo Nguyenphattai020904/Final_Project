@@ -10,15 +10,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My Vouchers"
+        android:text="Notifications"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
-    <!-- RecyclerView hiển thị danh sách voucher -->
+    <!-- RecyclerView hiển thị danh sách thông báo -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewVouchers"
+        android:id="@+id/recyclerViewNotifications"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="12dp"/>
 </LinearLayout>

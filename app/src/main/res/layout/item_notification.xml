@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/notification_background">
+
+    <!-- Tiêu đề thông báo -->
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Promotion"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <!-- Nội dung tóm tắt -->
+    <TextView
+        android:id="@+id/txtContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get 20% off on your next order!"
+        android:textSize="14sp"/>
+
+    <!-- Thời gian thông báo -->
+    <TextView
+        android:id="@+id/txtTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10 minutes ago"
+        android:textSize="12sp"
+        android:textColor="@android:color/darker_gray"/>
+
+    <!-- Đường line phân cách -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="8dp"/>
+</LinearLayout>
