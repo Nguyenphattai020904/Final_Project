@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class RetrofitClient {
     private static Retrofit retrofit;
-    private static final String BASE_URL = "http://192.168.1.8:3000/";
+    private static final String BASE_URL = "http://172.16.72.99:3000/";
 
     public static Retrofit getClient() {
         if (retrofit == null) {

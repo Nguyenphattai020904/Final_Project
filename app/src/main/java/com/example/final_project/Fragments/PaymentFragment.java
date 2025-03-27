@@ -1,7 +1,9 @@
 package com.example.final_project.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +43,7 @@ public class PaymentFragment extends Fragment {
     private LinearLayout orderItemsContainer;
     private TextView txtTotalCost;
     private int lastOrderId = -1;
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +59,11 @@ public class PaymentFragment extends Fragment {
         btnCancelOrder = view.findViewById(R.id.btn_cancel_order);
         orderItemsContainer = view.findViewById(R.id.order_items_container);
         txtTotalCost = view.findViewById(R.id.txt_total_cost);
+
+        // Khởi tạo ProgressDialog
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Đang xử lý đơn hàng...");
+        progressDialog.setCancelable(false);
 
         displayOrderItems();
 
@@ -108,23 +116,34 @@ public class PaymentFragment extends Fragment {
         }
 
         List<OrderRequest.OrderItem> items = new ArrayList<>();
+        double totalCost = 0;
         for (Product product : selectedItems) {
             items.add(new OrderRequest.OrderItem(product.getProductId(), product.getQuantity()));
+            totalCost += product.getPrice() * product.getQuantity();
         }
 
-        int userId = 1;
-        OrderRequest orderRequest = new OrderRequest(userId, items, paymentMethod, fullName, phoneNumber, address);
+        // Lấy token từ SharedPreferences
+        String token = getUserToken();
+        if (token == null || token.isEmpty()) {
+            Toast.makeText(getContext(), "🚫 Bạn cần đăng nhập trước.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        OrderRequest orderRequest = new OrderRequest(items, paymentMethod, fullName, phoneNumber, address, totalCost);
 
         ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
-        Call<OrderResponse> call = apiService.createOrder(orderRequest);
+        progressDialog.show();
+        Call<OrderResponse> call = apiService.createOrder("Bearer " + token, orderRequest);
         call.enqueue(new Callback<OrderResponse>() {
             @Override
             public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
+                progressDialog.dismiss();
                 if (response.isSuccessful() && response.body() != null) {
                     OrderResponse orderResponse = response.body();
                     lastOrderId = orderResponse.getOrderId();
                     if (paymentMethod.equals("COD")) {
                         removeSelectedItems(selectedItems);
+                        cartFragment.updateCartFromManager(); // Cập nhật giao diện giỏ hàng
                         Toast.makeText(getContext(), "Đặt hàng thành công! Order ID: " + lastOrderId, Toast.LENGTH_LONG).show();
                         navigateBackToHome();
                     } else if (paymentMethod.equals("ZaloPay")) {
@@ -141,20 +160,37 @@ public class PaymentFragment extends Fragment {
                                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(zaloPayUrl));
                                 startActivityForResult(browserIntent, 1);
                             }
-                        }else {
+                        } else {
                             Toast.makeText(getContext(), "Lỗi: Không nhận được URL ZaloPay", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } else {
-                    Toast.makeText(getContext(), "Lỗi: " + response.message(), Toast.LENGTH_SHORT).show();
+                    // Xử lý lỗi chi tiết hơn
+                    String errorMessage = "Lỗi: " + response.message();
+                    if (response.errorBody() != null) {
+                        try {
+                            errorMessage = "Lỗi: " + response.errorBody().string();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<OrderResponse> call, Throwable t) {
-                Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private String getUserToken() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userPrefs", getContext().MODE_PRIVATE);
+        String token = sharedPreferences.getString("access_token", null);
+        Log.d("PaymentFragment", "Retrieved token: " + token);
+        return token;
     }
 
     private void removeSelectedItems(List<Product> selectedItems) {
@@ -178,10 +214,12 @@ public class PaymentFragment extends Fragment {
 
     private void checkOrderStatus(int orderId) {
         ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
+        progressDialog.show();
         Call<OrderStatusResponse> call = apiService.checkOrderStatus(orderId);
         call.enqueue(new Callback<OrderStatusResponse>() {
             @Override
             public void onResponse(Call<OrderStatusResponse> call, Response<OrderStatusResponse> response) {
+                progressDialog.dismiss();
                 Log.i("OrderStatus", "Response code: " + response.code());
                 if (response.isSuccessful() && response.body() != null) {
                     String status = response.body().getPaymentStatus();
@@ -190,6 +228,7 @@ public class PaymentFragment extends Fragment {
                         CartFragment cartFragment = (CartFragment) getActivity().getSupportFragmentManager().findFragmentByTag("CartFragment");
                         if (cartFragment != null) {
                             removeSelectedItems(cartFragment.getSelectedItems());
+                            cartFragment.updateCartFromManager(); // Cập nhật giao diện giỏ hàng
                         }
                         Toast.makeText(getContext(), "Thanh toán ZaloPay thành công!", Toast.LENGTH_LONG).show();
                         navigateBackToHome();
@@ -197,14 +236,15 @@ public class PaymentFragment extends Fragment {
                         Toast.makeText(getContext(), "Thanh toán ZaloPay chưa hoàn tất", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getContext(), "Lỗi: Đơn hàng không tồn tại hoặc server lỗi (" + response.code() + ")", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Lỗi: Đơn hàng không tồn tại hoặc server lỗi (" + response.code() + ")", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<OrderStatusResponse> call, Throwable t) {
+                progressDialog.dismiss();
                 Log.e("OrderStatus", "Network error: " + t.getMessage());
-                Toast.makeText(getContext(), "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

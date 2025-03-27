@@ -1,23 +1,21 @@
 package com.example.final_project.API_Controls;
 
 import com.example.final_project.API_Reponse.ChatResponse;
-import com.example.final_project.API_Reponse.GeminiResponse;
 import com.example.final_project.API_Reponse.OrderListResponse;
 import com.example.final_project.API_Reponse.OrderResponse;
 import com.example.final_project.API_Reponse.OrderStatusResponse;
 import com.example.final_project.API_Reponse.ProductResponse;
 import com.example.final_project.API_Reponse.UserResponse;
 import com.example.final_project.API_Requests.ChatRequest;
-import com.example.final_project.API_Requests.GeminiRequest;
 import com.example.final_project.API_Requests.OrderRequest;
 import com.example.final_project.API_Requests.UserRequest;
+import com.example.final_project.Products.Product;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Header;
-import retrofit2.http.PUT;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ApiService {
@@ -50,13 +48,16 @@ public interface ApiService {
     @POST("api/chat/ask-ai")
     Call<ChatResponse> sendChatMessage(@Header("Authorization") String token, @Body ChatRequest request);
 
+    @GET("products/{id}")
+    Call<Product> getProductById(@Header("Authorization") String token, @Path("id") int productId);
+
     // Lấy danh sách sản phẩm
     @GET("/order/products")
     Call<ProductResponse> getProducts();
 
     // Tạo đơn hàng
     @POST("/order/create")
-    Call<OrderResponse> createOrder(@Body OrderRequest request);
+    Call<OrderResponse> createOrder(@Header("Authorization") String token, @Body OrderRequest request);
 
     @GET("/order-status/{orderId}")
     Call<OrderStatusResponse> checkOrderStatus(@Path("orderId") int orderId);
@@ -64,5 +65,4 @@ public interface ApiService {
     // Lấy danh sách đơn hàng
     @GET("/order/{userId}")
     Call<OrderListResponse> getUserOrders(@Path("userId") String userId);
-
 }

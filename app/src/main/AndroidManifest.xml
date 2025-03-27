@@ -29,8 +29,8 @@
         <activity android:name=".Log.RegisterActivity" />
         <activity android:name=".Log.ForgotPasswordActivity" />
         <activity android:name=".Log.NewPassWordActivity" />
-        <activity android:name=".DatabaseHelper"/>
         <activity android:name=".SecurityUtils"/>
+        <activity android:name=".API_Reponse.MentionedProduct"/>
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:exported="false"/>

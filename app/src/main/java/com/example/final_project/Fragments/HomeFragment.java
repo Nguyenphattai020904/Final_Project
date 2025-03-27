@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements ProductAdapter.OnProductClickListener, CarouselAdapter.OnCarouselItemClickListener {
+public class HomeFragment extends Fragment implements ProductAdapter.OnProductClickListener {
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
     private List<Product> productList = new ArrayList<>();
@@ -42,7 +42,6 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     private Button selectedButton = null;
     private ViewPager2 carouselViewPager;
     private CarouselAdapter carouselAdapter;
-    private List<Product> topProducts = new ArrayList<>();
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable carouselRunnable;
     private EditText searchEditText;
@@ -72,7 +71,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
         // Khởi tạo ViewPager2 cho carousel
         carouselViewPager = view.findViewById(R.id.carousel_view_pager);
-        carouselAdapter = new CarouselAdapter(getContext(), topProducts, this);
+        carouselAdapter = new CarouselAdapter(getContext());
         carouselViewPager.setAdapter(carouselAdapter);
 
         // Khởi tạo thanh tìm kiếm
@@ -82,6 +81,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
         // Lấy dữ liệu từ API
         fetchProducts();
+
+        // Thiết lập carousel tự động chạy
+        setupCarousel();
 
         return view;
     }
@@ -114,7 +116,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         productList.clear();
 
         if (query.isEmpty()) {
-            productList.addAll(fullProductList); // Hiển thị tất cả nếu không có từ khóa
+            productList.addAll(fullProductList);
         } else {
             for (Product product : fullProductList) {
                 if ((product.getName() != null && product.getName().toLowerCase().contains(query)) ||
@@ -127,7 +129,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
         productAdapter.notifyDataSetChanged();
         if (productList.isEmpty()) {
-            Toast.makeText(getContext(), "No products found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Không tìm thấy sản phẩm", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -163,34 +165,28 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
                     productList.clear();
                     productList.addAll(fullProductList);
                     productAdapter.notifyDataSetChanged();
-
-                    // Lấy 10 sản phẩm có số lượng cao nhất
-                    setupCarousel();
                 } else {
-                    Toast.makeText(getContext(), "Failed to load products: " + response.code(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Không tải được sản phẩm: " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Lỗi: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void setupCarousel() {
-        topProducts.clear();
-        List<Product> sortedList = new ArrayList<>(fullProductList);
-        Collections.sort(sortedList, (p1, p2) -> Integer.compare(p2.getQuantity(), p1.getQuantity()));
-        topProducts.addAll(sortedList.subList(0, Math.min(10, sortedList.size())));
-        carouselAdapter.notifyDataSetChanged();
-
         // Tự động chuyển slide mỗi 3 giây
+        if (carouselRunnable != null) {
+            handler.removeCallbacks(carouselRunnable);
+        }
         carouselRunnable = new Runnable() {
             @Override
             public void run() {
                 int currentItem = carouselViewPager.getCurrentItem();
-                int nextItem = (currentItem + 1) % topProducts.size();
+                int nextItem = (currentItem + 1) % 5; // Lặp lại sau 5 ảnh
                 carouselViewPager.setCurrentItem(nextItem, true);
                 handler.postDelayed(this, 3000);
             }
@@ -200,11 +196,6 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
     @Override
     public void onProductClick(Product product) {
-        navigateToDetail(product);
-    }
-
-    @Override
-    public void onCarouselItemClick(Product product) {
         navigateToDetail(product);
     }
 
