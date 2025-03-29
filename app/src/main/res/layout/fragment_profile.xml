@@ -16,6 +16,14 @@
 
         <!-- Personal Information -->
         <TextView
+            android:id="@+id/txt_full_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Personal Information"
@@ -39,7 +47,7 @@
 
             <!-- Edit Personal Info -->
             <LinearLayout
-                android:id="@+id/btn_edit_personal_info"
+                android:id="@+id/btn_show_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -49,12 +57,12 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/edit" />
+                    android:src="@drawable/person" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Edit Personal Information"
+                    android:text="Show Detail Information"
                     android:layout_marginStart="12dp"
                     android:textSize="14sp"
                     android:textColor="@color/black" />
@@ -94,6 +102,7 @@
 
             <!-- Purchase History -->
             <LinearLayout
+                android:id="@+id/btn_purchase_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -206,12 +215,6 @@
             </LinearLayout>
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/txt_full_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
 
         <Button
             android:id="@+id/btn_log_out"

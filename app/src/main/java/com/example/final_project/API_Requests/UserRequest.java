@@ -5,6 +5,8 @@ public class UserRequest {
     private String email;
     private String phone;
     private String password;
+    private String gender;
+    private String dateOfBirth;
     private String otp;
     private String newPassword;
 
@@ -12,12 +14,14 @@ public class UserRequest {
     public UserRequest() {}
 
     // Static factory method for registration
-    public static UserRequest createRegistrationRequest(String name, String email, String phone, String password) {
+    public static UserRequest createRegistrationRequest(String name, String email, String phone, String password, String gender, String dateOfBirth) {
         UserRequest request = new UserRequest();
         request.setName(name);
         request.setEmail(email);
         request.setPhone(phone);
         request.setPassword(password);
+        request.setGender(gender);
+        request.setDateOfBirth(dateOfBirth);
         return request;
     }
 
@@ -76,6 +80,22 @@ public class UserRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getOtp() {

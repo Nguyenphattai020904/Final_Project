@@ -41,8 +41,6 @@
         <activity android:name=".Fragments.ChatBotFragment"/>
         <activity android:name=".API_Controls.RetrofitClient"/>
         <activity android:name=".API_Controls.ApiService"/>
-        <activity android:name=".API_Requests.GeminiRequest"/>
-        <activity android:name=".API_Reponse.GeminiResponse"/>
         <activity android:name=".API_Reponse.ProductResponse"/>
         <activity android:name=".Products.Product"/>
         <activity android:name=".Products.ProductAdapter"/>
@@ -60,5 +58,12 @@
         <activity android:name=".Fragments.CartManager"/>
         <activity android:name=".Fragments.PaymentFragment"/>
         <activity android:name=".API_Reponse.OrderStatusResponse"/>
+        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".OrderHistoryActivity"/>
+        <activity android:name=".OrderDetailActivity"/>
+        <activity android:name=".OrderHistoryAdapter"/>
+        <activity android:name=".OrderDetailAdapter"/>
+        <activity android:name=".API_Reponse.OrderDetailResponse"/>
+        <activity android:name=".CheckoutActivity"/>
     </application>
 </manifest>
