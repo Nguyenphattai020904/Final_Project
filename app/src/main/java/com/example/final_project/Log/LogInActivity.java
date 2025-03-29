@@ -112,26 +112,37 @@ public class LogInActivity extends AppCompatActivity {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String token = response.body().getToken();
-                    String fullname = response.body().getFullname();
+                    String userId = response.body().getUserId();
+                    UserResponse.UserDetails userDetails = response.body().getUserDetails();
 
-                    Log.d("LoginDebug", "Token from API: " + token); // Kiểm tra token từ API
-                    Log.d("LoginDebug", "Fullname from API: " + fullname);
+                    Log.d("LoginDebug", "Token from API: " + token);
+                    Log.d("LoginDebug", "User ID from API: " + userId);
+                    Log.d("LoginDebug", "User Details: " + (userDetails != null ? userDetails.getName() : "null"));
 
-                    if (token == null || token.isEmpty() || fullname == null || fullname.isEmpty()) {
-                        Log.e("LoginError", "Token or fullname is null or empty");
+                    if (token == null || token.isEmpty() || userId == null || userId.isEmpty()) {
+                        Log.e("LoginError", "Token or userId is null or empty");
                         Toast.makeText(LogInActivity.this, "Đăng nhập thất bại, vui lòng thử lại!", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("access_token", token);
-                    editor.putString("fullname", fullname);
+                    editor.putString("userId", userId);
+                    editor.putString("fullname", userDetails != null ? userDetails.getName() : response.body().getFullname());
+                    if (userDetails != null) {
+                        editor.putString("email", userDetails.getEmail());
+                        editor.putString("phone", userDetails.getPhone());
+                        editor.putString("gender", userDetails.getGender());
+                        editor.putString("dateOfBirth", userDetails.getDateOfBirth());
+                    }
                     editor.putBoolean("isLoggedIn", true);
                     editor.apply();
 
-                    // Kiểm tra xem token có được lưu không
+                    // Kiểm tra xem token và userId có được lưu không
                     String savedToken = sharedPreferences.getString("access_token", null);
+                    String savedUserId = sharedPreferences.getString("userId", null);
                     Log.d("LoginDebug", "Token saved in SharedPreferences: " + savedToken);
+                    Log.d("LoginDebug", "UserId saved in SharedPreferences: " + savedUserId);
 
                     startActivity(new Intent(LogInActivity.this, MainActivity.class));
                     finish();
@@ -187,20 +198,51 @@ public class LogInActivity extends AppCompatActivity {
                         }
 
                         String fullName = user.getDisplayName() != null ? user.getDisplayName() : "User";
+                        String email = user.getEmail();
 
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("access_token", idToken); // Lưu Firebase token
-                        editor.putString("fullname", fullName);
-                        editor.putBoolean("isLoggedIn", true);
-                        editor.apply();
+                        // Gọi API để lấy hoặc tạo userId dựa trên email
+                        ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
+                        UserRequest userRequest = new UserRequest();
+                        userRequest.setEmail(email);
+                        userRequest.setName(fullName);
 
-                        // Kiểm tra token đã lưu
-                        String savedToken = sharedPreferences.getString("access_token", null);
-                        Log.d("GoogleLogin", "Token saved in SharedPreferences: " + savedToken);
-                        Log.d("GoogleLogin", "Đăng nhập Google thành công: " + fullName);
+                        apiService.registerUser(userRequest).enqueue(new Callback<UserResponse>() {
+                            @Override
+                            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                                if (response.isSuccessful() && response.body() != null) {
+                                    String userId = response.body().getUserId();
+                                    String token = response.body().getToken();
 
-                        startActivity(new Intent(LogInActivity.this, MainActivity.class));
-                        finish();
+                                    if (userId == null || userId.isEmpty()) {
+                                        Toast.makeText(LogInActivity.this, "Không thể lấy userId!", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("access_token", token != null ? token : idToken);
+                                    editor.putString("userId", userId);
+                                    editor.putString("fullname", fullName);
+                                    editor.putBoolean("isLoggedIn", true);
+                                    editor.apply();
+
+                                    String savedToken = sharedPreferences.getString("access_token", null);
+                                    String savedUserId = sharedPreferences.getString("userId", null);
+                                    Log.d("GoogleLogin", "Token saved in SharedPreferences: " + savedToken);
+                                    Log.d("GoogleLogin", "UserId saved in SharedPreferences: " + savedUserId);
+                                    Log.d("GoogleLogin", "Đăng nhập Google thành công: " + fullName);
+
+                                    startActivity(new Intent(LogInActivity.this, MainActivity.class));
+                                    finish();
+                                } else {
+                                    Toast.makeText(LogInActivity.this, "Không thể đăng ký user Google!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<UserResponse> call, Throwable t) {
+                                Toast.makeText(LogInActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
                         Log.e("GoogleLogin", "Firebase authentication failed");
                         Toast.makeText(this, "Xác thực với Firebase thất bại!", Toast.LENGTH_SHORT).show();

@@ -10,51 +10,78 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
 import com.example.final_project.Log.LogInActivity;
+import com.example.final_project.OrderHistoryActivity;
+import com.example.final_project.ProfileActivity;
 import com.example.final_project.R;
 
 public class ProfileFragment extends Fragment {
     private TextView txtFullName;
     private Button btnLogout;
+    private LinearLayout btnShowInfo, btnPurchaseHistory;
     private SharedPreferences sharedPreferences;
+
+    private ActivityResultLauncher<Intent> profileActivityLauncher;
 
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        // Retrieve fullname from SharedPreferences
+        profileActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK) {
+                        updateFullName();
+                    }
+                }
+        );
+
         sharedPreferences = requireActivity().getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
-        String fullName = sharedPreferences.getString("fullname", "User"); // Fallback to "User" if null
-        Log.d("ProfileFragment", "Retrieved Fullname: " + fullName);
 
-        // Display fullname
         txtFullName = view.findViewById(R.id.txt_full_name);
-        txtFullName.setText(fullName);
+        updateFullName();
 
-        // Logout button handling
+        btnShowInfo = view.findViewById(R.id.btn_show_info);
+        btnShowInfo.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ProfileActivity.class);
+            profileActivityLauncher.launch(intent);
+        });
+
+        // Purchase History button handling
+        btnPurchaseHistory = view.findViewById(R.id.btn_purchase_history);
+        btnPurchaseHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), OrderHistoryActivity.class);
+            startActivity(intent);
+        });
+
         btnLogout = view.findViewById(R.id.btn_log_out);
         btnLogout.setOnClickListener(v -> logoutUser());
 
         return view;
     }
 
+    private void updateFullName() {
+        String fullName = sharedPreferences.getString("fullname", "User");
+        Log.d("ProfileFragment", "Retrieved Fullname: " + fullName);
+        txtFullName.setText("Hello, " + fullName);
+    }
 
     private void logoutUser() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear(); // Clear all user-related data
+        editor.clear();
         editor.apply();
 
-        // Navigate back to the login screen
         Intent intent = new Intent(getActivity(), LogInActivity.class);
         startActivity(intent);
         requireActivity().finish();
     }
-
 }
-
-

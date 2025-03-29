@@ -4,54 +4,54 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/back_ground">
-
-    <!-- Title -->
+    android:background="#F5F5F5">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order Details"
+        android:text="Order History Detail"
         android:textSize="22sp"
         android:textStyle="bold"
         android:layout_gravity="center" />
 
-    <!-- Order ID -->
+    <!-- Order Information -->
     <TextView
         android:id="@+id/tvDetailOrderId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Order ID: #123456"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginTop="12dp"
-        android:textColor="#333333"/>
+        android:textColor="#333333"
+        android:layout_marginBottom="8dp" />
 
-    <!-- Order Date -->
-    <TextView
-        android:id="@+id/tvDetailOrderDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Order Date: 20/03/2025"
-        android:textSize="14sp"
-        android:textColor="#666666"
-        android:layout_marginTop="4dp"/>
 
-    <!-- Product List -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewOrderProducts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"/>
-
-    <!-- Total Price -->
     <TextView
         android:id="@+id/tvDetailTotalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total: ₫128,745"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textColor="#FF5722"
         android:textStyle="bold"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginBottom="16dp" />
 
+    <!-- Reorder Button -->
+
+    <!-- Product List -->
+    <Button
+        android:id="@+id/btnReorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#FF5722"
+        android:text="Buy Again"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewOrderProducts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>

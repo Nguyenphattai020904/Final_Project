@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,12 +21,18 @@ import com.example.final_project.API_Reponse.UserResponse;
 import com.example.final_project.API_Requests.UserRequest;
 import com.example.final_project.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText edtFullName, edtEmail, edtPhone, edtPassword, edtConfirmPassword;
+    private EditText edtFullName, edtEmail, edtPhone, edtPassword, edtConfirmPassword, edtDateOfBirth;
+    private RadioGroup rgGender;
+    private RadioButton rbMale, rbFemale;
     private Button btnRegister, btnBackToLogin;
 
     @SuppressLint("MissingInflatedId")
@@ -39,6 +47,10 @@ public class RegisterActivity extends AppCompatActivity {
         edtPhone = findViewById(R.id.edt_phone);
         edtPassword = findViewById(R.id.edt_password);
         edtConfirmPassword = findViewById(R.id.edt_confirm_password);
+        edtDateOfBirth = findViewById(R.id.edt_date_of_birth);
+        rgGender = findViewById(R.id.rg_gender);
+        rbMale = findViewById(R.id.rb_male);
+        rbFemale = findViewById(R.id.rb_female);
         btnRegister = findViewById(R.id.btn_register);
         btnBackToLogin = findViewById(R.id.btn_back_to_login);
 
@@ -51,6 +63,9 @@ public class RegisterActivity extends AppCompatActivity {
         // Toggle password visibility
         setupPasswordVisibility(edtPassword);
         setupPasswordVisibility(edtConfirmPassword);
+
+        // Date picker for date of birth
+        edtDateOfBirth.setOnClickListener(v -> showDatePicker());
 
         // Register action
         btnRegister.setOnClickListener(v -> {
@@ -88,6 +103,22 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    private void showDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+        new android.app.DatePickerDialog(
+                this,
+                (view, year, month, dayOfMonth) -> {
+                    Calendar selectedDate = Calendar.getInstance();
+                    selectedDate.set(year, month, dayOfMonth);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    edtDateOfBirth.setText(sdf.format(selectedDate.getTime()));
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        ).show();
+    }
+
     private void registerUser() {
         Log.d("RegisterActivity", "Inside registerUser");
 
@@ -96,41 +127,42 @@ public class RegisterActivity extends AppCompatActivity {
         String phone = edtPhone.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
         String confirmPassword = edtConfirmPassword.getText().toString().trim();
+        String dateOfBirth = edtDateOfBirth.getText().toString().trim();
+        String gender = rgGender.getCheckedRadioButtonId() == R.id.rb_male ? "Male" : "Female";
 
-// Input validations
-        if (fullName.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        // Input validations
+        if (fullName.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || dateOfBirth.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-// Validate email format
+        // Validate email format
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "Email không hợp lệ!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-// Validate phone number format (digits only)
+        // Validate phone number format (digits only)
         if (!phone.matches("\\d+")) {
             Toast.makeText(this, "Số điện thoại không hợp lệ!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-// Validate password length
+        // Validate password length
         if (password.length() < 8) {
             Toast.makeText(this, "Mật khẩu phải chứa ít nhất 8 ký tự!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-// Validate password confirmation
+        // Validate password confirmation
         if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "Mật khẩu xác nhận không khớp!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-
         Log.d("RegisterActivity", "Creating API call");
 
-        UserRequest request = UserRequest.createRegistrationRequest(fullName, email, phone, password);
+        UserRequest request = UserRequest.createRegistrationRequest(fullName, email, phone, password, gender, dateOfBirth);
         ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
         Call<UserResponse> call = apiService.registerUser(request);
 

@@ -1,44 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="150dp"
+    android:orientation="horizontal"
     android:padding="16dp"
     android:background="#FFFFFF"
-    android:layout_marginBottom="8dp"
-    android:gravity="center_horizontal">
+    android:layout_marginBottom="8dp">
 
-    <!-- Order ID -->
-    <TextView
-        android:id="@+id/tvOrderId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Order ID: #123456"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#333333"
-        android:gravity="center"/>
+    <!-- Product Image -->
+    <ImageView
+        android:id="@+id/ivFirstProduct"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img" />
 
-    <!-- Order Date -->
-    <TextView
-        android:id="@+id/tvOrderDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Order Date: 20/03/2025"
-        android:textSize="14sp"
-        android:textColor="#666666"
-        android:layout_marginTop="6dp"
-        android:gravity="center"/>
+    <!-- Information Section -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="16dp">
 
-    <!-- Order Total Price -->
-    <TextView
-        android:id="@+id/tvOrderTotal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Total: ₫128,745"
-        android:textSize="16sp"
-        android:textColor="#FF5722"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        android:gravity="center"/>
+        <!-- Order ID -->
+        <TextView
+            android:id="@+id/tvOrderId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order ID: #123456"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Order Date -->
+        <TextView
+            android:id="@+id/tvOrderDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order Date: 20/03/2025"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Order Total Price -->
+        <TextView
+            android:id="@+id/tvOrderTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: ₫128,745"
+            android:textSize="16sp"
+            android:textColor="#FF5722"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Reorder Button -->
+        <Button
+            android:id="@+id/btnReorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buy Again"
+            android:textSize="14sp"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF"
+            android:paddingHorizontal="16dp" />
+    </LinearLayout>
 </LinearLayout>
