@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import com.example.final_project.AddressManagementActivity;
 import com.example.final_project.Log.LogInActivity;
 import com.example.final_project.OrderHistoryActivity;
 import com.example.final_project.ProfileActivity;
@@ -26,7 +27,7 @@ import com.example.final_project.R;
 public class ProfileFragment extends Fragment {
     private TextView txtFullName;
     private Button btnLogout;
-    private LinearLayout btnShowInfo, btnPurchaseHistory;
+    private LinearLayout btnShowInfo, btnPurchaseHistory, btnShippingAddress;
     private SharedPreferences sharedPreferences;
 
     private ActivityResultLauncher<Intent> profileActivityLauncher;
@@ -56,10 +57,16 @@ public class ProfileFragment extends Fragment {
             profileActivityLauncher.launch(intent);
         });
 
-        // Purchase History button handling
         btnPurchaseHistory = view.findViewById(R.id.btn_purchase_history);
         btnPurchaseHistory.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), OrderHistoryActivity.class);
+            startActivity(intent);
+        });
+
+        // Thêm sự kiện cho Shipping Address
+        btnShippingAddress = view.findViewById(R.id.btn_shipping_address); // Đặt ID cho LinearLayout
+        btnShippingAddress.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AddressManagementActivity.class);
             startActivity(intent);
         });
 

@@ -3,68 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="8dp"
     android:background="@color/white"
-    android:elevation="2dp"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="8dp"
+    android:elevation="2dp">
 
-    <!-- Address Information -->
+    <TextView
+        android:id="@+id/txt_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/black" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="end"
+        android:layout_marginTop="8dp">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/txt_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="123 Street, City, Country"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/txt_address_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Home - Default Address"
-                android:textSize="14sp"
-                android:textColor="@color/gray"
-                android:layout_marginTop="4dp"/>
-        </LinearLayout>
-
-        <!-- Action Buttons -->
-        <LinearLayout
+        <Button
+            android:id="@+id/btn_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:paddingTop="4dp">
+            android:text="Edit"
+            android:textSize="14sp"
+            android:backgroundTint="@color/green_smoke"
+            android:textColor="@color/white" />
 
-            <ImageButton
-                android:id="@+id/btn_edit"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/edit"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_marginStart="8dp"
-                />
-
-            <ImageButton
-                android:id="@+id/btn_delete"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/delete"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_marginStart="8dp"
-                />
-        </LinearLayout>
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:textSize="14sp"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/white"
+            android:layout_marginStart="8dp" />
     </LinearLayout>
 </LinearLayout>

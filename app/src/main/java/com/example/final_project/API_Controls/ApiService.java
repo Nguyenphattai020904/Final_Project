@@ -10,7 +10,13 @@ import com.example.final_project.API_Reponse.UserResponse;
 import com.example.final_project.API_Requests.ChatRequest;
 import com.example.final_project.API_Requests.OrderRequest;
 import com.example.final_project.API_Requests.UserRequest;
+import com.example.final_project.Address;
+import com.example.final_project.District;
 import com.example.final_project.Products.Product;
+import com.example.final_project.Province;
+import com.example.final_project.Ward;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -79,4 +85,19 @@ public interface ApiService {
     // Lấy chi tiết đơn hàng
     @GET("/order/detail/{orderId}")
     Call<OrderDetailResponse> getOrderDetails(@Header("Authorization") String token, @Path("orderId") String orderId);
+
+    @GET("api/address/provinces")
+    Call<List<Province>> getProvinces();
+
+    @GET("api/address/districts/{provinceCode}")
+    Call<List<District>> getDistricts(@Path("provinceCode") int provinceCode);
+
+    @GET("api/address/wards/{districtCode}")
+    Call<List<Ward>> getWards(@Path("districtCode") int districtCode);
+
+    @GET("api/address/user/{userId}")
+    Call<List<Address>> getUserAddresses(@Path("userId") int userId);
+
+    @POST("api/address/save")
+    Call<Void> saveAddress(@Body Address address);
 }
