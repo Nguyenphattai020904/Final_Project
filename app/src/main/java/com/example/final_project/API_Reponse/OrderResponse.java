@@ -2,7 +2,7 @@ package com.example.final_project.API_Reponse;
 
 public class OrderResponse {
     private String message;
-    private int orderId;
+    private int pendingOrderId;
     private double total_price;
     private String zaloPay_url;
 
@@ -10,8 +10,8 @@ public class OrderResponse {
         return message;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public int getPendingOrderId() {
+        return pendingOrderId;
     }
 
     public double getTotalPrice() {

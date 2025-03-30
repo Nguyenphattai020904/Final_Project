@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/back_ground">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add/Edit Address"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/green_smoke"
+        android:layout_marginBottom="16dp" />
+
+    <Spinner
+        android:id="@+id/spinner_province"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border_edit_text"
+        android:layout_marginBottom="10dp" />
+
+    <Spinner
+        android:id="@+id/spinner_district"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border_edit_text"
+        android:layout_marginBottom="10dp" />
+
+    <Spinner
+        android:id="@+id/spinner_ward"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border_edit_text"
+        android:layout_marginBottom="10dp" />
+
+    <EditText
+        android:id="@+id/edt_street_address"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border_edit_text"
+        android:hint="Enter street and house number"
+        android:inputType="textPostalAddress"
+        android:textColor="@color/black"
+        android:padding="12dp"
+        android:layout_marginBottom="15dp" />
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/green_smoke" />
+</LinearLayout>

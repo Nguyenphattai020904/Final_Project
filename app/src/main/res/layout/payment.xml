@@ -18,35 +18,7 @@
             android:text="Payment Information"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Danh sách sản phẩm -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Order Items:"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginBottom="8dp" />
-
-        <LinearLayout
-            android:id="@+id/order_items_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Tổng chi phí -->
-        <TextView
-            android:id="@+id/txt_total_cost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total Cost: 0 VND"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="@color/green_smoke"
             android:layout_marginBottom="16dp" />
 
         <!-- Full Name -->
@@ -66,28 +38,97 @@
             android:background="@drawable/border_edit_text"
             android:hint="Enter your full name"
             android:inputType="textPersonName"
+            android:textColor="@color/black"
             android:padding="12dp"
             android:layout_marginBottom="15dp" />
 
-        <!-- Address -->
+        <!-- Saved Address Dropdown and Add New Address Button -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Shipping Address:"
+            android:text="Select Saved Address:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_marginBottom="5dp" />
 
-        <EditText
-            android:id="@+id/edt_address"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/border_edit_text"
-            android:hint="Enter shipping address"
-            android:inputType="textPostalAddress"
-            android:padding="12dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
+
+            <Spinner
+                android:id="@+id/spinner_saved_address"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_edit_text" />
+
+            <Button
+                android:id="@+id/btn_add_new_address"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="Add New"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/green_smoke"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- New Address Input (Hidden if Saved Address is Selected) -->
+        <LinearLayout
+            android:id="@+id/new_address_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="New Shipping Address:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="5dp" />
+
+            <!-- Province Dropdown -->
+            <Spinner
+                android:id="@+id/spinner_province"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/border_edit_text"
+                android:layout_marginBottom="10dp" />
+
+            <!-- District Dropdown -->
+            <Spinner
+                android:id="@+id/spinner_district"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/border_edit_text"
+                android:layout_marginBottom="10dp" />
+
+            <!-- Ward Dropdown -->
+            <Spinner
+                android:id="@+id/spinner_ward"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/border_edit_text"
+                android:layout_marginBottom="10dp" />
+
+            <!-- Street Address -->
+            <EditText
+                android:id="@+id/edt_street_address"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/border_edit_text"
+                android:hint="Enter street and house number"
+                android:inputType="textPostalAddress"
+                android:textColor="@color/black"
+                android:padding="12dp"
+                android:layout_marginBottom="15dp" />
+        </LinearLayout>
 
         <!-- Phone Number -->
         <TextView
@@ -105,11 +146,12 @@
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
             android:hint="Enter phone number"
+            android:textColor="@color/black"
             android:inputType="phone"
             android:padding="12dp"
             android:layout_marginBottom="20dp" />
 
-        <!-- Payment method -->
+        <!-- Payment Method -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -142,6 +184,36 @@
                 android:textSize="16sp"
                 android:textColor="@color/black" />
         </RadioGroup>
+
+        <!-- Order Items -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginBottom="8dp"
+            android:text="Order Items:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/order_items_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Total Cost -->
+        <TextView
+            android:id="@+id/txt_total_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="16dp"
+            android:text="Total Cost: 0 VND"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <!-- Confirm Order Button -->
         <Button

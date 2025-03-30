@@ -6,20 +6,27 @@
     android:padding="16dp"
     android:background="@color/back_ground">
 
-    <!-- Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order History"
-        android:textColor="@color/green_smoke"
+        android:text="Shipping Addresses"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:layout_gravity="center" />
+        android:textColor="@color/green_smoke"
+        android:layout_marginBottom="16dp" />
 
-    <!-- Order List -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewOrders"
+        android:id="@+id/recycler_view_addresses"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/btn_add_new_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"/>
+        android:text="Add New Address"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/green_smoke"
+        android:layout_marginTop="16dp" />
 </LinearLayout>

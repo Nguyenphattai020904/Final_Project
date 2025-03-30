@@ -19,6 +19,7 @@
             android:id="@+id/txt_full_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/green_smoke"
             android:text="TextView"
             android:textSize="20sp"
             android:textStyle="bold|italic" />
@@ -74,26 +75,28 @@
                 android:background="@color/gray" />
 
             <!-- Shipping Address -->
+            <!-- Trong phần Personal Information -->
             <LinearLayout
+                android:id="@+id/btn_shipping_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/address" />
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/address" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Shipping Address"
-                    android:layout_marginStart="12dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/black" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shipping Address"
+                android:layout_marginStart="12dp"
+                android:textSize="14sp"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -222,7 +225,7 @@
             android:layout_height="wrap_content"
             android:text="Log Out"
             android:textColor="@color/white"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/green_smoke"
             android:layout_marginTop="8dp"
             android:drawablePadding="8dp"
             android:paddingVertical="14dp"

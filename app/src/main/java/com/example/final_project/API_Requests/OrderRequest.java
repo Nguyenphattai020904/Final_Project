@@ -72,7 +72,7 @@ public class OrderRequest {
             try {
                 this.productId = Integer.parseInt(productId);
             } catch (NumberFormatException e) {
-                this.productId = 0; // Giá trị mặc định nếu parse thất bại
+                this.productId = 0;
             }
             this.quantity = quantity;
         }

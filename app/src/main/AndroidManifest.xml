@@ -65,5 +65,12 @@
         <activity android:name=".OrderDetailAdapter"/>
         <activity android:name=".API_Reponse.OrderDetailResponse"/>
         <activity android:name=".CheckoutActivity"/>
+        <activity android:name=".Address"/>
+        <activity android:name=".Province"/>
+        <activity android:name=".District"/>
+        <activity android:name=".Ward"/>
+        <activity android:name=".AddressManagementActivity"/>
+        <activity android:name=".AddressAdapter"/>
+        <activity android:name=".AddEditAddressActivity"/>
     </application>
 </manifest>

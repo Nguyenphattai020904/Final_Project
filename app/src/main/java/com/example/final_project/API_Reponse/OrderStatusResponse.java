@@ -6,4 +6,8 @@ public class OrderStatusResponse {
     public String getPaymentStatus() {
         return payment_status;
     }
+
+    public void setPaymentStatus(String payment_status) {
+        this.payment_status = payment_status;
+    }
 }
