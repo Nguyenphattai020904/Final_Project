@@ -8,6 +8,7 @@ import com.example.final_project.API_Reponse.OrderStatusResponse;
 import com.example.final_project.API_Reponse.ProductResponse;
 import com.example.final_project.API_Reponse.UserResponse;
 import com.example.final_project.API_Requests.ChatRequest;
+import com.example.final_project.API_Requests.FeedbackRequest;
 import com.example.final_project.API_Requests.OrderRequest;
 import com.example.final_project.API_Requests.UserRequest;
 import com.example.final_project.Address;
@@ -20,6 +21,9 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -100,4 +104,10 @@ public interface ApiService {
 
     @POST("api/address/save")
     Call<Void> saveAddress(@Body Address address);
+
+    @DELETE("api/address/{addressId}")
+    Call<Void> deleteAddress(@Path("addressId") int addressId);
+
+    @POST("api/feedback/save")
+    Call<Void> sendFeedback(@Body FeedbackRequest request);
 }

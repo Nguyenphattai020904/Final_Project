@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
 import com.example.final_project.AddressManagementActivity;
+import com.example.final_project.FeedbackActivity; // Thêm import
 import com.example.final_project.Log.LogInActivity;
 import com.example.final_project.OrderHistoryActivity;
 import com.example.final_project.ProfileActivity;
@@ -27,7 +28,7 @@ import com.example.final_project.R;
 public class ProfileFragment extends Fragment {
     private TextView txtFullName;
     private Button btnLogout;
-    private LinearLayout btnShowInfo, btnPurchaseHistory, btnShippingAddress;
+    private LinearLayout btnShowInfo, btnPurchaseHistory, btnShippingAddress, btnFeedback; // Thêm btnFeedback
     private SharedPreferences sharedPreferences;
 
     private ActivityResultLauncher<Intent> profileActivityLauncher;
@@ -63,10 +64,16 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
         });
 
-        // Thêm sự kiện cho Shipping Address
-        btnShippingAddress = view.findViewById(R.id.btn_shipping_address); // Đặt ID cho LinearLayout
+        btnShippingAddress = view.findViewById(R.id.btn_shipping_address);
         btnShippingAddress.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), AddressManagementActivity.class);
+            startActivity(intent);
+        });
+
+        // Thêm sự kiện cho Feedback / Contact
+        btnFeedback = view.findViewById(R.id.btn_feedback);
+        btnFeedback.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), FeedbackActivity.class);
             startActivity(intent);
         });
 

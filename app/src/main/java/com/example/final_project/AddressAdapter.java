@@ -1,6 +1,5 @@
 package com.example.final_project;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,17 @@ import java.util.List;
 
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressViewHolder> {
     private List<Address> addressList;
-    private final OnEditClickListener editClickListener;
-    private final OnDeleteClickListener deleteClickListener;
+    private final OnAddressActionListener editListener;
+    private final OnAddressActionListener deleteListener;
 
-    public AddressAdapter(List<Address> addressList, OnEditClickListener editClickListener, OnDeleteClickListener deleteClickListener) {
+    public interface OnAddressActionListener {
+        void onAddressAction(Address address);
+    }
+
+    public AddressAdapter(List<Address> addressList, OnAddressActionListener editListener, OnAddressActionListener deleteListener) {
         this.addressList = addressList;
-        this.editClickListener = editClickListener;
-        this.deleteClickListener = deleteClickListener;
+        this.editListener = editListener;
+        this.deleteListener = deleteListener;
     }
 
     @NonNull
@@ -34,8 +37,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     public void onBindViewHolder(@NonNull AddressViewHolder holder, int position) {
         Address address = addressList.get(position);
         holder.txtAddress.setText(address.toString());
-        holder.btnEdit.setOnClickListener(v -> editClickListener.onEdit(address));
-        holder.btnDelete.setOnClickListener(v -> deleteClickListener.onDelete(address));
+        holder.btnEdit.setOnClickListener(v -> editListener.onAddressAction(address));
+        holder.btnDelete.setOnClickListener(v -> deleteListener.onAddressAction(address));
     }
 
     @Override
@@ -47,20 +50,11 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         TextView txtAddress;
         Button btnEdit, btnDelete;
 
-        @SuppressLint("WrongViewCast")
-        public AddressViewHolder(@NonNull View itemView) {
+        AddressViewHolder(@NonNull View itemView) {
             super(itemView);
             txtAddress = itemView.findViewById(R.id.txt_address);
             btnEdit = itemView.findViewById(R.id.btn_edit);
             btnDelete = itemView.findViewById(R.id.btn_delete);
         }
-    }
-
-    interface OnEditClickListener {
-        void onEdit(Address address);
-    }
-
-    interface OnDeleteClickListener {
-        void onDelete(Address address);
     }
 }

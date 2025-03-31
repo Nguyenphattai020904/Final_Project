@@ -18,7 +18,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_addresses"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1" /> <!-- Sử dụng layout_weight để chia sẻ không gian -->
 
     <Button
         android:id="@+id/btn_add_new_address"

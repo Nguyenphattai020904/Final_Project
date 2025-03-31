@@ -72,5 +72,7 @@
         <activity android:name=".AddressManagementActivity"/>
         <activity android:name=".AddressAdapter"/>
         <activity android:name=".AddEditAddressActivity"/>
+        <activity android:name=".FeedbackActivity"/>
+        <activity android:name=".API_Requests.FeedbackRequest"/>
     </application>
 </manifest>
