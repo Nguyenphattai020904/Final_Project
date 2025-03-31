@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contact Us"
+        android:textColor="@color/green_smoke"
         android:textSize="22sp"
         android:textStyle="bold"
         android:layout_gravity="center" />
@@ -27,24 +28,30 @@
 
         <!-- Email -->
         <TextView
+            android:id="@+id/tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email: support@yourshop.com"
+            android:text="Email: freshfoodtuoisach2025@gmail.com"
             android:textSize="16sp"
-            android:textColor="#333333"
+            android:textColor="@color/red"
             android:drawableLeft="@drawable/ic_email"
-            android:drawablePadding="8dp"/>
+            android:drawablePadding="8dp"
+            android:clickable="true"
+            android:focusable="true" />
 
         <!-- Phone -->
         <TextView
+            android:id="@+id/tv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Phone: +84 123 456 789"
+            android:text="Phone: 0916303763"
             android:textSize="16sp"
-            android:textColor="#333333"
+            android:textColor="@color/red"
             android:drawableLeft="@drawable/ic_phone"
             android:drawablePadding="8dp"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:focusable="true" />
     </LinearLayout>
 
     <!-- Feedback Message -->
@@ -55,6 +62,7 @@
         android:hint="Write your feedback here..."
         android:background="@android:drawable/edit_text"
         android:gravity="top|start"
+        android:textColor="@color/black"
         android:padding="12dp"
         android:layout_marginTop="16dp"/>
 
@@ -66,7 +74,7 @@
         android:text="Send"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/green_smoke"
         android:textColor="#FFFFFF"
         android:layout_marginTop="12dp"/>
 </LinearLayout>

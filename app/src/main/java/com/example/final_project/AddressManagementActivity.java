@@ -56,7 +56,7 @@ public class AddressManagementActivity extends AppCompatActivity {
             finish();
             return;
         }
-        Call<List<Address>> call = apiService.getUserAddresses(Integer.parseInt(userId)); // Chuyển thành int nếu API yêu cầu
+        Call<List<Address>> call = apiService.getUserAddresses(Integer.parseInt(userId));
         call.enqueue(new Callback<List<Address>>() {
             @Override
             public void onResponse(Call<List<Address>> call, Response<List<Address>> response) {
@@ -65,7 +65,7 @@ public class AddressManagementActivity extends AppCompatActivity {
                     addressList.addAll(response.body());
                     addressAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(AddressManagementActivity.this, "Lỗi tải địa chỉ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddressManagementActivity.this, "Lỗi tải địa chỉ: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -84,8 +84,25 @@ public class AddressManagementActivity extends AppCompatActivity {
     }
 
     private void onDeleteAddress(Address address) {
-        // Logic xóa địa chỉ (cần thêm API endpoint để xóa)
-        Toast.makeText(this, "Chức năng xóa chưa được triển khai", Toast.LENGTH_SHORT).show();
+        ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
+        Call<Void> call = apiService.deleteAddress(address.getId());
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    addressList.remove(address);
+                    addressAdapter.notifyDataSetChanged();
+                    Toast.makeText(AddressManagementActivity.this, "Xóa địa chỉ thành công", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AddressManagementActivity.this, "Lỗi khi xóa địa chỉ: " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(AddressManagementActivity.this, "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
