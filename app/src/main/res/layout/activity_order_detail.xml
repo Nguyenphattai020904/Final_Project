@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order Details"
+        android:text="Chi tiết đơn hàng"
         android:textSize="22sp"
         android:textStyle="bold"
         android:layout_gravity="center" />
@@ -20,7 +20,7 @@
         android:id="@+id/tvDetailOrderId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order ID: #123456"
+        android:text="Mã đơn hàng: #123456"
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_marginTop="12dp"
@@ -31,7 +31,7 @@
         android:id="@+id/tvDetailOrderDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order Date: 20/03/2025"
+        android:text="Ngày đặt hàng: 20/03/2025"
         android:textSize="14sp"
         android:textColor="#666666"
         android:layout_marginTop="4dp"/>
@@ -48,7 +48,7 @@
         android:id="@+id/tvDetailTotalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total: ₫128,745"
+        android:text="Tổng cộng: ₫128,745"
         android:textSize="18sp"
         android:textColor="#FF5722"
         android:textStyle="bold"

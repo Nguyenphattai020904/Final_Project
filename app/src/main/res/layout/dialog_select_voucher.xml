@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select a Voucher"
+        android:text="Chọn một Voucher"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_gravity="center"/>
@@ -27,7 +27,7 @@
         android:id="@+id/btnApplyVoucher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Apply"
+        android:text="Áp dụng"
         android:backgroundTint="@color/green_smoke"
         android:textColor="#FFFFFF"
         android:layout_marginTop="12dp"/>

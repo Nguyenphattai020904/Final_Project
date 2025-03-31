@@ -10,7 +10,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Contact Us"
+        android:text="Liên hệ với chúng tôi"
+        android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
         android:layout_gravity="center" />
@@ -29,9 +30,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email: support@yourshop.com"
+            android:text="Email: freshfoodtuoisach2025@gmail.com"
             android:textSize="16sp"
-            android:textColor="#333333"
+            android:textColor="@color/black"
             android:drawableLeft="@drawable/ic_email"
             android:drawablePadding="8dp"/>
 
@@ -39,9 +40,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Phone: +84 123 456 789"
+            android:text="SĐT: +84 123 456 789"
             android:textSize="16sp"
-            android:textColor="#333333"
+            android:textColor="@color/black"
             android:drawableLeft="@drawable/ic_phone"
             android:drawablePadding="8dp"
             android:layout_marginTop="8dp"/>
@@ -52,7 +53,7 @@
         android:id="@+id/etMessage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:hint="Write your feedback here..."
+        android:hint="Viết phản hồi của bạn ở đây..."
         android:background="@android:drawable/edit_text"
         android:gravity="top|start"
         android:padding="12dp"
@@ -63,7 +64,7 @@
         android:id="@+id/btnSendFeedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send"
+        android:text="Gửi"
         android:textSize="16sp"
         android:textStyle="bold"
         android:backgroundTint="@color/black"

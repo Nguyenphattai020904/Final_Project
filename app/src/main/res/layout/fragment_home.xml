@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:background="@drawable/search_bar_background"
             android:drawablePadding="8dp"
-            android:hint="Search by name, category, or main category"
+            android:hint="Tìm kiếm theo tên hoặc danh mục"
             android:inputType="text"
             android:padding="10dp"
             android:textSize="14sp" />
@@ -101,7 +101,7 @@
                     android:layout_margin="4dp"
                     android:backgroundTint="@color/green_smoke"
                     android:paddingHorizontal="8dp"
-                    android:text="Fresh Food"
+                    android:text="Thực phẩm tươi"
                     android:textColor="@color/yellow"
                     android:textSize="13sp"
                     app:cornerRadius="16dp" />
@@ -110,7 +110,7 @@
                     android:id="@+id/btn_drinks"
                     android:layout_width="wrap_content"
                     android:layout_height="70dp"
-                    android:text="Drinks"
+                    android:text="Nước "
                     android:textSize="13sp"
                     android:textColor="@color/yellow"
                     android:backgroundTint="@color/green_smoke"
@@ -125,7 +125,7 @@
                     android:layout_margin="4dp"
                     android:backgroundTint="@color/green_smoke"
                     android:paddingHorizontal="8dp"
-                    android:text="Dry Food"
+                    android:text="Thực phẩm khô"
                     android:textColor="@color/yellow"
                     android:textSize="13sp"
                     app:cornerRadius="16dp" />
@@ -134,7 +134,7 @@
                     android:id="@+id/btn_spice"
                     android:layout_width="wrap_content"
                     android:layout_height="70dp"
-                    android:text="Spices"
+                    android:text="Gia vị"
                     android:textSize="13sp"
                     android:textColor="@color/yellow"
                     android:backgroundTint="@color/green_smoke"
@@ -155,7 +155,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="All products"
+            android:text="Tất cả sản phẩm"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/red"

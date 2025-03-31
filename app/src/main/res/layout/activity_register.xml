@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Full Name:"
+            android:text="Họ tên:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
-            android:hint="Enter your full name"
+            android:hint="Nhập họ tên"
             android:inputType="textPersonName"
             android:padding="12dp"
             android:layout_marginBottom="15dp" />
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
-            android:hint="Enter your email"
+            android:hint="Nhập email của bạn"
             android:inputType="textEmailAddress"
             android:padding="12dp"
             android:layout_marginBottom="15dp" />
@@ -65,7 +65,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Phone Number:"
+            android:text="SĐT:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
-            android:hint="Enter your phonenumber"
+            android:hint="Nhập SĐT"
             android:inputType="text"
             android:padding="12dp"
             android:layout_marginBottom="15dp" />
@@ -85,7 +85,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Password:"
+            android:text="Mật khẩu:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -96,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
-            android:hint="Enter your password"
+            android:hint="Nhập mật khẩu"
             android:inputType="textPassword"
             android:drawableEnd="@drawable/ic_eye"
             android:padding="12dp"
@@ -106,7 +106,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Confirm Password:"
+            android:text="Xác nhận mật khẩu:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -117,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
-            android:hint="Re-enter your password"
+            android:hint="Nhập lại mật khẩu của bạn"
             android:drawableEnd="@drawable/ic_eye"
             android:inputType="textPassword"
             android:padding="12dp"
@@ -129,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:backgroundTint="@color/green_smoke"
-            android:text="Register"
+            android:text="Dăng ký"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -141,7 +141,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:backgroundTint="@color/black"
-            android:text="Back to Log In"
+            android:text="Quay lại đăng nhập"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/white" />

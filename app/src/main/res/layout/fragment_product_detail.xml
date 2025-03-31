@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:backgroundTint="@color/green_smoke"
-        android:text="Add to Cart"
+        android:text="Thêm vào giỏ hàng"
         android:textColor="@color/yellow"
         android:textSize="16sp"
         android:textStyle="bold" />

@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Payment Information"
+            android:text="Thông tin thanh toán"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Order Items:"
+            android:text="Danh sách sản phẩm:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -43,7 +43,7 @@
             android:id="@+id/txt_total_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Cost: 0 VND"
+            android:text="Tổng chi phí: 0 VND"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -53,7 +53,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Full Name:"
+            android:text="Họ tên:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
-            android:hint="Enter your full name"
+            android:hint="Nhập họ tên"
             android:inputType="textPersonName"
             android:padding="12dp"
             android:layout_marginBottom="15dp" />
@@ -73,7 +73,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Shipping Address:"
+            android:text="Địa chỉ giao hàng:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -84,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
-            android:hint="Enter shipping address"
+            android:hint="Nhập địa chỉ giao hàng"
             android:inputType="textPostalAddress"
             android:padding="12dp"
             android:layout_marginBottom="15dp" />
@@ -93,7 +93,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Phone Number:"
+            android:text="SĐT:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -104,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
-            android:hint="Enter phone number"
+            android:hint="Nhập SĐT"
             android:inputType="phone"
             android:padding="12dp"
             android:layout_marginBottom="20dp" />
@@ -113,7 +113,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Payment Method:"
+            android:text="Phương thức thanh toán:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -130,7 +130,7 @@
                 android:id="@+id/rb_cod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cash on Delivery"
+                android:text="Thanh toán khi nhận hàng"
                 android:textSize="16sp"
                 android:textColor="@color/black" />
 
@@ -149,7 +149,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:backgroundTint="@color/green_smoke"
-            android:text="Confirm Order"
+            android:text="Xác nhận đơn hàng"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -161,7 +161,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:backgroundTint="@color/black"
-            android:text="Cancel"
+            android:text="Huỷ bỏ"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/white" />

@@ -19,7 +19,7 @@
         android:id="@+id/empty_cart_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="There are no products available."
+        android:text="Không có sản phẩm nào có sẵn."
         android:textSize="20sp"
         android:textColor="@color/gray"
         android:gravity="center"
