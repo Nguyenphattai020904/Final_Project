@@ -36,8 +36,8 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     public void onBindViewHolder(@NonNull OrderItemViewHolder holder, int position) {
         OrderDetailResponse.OrderItem item = items.get(position);
         holder.tvProductName.setText(item.getProductName()); // Hiển thị productName thay vì productId
-        holder.tvQuantity.setText("Quantity: " + item.getQuantity());
-        holder.tvPrice.setText("Price: " + formatPrice(item.getPrice()));
+        holder.tvQuantity.setText("Số lượng: " + item.getQuantity());
+        holder.tvPrice.setText("Giá: " + formatPrice(item.getPrice()));
 
         // Load ảnh sản phẩm
         if (item.getImage() != null && !item.getImage().isEmpty()) {

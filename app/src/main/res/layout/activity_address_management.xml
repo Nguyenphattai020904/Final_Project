@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/back_ground">
@@ -9,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shipping Addresses"
+        android:text="Địa chỉ giao hàng"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/green_smoke"
@@ -25,9 +26,10 @@
         android:id="@+id/btn_add_new_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add New Address"
+        android:text="Thêm địa chỉ mới"
         android:textSize="16sp"
         android:textColor="@color/white"
         android:backgroundTint="@color/green_smoke"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        app:cornerRadius="10dp"/>
 </LinearLayout>

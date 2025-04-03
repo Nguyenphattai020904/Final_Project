@@ -1,4 +1,5 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,19 +9,17 @@
     app:cardElevation="0dp"
     app:cardUseCompatPadding="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:orientation="vertical"
-        android:background="@color/green_smoke"
+        android:background="@drawable/border"
         android:padding="12dp">
 
         <!-- Hình ảnh sản phẩm -->
         <ImageView
             android:id="@+id/product_image"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:background="@drawable/img"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
             android:contentDescription="Product Image"
             android:scaleType="centerCrop" />
 
@@ -29,38 +28,65 @@
             android:id="@+id/product_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/product_image"
             android:layout_marginTop="8dp"
-            android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="Product Name"
-            android:textColor="@color/yellow"
-            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
-        <!-- Giá sản phẩm -->
+        <!-- Giá gốc (màu xám) -->
+        <TextView
+            android:id="@+id/original_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/product_name"
+            android:layout_marginTop="4dp"
+            android:text="0 VND"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <!-- Giá sau giảm -->
         <TextView
             android:id="@+id/product_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="4dp"
-            android:text="0VND"
-            android:textColor="@color/yellow"
-            android:textSize="15sp"
+            android:layout_below="@id/original_price"
+            android:text="0 VND"
+            android:textColor="@color/red"
+            android:textSize="14sp"
             android:textStyle="bold" />
+
+        <!-- Tag giảm giá -->
+        <TextView
+            android:id="@+id/discount_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/discount_tag_background"
+            android:padding="4dp"
+            android:text="-10%"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <!-- Nút thêm vào giỏ hàng -->
         <Button
             android:id="@+id/add_to_cart_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginTop="8dp"
-            android:backgroundTint="@color/back_ground"
-            android:text="Add"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+            android:backgroundTint="@color/green_smoke"
+            android:text="Thêm"
+            android:textColor="@color/yellow"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp" />
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

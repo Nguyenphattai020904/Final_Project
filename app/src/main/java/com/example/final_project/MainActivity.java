@@ -3,6 +3,7 @@ package com.example.final_project;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import com.example.final_project.Fragments.CartFragment;
 import com.example.final_project.Fragments.ChatBotFragment;
 import com.example.final_project.Fragments.DiscountFragment;
 import com.example.final_project.Fragments.HomeFragment;
+import com.example.final_project.Fragments.PaymentFragment;
 import com.example.final_project.Fragments.ProfileFragment;
 import com.example.final_project.Log.LogInActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -107,6 +109,16 @@ public class MainActivity extends AppCompatActivity {
             cartBadge.setNumber(itemCount);
         } else {
             cartBadge.setVisible(false);
+        }
+    }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null && intent.getData() != null && "myapp".equals(intent.getData().getScheme())) {
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            if (fragment instanceof PaymentFragment) {
+                ((PaymentFragment) fragment).checkPaymentStatus();
+            }
         }
     }
 }

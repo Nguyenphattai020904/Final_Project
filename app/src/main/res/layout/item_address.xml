@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="8dp"
     android:background="@color/white"
@@ -26,19 +27,21 @@
             android:id="@+id/btn_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit"
+            android:text="Chỉnh sửa"
             android:textSize="14sp"
             android:backgroundTint="@color/green_smoke"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            app:cornerRadius="10dp"/>
 
         <Button
             android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete"
+            android:text="Xóa"
             android:textSize="14sp"
             android:backgroundTint="@color/red"
             android:textColor="@color/white"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            app:cornerRadius="10dp"/>
     </LinearLayout>
 </LinearLayout>

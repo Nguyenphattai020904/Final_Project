@@ -38,7 +38,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         OrderListResponse.OrderItem order = orders.get(position);
-        holder.tvOrderId.setText("Order #" + order.getOrderId());
+        holder.tvOrderId.setText("Mã đơn hàng: " + order.getOrderId());
         holder.tvOrderDate.setText(order.getOrderDate());
         holder.tvOrderTotal.setText(String.valueOf(order.getTotalPrice()));
 

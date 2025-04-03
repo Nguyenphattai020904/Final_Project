@@ -128,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
         String password = edtPassword.getText().toString().trim();
         String confirmPassword = edtConfirmPassword.getText().toString().trim();
         String dateOfBirth = edtDateOfBirth.getText().toString().trim();
-        String gender = rgGender.getCheckedRadioButtonId() == R.id.rb_male ? "Male" : "Female";
+        String gender = rgGender.getCheckedRadioButtonId() == R.id.rb_male ? "Nam" : "Nữ";
 
         // Input validations
         if (fullName.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || dateOfBirth.isEmpty()) {

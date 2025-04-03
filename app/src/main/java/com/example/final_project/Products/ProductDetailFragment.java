@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 
 public class ProductDetailFragment extends Fragment {
     private ImageView productImage;
-    private TextView productName, productPrice, productBrand, productCategory, productIngredients, productNutrients, productMainCategory;
+    private TextView productName, productPrice, productBrand, productCategory, productIngredients, productNutrients, productMainCategory, discountTag;
     private Button addToCartButton;
 
     @Override
@@ -34,17 +34,25 @@ public class ProductDetailFragment extends Fragment {
         productIngredients = view.findViewById(R.id.detail_product_ingredients);
         productNutrients = view.findViewById(R.id.detail_product_nutrients);
         productMainCategory = view.findViewById(R.id.detail_product_main_category);
+        discountTag = view.findViewById(R.id.detail_discount_tag);
         addToCartButton = view.findViewById(R.id.add_to_cart_button);
 
         Product product = (Product) getArguments().getSerializable("product");
         if (product != null) {
             productName.setText(product.getName());
-            productPrice.setText(String.format("%.0f VND", product.getPrice()));
-            productBrand.setText("Brand: " + (product.getBrand() != null ? product.getBrand() : "N/A"));
-            productCategory.setText("Category: " + (product.getCategory() != null ? product.getCategory() : "N/A"));
-            productIngredients.setText("Ingredients: " + (product.getIngredients() != null ? product.getIngredients() : "N/A"));
-            productNutrients.setText("Nutrients: " + (product.getNutrients() != null ? product.getNutrients() : "N/A"));
-            productMainCategory.setText("Main Category: " + (product.getMainCategory() != null ? product.getMainCategory() : "N/A"));
+            productPrice.setText(String.format("%.0f VND", product.getFinalPrice()));
+            productBrand.setText("Thương hiệu: " + (product.getBrand() != null ? product.getBrand() : "N/A"));
+            productCategory.setText("Loại sản phẩm: " + (product.getCategory() != null ? product.getCategory() : "N/A"));
+            productIngredients.setText("Thành phần: " + (product.getIngredients() != null ? product.getIngredients() : "N/A"));
+            productNutrients.setText("Dinh dưỡng: " + (product.getNutrients() != null ? product.getNutrients() : "N/A"));
+            productMainCategory.setText("Phân loại sản phẩm chính: " + (product.getMainCategory() != null ? product.getMainCategory() : "N/A"));
+
+            if (product.getDiscount() != null && product.getDiscount() > 0) {
+                discountTag.setVisibility(View.VISIBLE);
+                discountTag.setText(String.format("-%d%%", Math.round(product.getDiscount())));
+            } else {
+                discountTag.setVisibility(View.GONE);
+            }
 
             String imageUrl = product.getImages();
             if (imageUrl != null && !imageUrl.isEmpty()) {
@@ -62,16 +70,16 @@ public class ProductDetailFragment extends Fragment {
             }
 
             addToCartButton.setOnClickListener(v -> {
-                CartManager.getInstance().addToCart(product);
+                // Truyền Context vào CartManager.getInstance()
+                CartManager.getInstance(getContext()).addToCart(new Product(product.getProductId(), product.getName(), product.getFinalPrice(), product.getImages()));
                 Toast.makeText(getContext(), "Đã thêm " + product.getName() + " vào giỏ hàng", Toast.LENGTH_SHORT).show();
 
-                // Cập nhật badge
                 MainActivity activity = (MainActivity) getActivity();
                 if (activity != null) {
-                    activity.updateCartBadge(CartManager.getInstance().getCartSize());
+                    // Truyền Context vào CartManager.getInstance()
+                    activity.updateCartBadge(CartManager.getInstance(getContext()).getCartSize());
                 }
 
-                // Cập nhật CartFragment nếu đang hiển thị
                 CartFragment cartFragment = (CartFragment) getActivity().getSupportFragmentManager().findFragmentByTag("CartFragment");
                 if (cartFragment != null && cartFragment.isVisible()) {
                     cartFragment.updateCartFromManager();

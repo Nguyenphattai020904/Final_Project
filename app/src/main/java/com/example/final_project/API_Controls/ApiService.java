@@ -1,23 +1,29 @@
 package com.example.final_project.API_Controls;
 
 import com.example.final_project.API_Reponse.ChatResponse;
+import com.example.final_project.API_Reponse.NotificationResponse;
 import com.example.final_project.API_Reponse.OrderDetailResponse;
 import com.example.final_project.API_Reponse.OrderListResponse;
 import com.example.final_project.API_Reponse.OrderResponse;
 import com.example.final_project.API_Reponse.OrderStatusResponse;
 import com.example.final_project.API_Reponse.ProductResponse;
+import com.example.final_project.API_Reponse.UnreadCountResponse;
 import com.example.final_project.API_Reponse.UserResponse;
+import com.example.final_project.API_Reponse.VoucherResponse;
 import com.example.final_project.API_Requests.ChatRequest;
 import com.example.final_project.API_Requests.FeedbackRequest;
 import com.example.final_project.API_Requests.OrderRequest;
 import com.example.final_project.API_Requests.UserRequest;
+import com.example.final_project.API_Requests.VoucherRequest;
 import com.example.final_project.Address;
 import com.example.final_project.District;
 import com.example.final_project.Products.Product;
 import com.example.final_project.Province;
+import com.example.final_project.Voucher;
 import com.example.final_project.Ward;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -68,7 +74,7 @@ public interface ApiService {
     @POST("api/chat/ask-ai")
     Call<ChatResponse> sendChatMessage(@Header("Authorization") String token, @Body ChatRequest request);
 
-    @GET("products/{id}")
+    @GET("/api/products/{id}")
     Call<Product> getProductById(@Header("Authorization") String token, @Path("id") int productId);
 
     // Lấy danh sách sản phẩm
@@ -79,7 +85,7 @@ public interface ApiService {
     @POST("/order/create")
     Call<OrderResponse> createOrder(@Header("Authorization") String token, @Body OrderRequest request);
 
-    @GET("/order-status/{orderId}")
+    @GET("/order/order-status/{orderId}")
     Call<OrderStatusResponse> checkOrderStatus(@Path("orderId") int orderId);
 
     // Lấy danh sách đơn hàng
@@ -110,4 +116,22 @@ public interface ApiService {
 
     @POST("api/feedback/save")
     Call<Void> sendFeedback(@Body FeedbackRequest request);
+
+    @GET("api/vouchers/{user_id}")
+    Call<List<Voucher>> getVouchers(@Path("user_id") int userId);
+
+    @POST("api/vouchers/apply")
+    Call<VoucherResponse> applyVoucher(@Body VoucherRequest voucherRequest);
+
+    @POST("/order/calculate-total")
+    Call<Map<String, Double>> calculateTotal(@Header("Authorization") String token, @Body Map<String, Object> request);
+
+    @GET("notifications/{userId}")
+    Call<NotificationResponse> getNotifications(@Path("userId") int userId, @Header("Authorization") String token);
+
+    @GET("notifications/unread-count/{userId}")
+    Call<UnreadCountResponse> getUnreadCount(@Path("userId") int userId, @Header("Authorization") String token);
+
+    @DELETE("notifications/{id}")
+    Call<Void> deleteNotification(@Path("id") int id, @Header("Authorization") String token);
 }

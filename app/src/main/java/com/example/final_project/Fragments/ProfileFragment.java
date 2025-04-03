@@ -28,8 +28,9 @@ import com.example.final_project.R;
 public class ProfileFragment extends Fragment {
     private TextView txtFullName;
     private Button btnLogout;
-    private LinearLayout btnShowInfo, btnPurchaseHistory, btnShippingAddress, btnFeedback; // Thêm btnFeedback
+    private LinearLayout btnShowInfo, btnPurchaseHistory, btnShippingAddress, btnFeedback, btnVouchers; // Thêm btnFeedback
     private SharedPreferences sharedPreferences;
+
 
     private ActivityResultLauncher<Intent> profileActivityLauncher;
 
@@ -77,6 +78,15 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
         });
 
+        btnVouchers = view.findViewById(R.id.btn_vouchers);
+        btnVouchers.setOnClickListener(v -> {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new VoucherFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         btnLogout = view.findViewById(R.id.btn_log_out);
         btnLogout.setOnClickListener(v -> logoutUser());
 
@@ -86,7 +96,7 @@ public class ProfileFragment extends Fragment {
     private void updateFullName() {
         String fullName = sharedPreferences.getString("fullname", "User");
         Log.d("ProfileFragment", "Retrieved Fullname: " + fullName);
-        txtFullName.setText("Hello, " + fullName);
+        txtFullName.setText("Xin chào, " + fullName);
     }
 
     private void logoutUser() {

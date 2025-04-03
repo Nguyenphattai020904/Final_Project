@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/back_ground">
@@ -15,6 +16,10 @@
         android:textStyle="bold"
         android:paddingBottom="10dp"
         android:textColor="@color/black" />
+
+
+
+
 
     <!-- Vùng chứa tin nhắn -->
     <LinearLayout
@@ -56,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:hint="Type a message..."
+            android:hint="Nhập tin nhắn..."
             android:textColor="@color/black"
             android:textSize="16sp"
             android:padding="8dp" />
@@ -67,7 +72,6 @@
             android:layout_height="48dp"
             android:background="@android:color/transparent"
             android:src="@drawable/baseline_send_24"
-            android:tint="@color/green_smoke"
             android:contentDescription="Send Message" />
     </LinearLayout>
 
@@ -76,9 +80,10 @@
         android:id="@+id/clean_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Clean Messages"
+        android:text="Xóa lịch sử tin nhắn"
         android:backgroundTint="@color/green_smoke"
         android:textColor="@color/white"
         android:layout_marginTop="8dp"
-        android:elevation="4dp"/>
+        android:elevation="4dp"
+        app:cornerRadius="10dp"/>
 </LinearLayout>

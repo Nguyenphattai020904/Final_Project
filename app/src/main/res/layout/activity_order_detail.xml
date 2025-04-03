@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="#F2FAE0">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order History Detail"
+        android:text="Chi tiết lịch sử đơn hàng"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/green_smoke"
@@ -19,7 +20,7 @@
         android:id="@+id/tvDetailOrderId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order ID: #123456"
+        android:text="Mã đơn hàng: #123456"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="#333333"
@@ -30,7 +31,7 @@
         android:id="@+id/tvDetailTotalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total: ₫128,745"
+        android:text="Tổng giá tiền: ₫128,745"
         android:textSize="16sp"
         android:textColor="#FF5722"
         android:textStyle="bold"
@@ -38,6 +39,13 @@
 
     <!-- Reorder Button -->
 
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewOrderProducts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
     <!-- Product List -->
     <Button
         android:id="@+id/btnReorder"
@@ -46,13 +54,8 @@
         android:layout_gravity="end"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#FF5722"
-        android:text="Buy Again"
+        android:text="Mua lại"
         android:textColor="#FFFFFF"
-        android:textSize="16sp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewOrderProducts"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:textSize="16sp"
+        app:cornerRadius="10dp"/>
 </LinearLayout>

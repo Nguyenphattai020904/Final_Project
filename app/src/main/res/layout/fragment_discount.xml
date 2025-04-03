@@ -1,35 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/back_ground"
-    android:padding="16dp">
+    android:background="@color/back_ground">
 
-    <!-- Search Bar -->
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
+    <!-- Header -->
+    <LinearLayout
+        android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search voucher..."
-        android:background="@color/white"
-        android:layout_marginTop="8dp"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="12dp"
+        android:background="@color/green_smoke"
+        android:elevation="4dp">
 
-    <!-- Title -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Vouchers"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@color/back_ground"
-        android:layout_gravity="center"/>
+        <ImageButton
+            android:id="@+id/menu_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:contentDescription="Menu"
+            android:src="@drawable/ic_menu"
+            android:layout_marginEnd="8dp" />
 
-    <!-- RecyclerView hiển thị danh sách voucher -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewVouchers"
+        <EditText
+            android:id="@+id/search_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="@drawable/search_bar_background"
+            android:drawablePadding="8dp"
+            android:hint="Tìm kiếm sản phẩm giảm giá"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Search"
+            android:src="@drawable/ic_search" />
+
+        <FrameLayout
+            android:id="@+id/frame_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp">
+
+
+
+            <TextView
+                android:id="@+id/tvNotificationBadge"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end|top"
+                android:background="@drawable/badge_background"
+                android:text="3"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/back_ground"
-        android:layout_marginTop="12dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_discount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/back_ground"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="true"
+                android:paddingHorizontal="4dp"
+                android:paddingBottom="16dp"
+                android:scrollbars="vertical" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

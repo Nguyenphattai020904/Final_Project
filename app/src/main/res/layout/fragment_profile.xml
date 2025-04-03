@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/back_ground"
     android:padding="16dp">
 
@@ -27,7 +28,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Personal Information"
+            android:text="Thông tin cá nhân"
             android:textStyle="bold"
             android:textSize="16sp"
             android:paddingVertical="12dp"
@@ -63,7 +64,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Show Detail Information"
+                    android:text="Chi tiết thông tin cá nhân"
                     android:layout_marginStart="12dp"
                     android:textSize="14sp"
                     android:textColor="@color/black" />
@@ -92,7 +93,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shipping Address"
+                android:text="Địa chỉ giao hàng đã lưu"
                 android:layout_marginStart="12dp"
                 android:textSize="14sp"
                 android:textColor="@color/black" />
@@ -120,7 +121,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Purchase History"
+                    android:text="Lịch sử đơn hàng"
                     android:layout_marginStart="12dp"
                     android:textSize="14sp"
                     android:textColor="@color/black" />
@@ -131,7 +132,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Accumulation"
+            android:text="Thu thập"
             android:textStyle="bold"
             android:textSize="16sp"
             android:paddingVertical="12dp"
@@ -151,6 +152,7 @@
 
             <!-- My Vouchers -->
             <LinearLayout
+                android:id="@+id/btn_vouchers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -165,7 +167,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Vouchers"
+                    android:text="Vouchers giảm giá"
                     android:layout_marginStart="12dp"
                     android:textSize="14sp"
                     android:textColor="@color/black" />
@@ -177,7 +179,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Customer Support"
+            android:text="Chăm sóc khách hàng"
             android:textStyle="bold"
             android:textSize="16sp"
             android:paddingVertical="12dp"
@@ -212,7 +214,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Feedback / Contact"
+                    android:text="Đánh giá / Liên hệ"
                     android:layout_marginStart="12dp"
                     android:textSize="14sp"
                     android:textColor="@color/black" />
@@ -224,13 +226,14 @@
             android:id="@+id/btn_log_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log Out"
+            android:text="Đăng xuất"
             android:textColor="@color/white"
             android:backgroundTint="@color/green_smoke"
             android:layout_marginTop="8dp"
             android:drawablePadding="8dp"
             android:paddingVertical="14dp"
             android:textSize="16sp"
-            android:gravity="center" />
+            android:gravity="center"
+            app:cornerRadius="10dp"/>
     </LinearLayout>
 </ScrollView>

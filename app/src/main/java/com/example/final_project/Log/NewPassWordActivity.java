@@ -6,6 +6,7 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,7 +39,6 @@ public class NewPassWordActivity extends AppCompatActivity {
         btnSetNewPassword = findViewById(R.id.btn_set_new_password);
         btnBackToLogin = findViewById(R.id.btn_back_to_login);
 
-        // Retrieve email passed from the previous activity
         email = getIntent().getStringExtra("email");
         if (email == null || email.isEmpty()) {
             Toast.makeText(this, "Email không hợp lệ!", Toast.LENGTH_SHORT).show();
@@ -58,17 +58,26 @@ public class NewPassWordActivity extends AppCompatActivity {
 
     private void handlePasswordVisibility(EditText editText) {
         editText.setOnTouchListener((v, event) -> {
-            final int DRAWABLE_RIGHT = 2; // Index for the right drawable
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            final int DRAWABLE_RIGHT = 2;
+            if (event.getAction() == MotionEvent.ACTION_UP) {
                 if (event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                    editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    if (editText.getTransformationMethod() instanceof PasswordTransformationMethod) {
+                        editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    } else {
+                        editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    }
+                    editText.setSelection(editText.getText().length()); // Giữ con trỏ ở cuối
                     return true;
                 }
-            } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                return true;
             }
-            return false;
+            return false; // Không chặn sự kiện bàn phím
+        });
+
+        // Đảm bảo EditText có thể nhận focus
+        editText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                editText.post(() -> editText.requestFocus());
+            }
         });
     }
 
@@ -76,7 +85,6 @@ public class NewPassWordActivity extends AppCompatActivity {
         String newPassword = edtNewPassword.getText().toString().trim();
         String confirmNewPassword = edtConfirmNewPassword.getText().toString().trim();
 
-        // Validate input
         if (newPassword.isEmpty() || confirmNewPassword.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập mật khẩu mới!", Toast.LENGTH_SHORT).show();
             return;
@@ -87,38 +95,27 @@ public class NewPassWordActivity extends AppCompatActivity {
             return;
         }
 
-        // Log password change request for debugging
         Log.d("NewPasswordActivity", "Email: " + email + ", New Password: " + newPassword);
 
-        // Create UserRequest object
         UserRequest resetRequest = UserRequest.createPasswordResetRequest(email, newPassword);
-
-        // Initialize Retrofit
         ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
 
-        // Log the request to ensure fields are populated correctly
         Log.d("NewPasswordActivity", "Request Payload: " + new Gson().toJson(resetRequest));
 
-        // Make API call
         apiService.updatePassword(resetRequest).enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     UserResponse userResponse = response.body();
-
-                    // Check if the response contains success message or status code indicating success
                     if ("Password updated successfully".equals(userResponse.getMessage())) {
-                        // Password update was successful
                         Toast.makeText(NewPassWordActivity.this, "Mật khẩu đã được thay đổi thành công!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(NewPassWordActivity.this, LogInActivity.class));
                         finish();
                     } else {
-                        // Handle failure response
                         Toast.makeText(NewPassWordActivity.this, "Cập nhật mật khẩu thất bại: " + userResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         Log.e("SetNewPassword", "Backend Error: " + userResponse.getMessage());
                     }
                 } else {
-                    // Handle API error response
                     try {
                         String errorResponse = response.errorBody().string();
                         Log.e("SetNewPassword", "Error Response: " + errorResponse);
@@ -130,9 +127,6 @@ public class NewPassWordActivity extends AppCompatActivity {
                 }
             }
 
-
-
-
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 Toast.makeText(NewPassWordActivity.this, "Lỗi kết nối API!", Toast.LENGTH_SHORT).show();
@@ -140,5 +134,4 @@ public class NewPassWordActivity extends AppCompatActivity {
             }
         });
     }
-
 }

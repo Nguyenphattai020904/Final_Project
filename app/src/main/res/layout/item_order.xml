@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="Order ID: #123456"
+            android:text="Mã đơn hàng: #123456"
             android:textColor="#333333"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="Order Date: 20/03/2025"
+            android:text="Ngày: 20/03/2025"
             android:textColor="#666666"
             android:textSize="14sp" />
 
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginBottom="8dp"
-            android:text="Total: ₫128,745"
+            android:text="Tổng: ₫128,745"
             android:textColor="#FF5722"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -65,8 +65,9 @@
             android:layout_gravity="right"
             android:backgroundTint="#4CAF50"
             android:paddingHorizontal="16dp"
-            android:text="Buy Again"
+            android:text="Mua lại"
             android:textColor="#FFFFFF"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:cornerRadius="10dp"/>
     </LinearLayout>
 </LinearLayout>

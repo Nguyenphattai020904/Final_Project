@@ -64,8 +64,8 @@ public class OrderDetailActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     OrderDetailResponse.Order order = response.body().getOrder();
 
-                    tvDetailOrderId.setText("Order ID: #" + order.getOrderId());
-                    tvDetailTotalPrice.setText("Total: " + formatPrice(order.getTotalPrice()));
+                    tvDetailOrderId.setText("Mã đơn hàng: " + order.getOrderId());
+                    tvDetailTotalPrice.setText("Tổng giá: " + formatPrice(order.getTotalPrice()));
 
                     orderDetailAdapter = new OrderDetailAdapter(order.getItems());
                     recyclerViewOrderProducts.setAdapter(orderDetailAdapter);

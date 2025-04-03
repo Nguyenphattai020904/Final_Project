@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/back_ground"
     android:padding="16dp">
 
@@ -35,6 +36,7 @@
         android:textColor="@android:color/white"
         android:backgroundTint="@color/green_smoke"
         android:layout_marginTop="12dp"
-        android:layout_below="@id/list_address"/>
+        android:layout_below="@id/list_address"
+        app:cornerRadius="10dp"/>
 
 </RelativeLayout>
