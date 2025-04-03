@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,9 +22,10 @@ import java.util.List;
 
 public class CartFragment extends Fragment implements CartAdapter.OnQuantityChangeListener {
     private RecyclerView recyclerView;
-    private CartAdapter cartAdapter; // Vẫn giữ private
+    private CartAdapter cartAdapter;
     private TextView emptyCartMessage;
     private Button buyNowButton;
+    private CheckBox selectAllCheckBox;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,13 +34,19 @@ public class CartFragment extends Fragment implements CartAdapter.OnQuantityChan
         recyclerView = view.findViewById(R.id.cart_recycler_view);
         emptyCartMessage = view.findViewById(R.id.empty_cart_message);
         buyNowButton = view.findViewById(R.id.btnBuyNow);
+        selectAllCheckBox = view.findViewById(R.id.checkbox_select_all);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        cartAdapter = new CartAdapter(getContext(), CartManager.getInstance().getCartItems(), this);
+        cartAdapter = new CartAdapter(getContext(), CartManager.getInstance(getContext()).getCartItems(), this);
         recyclerView.setAdapter(cartAdapter);
 
         int spacingInPx = Math.round(5 * getResources().getDisplayMetrics().density);
         recyclerView.addItemDecoration(new CartAdapter.ItemSpacingDecoration(spacingInPx));
+
+        selectAllCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            cartAdapter.selectAll(isChecked);
+            cartAdapter.notifyDataSetChanged();
+        });
 
         updateCartUI();
 
@@ -47,11 +55,25 @@ public class CartFragment extends Fragment implements CartAdapter.OnQuantityChan
             if (selectedItems.isEmpty()) {
                 Toast.makeText(getContext(), "Vui lòng chọn ít nhất một sản phẩm để thanh toán", Toast.LENGTH_SHORT).show();
             } else {
+                // Tạo PaymentFragment và truyền selectedItems qua Bundle
+                PaymentFragment paymentFragment = new PaymentFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("selectedItems", new ArrayList<>(selectedItems));
+                paymentFragment.setArguments(bundle);
+
+                // Chuyển sang PaymentFragment
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, new PaymentFragment())
+                        .replace(R.id.fragment_container, paymentFragment)
                         .addToBackStack(null)
                         .commit();
+
+                // Xóa các sản phẩm đã chọn khỏi giỏ hàng
+                for (Product item : selectedItems) {
+                    CartManager.getInstance(getContext()).removeItem(item);
+                }
+                cartAdapter.notifyDataSetChanged();
+                updateCartUI();
             }
         });
 
@@ -59,7 +81,7 @@ public class CartFragment extends Fragment implements CartAdapter.OnQuantityChan
     }
 
     public void addToCart(Product product) {
-        CartManager.getInstance().addToCart(product);
+        CartManager.getInstance(getContext()).addToCart(product);
         cartAdapter.notifyDataSetChanged();
         updateCartUI();
     }
@@ -70,16 +92,22 @@ public class CartFragment extends Fragment implements CartAdapter.OnQuantityChan
     }
 
     private void updateCartUI() {
-        if (CartManager.getInstance().getCartItems().isEmpty()) {
+        List<Product> cartItems = CartManager.getInstance(getContext()).getCartItems();
+        if (cartItems.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
             emptyCartMessage.setVisibility(View.VISIBLE);
             buyNowButton.setVisibility(View.GONE);
+            selectAllCheckBox.setVisibility(View.GONE);
         } else {
             recyclerView.setVisibility(View.VISIBLE);
             emptyCartMessage.setVisibility(View.GONE);
             buyNowButton.setVisibility(View.VISIBLE);
+            selectAllCheckBox.setVisibility(View.VISIBLE);
         }
+        cartAdapter.notifyDataSetChanged();
         updateCartBadge();
+
+        updateSelectAllCheckBox();
     }
 
     @Override
@@ -87,15 +115,35 @@ public class CartFragment extends Fragment implements CartAdapter.OnQuantityChan
         updateCartUI();
     }
 
+    @Override
+    public void onSelectionChanged() {
+        updateSelectAllCheckBox();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateCartUI();
+    }
+
     private void updateCartBadge() {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
-            activity.updateCartBadge(CartManager.getInstance().getCartSize());
+            activity.updateCartBadge(CartManager.getInstance(getContext()).getCartSize());
         }
     }
 
-    // Thêm phương thức công khai để lấy danh sách sản phẩm được chọn
     public List<Product> getSelectedItems() {
         return cartAdapter != null ? cartAdapter.getSelectedItems() : new ArrayList<>();
+    }
+
+    public void updateSelectAllCheckBox() {
+        List<Product> cartItems = CartManager.getInstance(getContext()).getCartItems();
+        List<Product> selectedItems = cartAdapter.getSelectedItems();
+        if (cartItems.isEmpty()) {
+            selectAllCheckBox.setChecked(false);
+        } else {
+            selectAllCheckBox.setChecked(selectedItems.size() == cartItems.size());
+        }
     }
 }

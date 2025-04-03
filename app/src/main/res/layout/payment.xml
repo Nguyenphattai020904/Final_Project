@@ -2,8 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/back_ground"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/back_ground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,17 +15,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="16dp"
             android:text="Payment Information"
-            android:textSize="22sp"
-            android:textStyle="bold"
             android:textColor="@color/green_smoke"
-            android:layout_marginBottom="16dp" />
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <!-- Full Name -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Full Name:"
+            android:text="Họ &amp; tên:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -36,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
-            android:hint="Enter your full name"
+            android:hint="Nhập tên người nhận"
             android:inputType="textPersonName"
             android:textColor="@color/black"
             android:padding="12dp"
@@ -46,7 +47,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Saved Address:"
+            android:text="Chọn địa chỉ:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -56,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:textColor="@color/black"
             android:layout_marginBottom="15dp">
 
             <Spinner
@@ -69,11 +71,12 @@
                 android:id="@+id/btn_add_new_address"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="Add New"
+                android:text="Thêm mới"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/green_smoke"
-                android:layout_marginStart="8dp" />
+                android:layout_marginStart="8dp"
+                app:cornerRadius="10dp"/>
         </LinearLayout>
 
         <!-- New Address Input (Hidden if Saved Address is Selected) -->
@@ -134,7 +137,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Phone Number:"
+            android:text="Số điện thoại:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -145,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/border_edit_text"
-            android:hint="Enter phone number"
+            android:hint="Nhập số điện thoại người nhận"
             android:textColor="@color/black"
             android:inputType="phone"
             android:padding="12dp"
@@ -155,7 +158,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Payment Method:"
+            android:text="Phương thức thanh toán:"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -172,7 +175,7 @@
                 android:id="@+id/rb_cod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cash on Delivery"
+                android:text="Thanh toán khi nhận hàng"
                 android:textSize="16sp"
                 android:textColor="@color/black" />
 
@@ -191,7 +194,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginBottom="8dp"
-            android:text="Order Items:"
+            android:text="Sản phẩm:"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -215,17 +218,56 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="5dp"
+            android:text="Chọn Voucher:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinner_vouchers"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/border_edit_text"
+            android:layout_marginBottom="15dp" />
+
+        <TextView
+            android:id="@+id/txt_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="8dp"
+            android:text="Discount: 0 VND"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txt_final_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="16dp"
+            android:text="Final Cost: 0 VND"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <!-- Confirm Order Button -->
         <Button
             android:id="@+id/btn_confirm_order"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:backgroundTint="@color/green_smoke"
-            android:text="Confirm Order"
+            android:text="Xác nhận thanh toán"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            app:cornerRadius="10dp"/>
 
         <!-- Back Button -->
         <Button
@@ -233,10 +275,11 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:backgroundTint="@color/black"
-            android:text="Cancel"
+            android:text="Thoát"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            app:cornerRadius="10dp"/>
 
     </LinearLayout>
 </ScrollView>

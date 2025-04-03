@@ -23,13 +23,17 @@ public class OrderRequest {
     @SerializedName("total_price")
     private double totalPrice;
 
-    public OrderRequest(List<OrderItem> items, String paymentMethod, String name, String phone, String address, double totalPrice) {
+    @SerializedName("voucher_id")
+    private int voucherId; // Thêm trường voucherId
+
+    public OrderRequest(List<OrderItem> items, String paymentMethod, String name, String phone, String address, double totalPrice, int voucherId) {
         this.items = items;
         this.paymentMethod = paymentMethod;
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.totalPrice = totalPrice;
+        this.voucherId = voucherId;
     }
 
     public List<OrderItem> getItems() {
@@ -54,6 +58,10 @@ public class OrderRequest {
 
     public double getTotalPrice() {
         return totalPrice;
+    }
+
+    public int getVoucherId() {
+        return voucherId;
     }
 
     public static class OrderItem {
@@ -103,6 +111,7 @@ public class OrderRequest {
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", totalPrice=" + totalPrice +
+                ", voucherId=" + voucherId +
                 '}';
     }
 }

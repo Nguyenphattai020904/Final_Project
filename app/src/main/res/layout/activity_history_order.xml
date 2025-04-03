@@ -10,11 +10,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order History"
+        android:layout_gravity="start"
+        android:text="Lịch sử đơn hàng"
         android:textColor="@color/green_smoke"
         android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_gravity="center" />
+        android:textStyle="bold" />
 
     <!-- Order List -->
     <androidx.recyclerview.widget.RecyclerView

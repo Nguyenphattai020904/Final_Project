@@ -14,27 +14,44 @@ public class Product implements Serializable {
     private String eco_labels;
     private String weight_volume;
     private String origin;
-    private String images; // URL hoặc chuỗi JSON chứa danh sách ảnh
+    private String images;
     private String environment_data;
     private double price;
-    private int quantity; // Số lượng trong giỏ hàng hoặc tồn kho
+    private Double discount; // Có thể null
+    private double final_price;
+    private int quantity;
     private String created_at;
     private String updated_at;
     private String main_category;
 
-    // Constructor cơ bản cho danh sách sản phẩm
-    public Product(int product_id, String name, double price, String images) {
+    // Constructor cơ bản (dùng chung cho danh sách sản phẩm và giỏ hàng)
+    public Product(int product_id, String name, double priceOrFinalPrice, String images) {
+        this.product_id = product_id;
+        this.name = name;
+        this.price = priceOrFinalPrice; // Giá gốc ban đầu
+        this.final_price = priceOrFinalPrice; // Mặc định final_price = price nếu không có discount
+        this.images = images;
+        this.quantity = 0;
+    }
+
+    // Constructor đầy đủ từ API
+    public Product(int product_id, String name, double price, Double discount, double final_price, String images, String main_category) {
         this.product_id = product_id;
         this.name = name;
         this.price = price;
+        this.discount = discount;
+        this.final_price = final_price;
         this.images = images;
-        this.quantity = 0; // Khởi tạo mặc định là 0
+        this.main_category = main_category;
+        this.quantity = 0;
     }
 
     // Getters
     public int getProductId() { return product_id; }
     public String getName() { return name; }
     public double getPrice() { return price; }
+    public Double getDiscount() { return discount; }
+    public double getFinalPrice() { return final_price; }
     public String getImages() { return images; }
     public String getBrand() { return brand; }
     public String getCategory() { return category; }

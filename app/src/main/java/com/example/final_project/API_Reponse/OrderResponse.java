@@ -1,10 +1,18 @@
 package com.example.final_project.API_Reponse;
 
+import com.google.gson.annotations.SerializedName;
+
 public class OrderResponse {
+    private boolean success;
     private String message;
     private int pendingOrderId;
-    private double total_price;
-    private String zaloPay_url;
+
+    @SerializedName("zaloPayUrl")
+    private String zaloPayUrl;
+
+    public boolean isSuccess() {
+        return success;
+    }
 
     public String getMessage() {
         return message;
@@ -14,11 +22,17 @@ public class OrderResponse {
         return pendingOrderId;
     }
 
-    public double getTotalPrice() {
-        return total_price;
+    public String getZaloPayUrl() {
+        return zaloPayUrl;
     }
 
-    public String getZaloPayUrl() {
-        return zaloPay_url;
+    @Override
+    public String toString() {
+        return "OrderResponse{" +
+                "success=" + success +
+                ", message='" + message + '\'' +
+                ", pendingOrderId=" + pendingOrderId +
+                ", zaloPayUrl='" + zaloPayUrl + '\'' +
+                '}';
     }
 }

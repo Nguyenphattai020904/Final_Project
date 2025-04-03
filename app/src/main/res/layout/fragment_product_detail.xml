@@ -1,20 +1,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/back_ground">
 
-    <!-- Scrollable content -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/add_to_cart_button"
+        android:layout_above="@id/add_to_cart_button"
         android:padding="16dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/detail_product_image"
@@ -23,71 +22,93 @@
                 android:scaleType="centerCrop" />
 
             <TextView
+                android:id="@+id/detail_discount_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/detail_product_image"
+                android:layout_alignEnd="@id/detail_product_image"
+                android:background="@drawable/discount_tag_background"
+                android:padding="4dp"
+                android:text="-10%"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/detail_product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/detail_product_image"
                 android:layout_marginTop="16dp"
-                android:text="Product Name"
+                android:text="Tên sản phẩm:"
+                android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
+
 
             <TextView
                 android:id="@+id/detail_product_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/detail_product_name"
                 android:layout_marginTop="8dp"
                 android:text="0 VND"
-                android:textColor="@color/green_smoke"
+                android:textColor="@color/red"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/detail_product_brand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/detail_product_price"
                 android:layout_marginTop="8dp"
-                android:text="Brand: "
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="Thương hiệu: "
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/detail_product_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/detail_product_brand"
                 android:layout_marginTop="8dp"
-                android:text="Category: "
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="Loại sản phẩm: "
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/detail_product_ingredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/detail_product_category"
                 android:layout_marginTop="8dp"
-                android:text="Ingredients: "
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="Thành phần: "
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/detail_product_nutrients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/detail_product_ingredients"
                 android:layout_marginTop="8dp"
-                android:text="Nutrients: "
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="Chất dinh dưỡng: "
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/detail_product_main_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/detail_product_nutrients"
                 android:layout_marginTop="8dp"
-                android:text="Main Category: "
-                android:textSize="20sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:text="Phân loại chính: "
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </RelativeLayout>
     </ScrollView>
 
-    <!-- Fixed button at the bottom -->
     <Button
         android:id="@+id/add_to_cart_button"
         android:layout_width="match_parent"
@@ -97,5 +118,6 @@
         android:text="Add to Cart"
         android:textColor="@color/yellow"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:cornerRadius="10dp"/>
 </RelativeLayout>

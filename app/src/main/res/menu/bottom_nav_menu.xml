@@ -3,17 +3,17 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
-        android:title="Home"/>
+        android:title="Trang chủ"/>
     <item
         android:id="@+id/nav_discount"
         android:icon="@drawable/ic_discount"
-        android:title="Discount"/>
+        android:title="Giảm giá"/>
     <item
         android:id="@+id/nav_cart"
         android:icon="@drawable/ic_cart"
-        android:title="Cart"/>
+        android:title="Giỏ hàng"/>
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_profile"
-        android:title="Profile"/>
+        android:title="Cá nhân"/>
 </menu>

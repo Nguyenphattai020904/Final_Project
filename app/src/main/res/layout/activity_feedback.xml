@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/back_ground">
@@ -10,11 +11,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Contact Us"
+        android:text="Liên hệ"
         android:textColor="@color/green_smoke"
         android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_gravity="center" />
+        android:textStyle="bold" />
 
     <!-- Contact Information -->
     <LinearLayout
@@ -59,7 +59,7 @@
         android:id="@+id/etMessage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:hint="Write your feedback here..."
+        android:hint="Viết nhận xét của bạn ở đây..."
         android:background="@android:drawable/edit_text"
         android:gravity="top|start"
         android:textColor="@color/black"
@@ -71,10 +71,11 @@
         android:id="@+id/btnSendFeedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send"
+        android:text="Gửi"
         android:textSize="16sp"
         android:textStyle="bold"
         android:backgroundTint="@color/green_smoke"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="12dp"
+        app:cornerRadius="10dp"/>
 </LinearLayout>

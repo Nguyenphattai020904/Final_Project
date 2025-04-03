@@ -1,60 +1,70 @@
 package com.example.final_project.Fragments;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
+
 import com.example.final_project.API_Controls.ApiService;
 import com.example.final_project.API_Controls.RetrofitClient;
 import com.example.final_project.API_Reponse.ProductResponse;
+import com.example.final_project.API_Reponse.UnreadCountResponse;
 import com.example.final_project.Products.CarouselAdapter;
 import com.example.final_project.Products.Product;
 import com.example.final_project.Products.ProductAdapter;
 import com.example.final_project.Products.ProductDetailFragment;
 import com.example.final_project.R;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class HomeFragment extends Fragment implements ProductAdapter.OnProductClickListener {
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
     private List<Product> productList = new ArrayList<>();
     private List<Product> fullProductList = new ArrayList<>();
-    private Button btnFreshFood, btnDrinks, btnDryFood, btnSpice;
-    private Button selectedButton = null;
     private ViewPager2 carouselViewPager;
     private CarouselAdapter carouselAdapter;
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable carouselRunnable;
     private EditText searchEditText;
-    private ImageButton searchButton;
+    private ImageButton searchButton, menuButton, btnNotification;
+    private TextView tvNotificationBadge;
+    private PopupWindow popupWindow;
 
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Khởi tạo RecyclerView
         recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         productAdapter = new ProductAdapter(getContext(), productList, this);
         recyclerView.setAdapter(productAdapter);
 
@@ -62,43 +72,34 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         int spacingInPx = Math.round(spacingInDp * getResources().getDisplayMetrics().density);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(spacingInPx));
 
-        // Khởi tạo các button
-        btnFreshFood = view.findViewById(R.id.btn_fresh_food);
-        btnDrinks = view.findViewById(R.id.btn_drinks);
-        btnDryFood = view.findViewById(R.id.btn_dry_food);
-        btnSpice = view.findViewById(R.id.btn_spice);
-        setupButtonListeners();
-
-        // Khởi tạo ViewPager2 cho carousel
         carouselViewPager = view.findViewById(R.id.carousel_view_pager);
         carouselAdapter = new CarouselAdapter(getContext());
         carouselViewPager.setAdapter(carouselAdapter);
 
-        // Khởi tạo thanh tìm kiếm
         searchEditText = view.findViewById(R.id.search_edit_text);
         searchButton = view.findViewById(R.id.search_button);
+        menuButton = view.findViewById(R.id.menu_button);
+        btnNotification = view.findViewById(R.id.btnNotification);
+        tvNotificationBadge = view.findViewById(R.id.tvNotificationBadge);
+
         setupSearchListener();
+        setupMenuButton();
+        setupNotificationButton();
 
-        // Lấy dữ liệu từ API
         fetchProducts();
-
-        // Thiết lập carousel tự động chạy
         setupCarousel();
 
         return view;
     }
 
-    private void setupButtonListeners() {
-        btnFreshFood.setOnClickListener(v -> filterProducts("Fresh Food", btnFreshFood));
-        btnDrinks.setOnClickListener(v -> filterProducts("Drinks", btnDrinks));
-        btnDryFood.setOnClickListener(v -> filterProducts("Dry Food", btnDryFood));
-        btnSpice.setOnClickListener(v -> filterProducts("Spices", btnSpice));
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateNotificationBadge();
     }
 
     private void setupSearchListener() {
         searchButton.setOnClickListener(v -> performSearch());
-
-        // Tìm kiếm khi nhấn Enter trên bàn phím
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH ||
                     actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE ||
@@ -109,6 +110,54 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
             }
             return false;
         });
+    }
+
+    private void setupMenuButton() {
+        menuButton.setOnClickListener(v -> showCategoryMenu(v));
+    }
+
+    private void setupNotificationButton() {
+        btnNotification.setOnClickListener(v -> {
+            NotificationFragment notificationFragment = new NotificationFragment();
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, notificationFragment)
+                    .addToBackStack(null)
+                    .commit();
+            clearNotificationBadge();
+        });
+    }
+
+    private void showCategoryMenu(View anchorView) {
+        LinearLayout menuLayout = new LinearLayout(getContext());
+        menuLayout.setOrientation(LinearLayout.VERTICAL);
+        menuLayout.setBackgroundColor(Color.WHITE);
+        menuLayout.setPadding(16, 16, 16, 16);
+
+        String[] categories = {"Tất Cả", "Thực Phẩm Tươi", "Đồ Uống", "Thực Phẩm Khô", "Gia Vị"};
+        for (String category : categories) {
+            Button button = new Button(getContext());
+            button.setText(category);
+            button.setTextSize(14);
+            button.setBackgroundTintList(android.content.res.ColorStateList.valueOf(getResources().getColor(R.color.green_smoke)));
+            button.setTextColor(getResources().getColor(R.color.yellow));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 0, 0, 8);
+            button.setLayoutParams(params);
+            button.setOnClickListener(v -> {
+                filterProducts(category, button);
+                popupWindow.dismiss();
+            });
+            menuLayout.addView(button);
+        }
+
+        popupWindow = new PopupWindow(menuLayout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setElevation(8f);
+        popupWindow.showAsDropDown(anchorView, 0, 0, Gravity.START);
     }
 
     private void performSearch() {
@@ -134,14 +183,8 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     }
 
     private void filterProducts(String mainCategory, Button clickedButton) {
-        if (selectedButton != null) {
-            selectedButton.setBackgroundTintList(android.content.res.ColorStateList.valueOf(getResources().getColor(R.color.green_smoke)));
-        }
-        clickedButton.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#4CAF50")));
-        selectedButton = clickedButton;
-
         productList.clear();
-        if (mainCategory.equals("All")) {
+        if (mainCategory.equals("Tất Cả")) {
             productList.addAll(fullProductList);
         } else {
             for (Product product : fullProductList) {
@@ -178,7 +221,6 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     }
 
     private void setupCarousel() {
-        // Tự động chuyển slide mỗi 3 giây
         if (carouselRunnable != null) {
             handler.removeCallbacks(carouselRunnable);
         }
@@ -186,12 +228,45 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
             @Override
             public void run() {
                 int currentItem = carouselViewPager.getCurrentItem();
-                int nextItem = (currentItem + 1) % 5; // Lặp lại sau 5 ảnh
+                int nextItem = (currentItem + 1) % 5;
                 carouselViewPager.setCurrentItem(nextItem, true);
                 handler.postDelayed(this, 3000);
             }
         };
         handler.postDelayed(carouselRunnable, 3000);
+    }
+
+    public void updateNotificationBadge() {
+        if (getActivity() == null) return;
+
+        String token = getActivity().getSharedPreferences("userPrefs", getContext().MODE_PRIVATE).getString("access_token", "");
+        int userId = Integer.parseInt(getActivity().getSharedPreferences("userPrefs", getContext().MODE_PRIVATE).getString("userId", "0"));
+        ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
+
+        Call<UnreadCountResponse> call = apiService.getUnreadCount(userId, "Bearer " + token);
+        call.enqueue(new Callback<UnreadCountResponse>() {
+            @Override
+            public void onResponse(Call<UnreadCountResponse> call, Response<UnreadCountResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int count = response.body().getUnreadCount();
+                    if (count > 0) {
+                        tvNotificationBadge.setText(String.valueOf(count));
+                        tvNotificationBadge.setVisibility(View.VISIBLE);
+                    } else {
+                        tvNotificationBadge.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UnreadCountResponse> call, Throwable t) {
+                Log.e("HomeFragment", "Failed to update badge: " + t.getMessage());
+            }
+        });
+    }
+
+    private void clearNotificationBadge() {
+        updateNotificationBadge();
     }
 
     @Override

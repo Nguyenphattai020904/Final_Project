@@ -1,6 +1,7 @@
 package com.example.final_project.Products;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.example.final_project.Fragments.CartFragment;
 import com.example.final_project.Fragments.CartManager;
@@ -26,6 +26,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private Context context;
     private List<Product> productList;
     private OnProductClickListener listener;
+    Button addToCartButton;
 
     public interface OnProductClickListener {
         void onProductClick(Product product);
@@ -48,7 +49,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
         holder.productName.setText(product.getName());
-        holder.productPrice.setText(String.format("%.0f VND", product.getPrice()));
+
+        // Kiểm tra nếu có giảm giá
+        if (product.getDiscount() != null && product.getDiscount() > 0) {
+            holder.originalPrice.setVisibility(View.VISIBLE);
+            holder.originalPrice.setText(String.format("%.0f VND", product.getPrice()));
+            holder.originalPrice.setPaintFlags(holder.originalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); // Gạch ngang
+            holder.productPrice.setText(String.format("%.0f VND", product.getFinalPrice()));
+            holder.discountTag.setVisibility(View.VISIBLE);
+            holder.discountTag.setText(String.format("-%d%%", Math.round(product.getDiscount())));
+        } else {
+            holder.originalPrice.setVisibility(View.GONE);
+            holder.productPrice.setText(String.format("%.0f VND", product.getPrice()));
+            holder.discountTag.setVisibility(View.GONE);
+        }
 
         String imageUrl = product.getImages();
         if (imageUrl != null && !imageUrl.isEmpty()) {
@@ -67,15 +81,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         holder.itemView.setOnClickListener(v -> listener.onProductClick(product));
         holder.addToCartButton.setOnClickListener(v -> {
-            CartManager.getInstance().addToCart(new Product(product.getProductId(), product.getName(), product.getPrice(), product.getImages()));
+            CartManager.getInstance(context).addToCart(new Product(product.getProductId(), product.getName(), product.getFinalPrice(), product.getImages()));
             Toast.makeText(context, "Đã thêm " + product.getName() + " vào giỏ hàng", Toast.LENGTH_SHORT).show();
 
-            // Cập nhật badge
             if (context instanceof MainActivity) {
-                ((MainActivity) context).updateCartBadge(CartManager.getInstance().getCartSize());
+                ((MainActivity) context).updateCartBadge(CartManager.getInstance(context).getCartSize());
             }
 
-            // Cập nhật CartFragment nếu đang hiển thị
             if (context instanceof FragmentActivity) {
                 FragmentActivity activity = (FragmentActivity) context;
                 CartFragment cartFragment = (CartFragment) activity.getSupportFragmentManager().findFragmentByTag("CartFragment");
@@ -93,7 +105,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
-        TextView productName, productPrice;
+        TextView productName, productPrice, discountTag, originalPrice;
         Button addToCartButton;
 
         public ProductViewHolder(@NonNull View itemView) {
@@ -101,6 +113,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productImage = itemView.findViewById(R.id.product_image);
             productName = itemView.findViewById(R.id.product_name);
             productPrice = itemView.findViewById(R.id.product_price);
+            discountTag = itemView.findViewById(R.id.discount_tag);
+            originalPrice = itemView.findViewById(R.id.original_price);
             addToCartButton = itemView.findViewById(R.id.add_to_cart_button);
         }
     }

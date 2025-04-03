@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/back_ground"
-    android:padding="8dp">
+    android:background="@color/back_ground">
 
-    <!-- RecyclerView hiển thị danh sách sản phẩm -->
+    <!-- Checkbox Select All -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <CheckBox
+            android:id="@+id/checkbox_select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chọn tất cả"
+            android:textSize="16sp"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <!-- RecyclerView hiển thị danh sách sản phẩm trong giỏ hàng -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cart_recycler_view"
         android:layout_width="match_parent"
@@ -19,14 +37,15 @@
         android:id="@+id/empty_cart_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="There are no products available."
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:gravity="center"
         android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Không có sản phẩm nào trong giỏ hàng"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
         android:visibility="visible" />
 
-    <!-- Button Thanh toán chung -->
+    <!-- Button Thanh toán -->
     <Button
         android:id="@+id/btnBuyNow"
         android:layout_width="match_parent"
@@ -39,5 +58,6 @@
         android:padding="12dp"
         android:text="Thanh toán"
         android:textColor="@color/white"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:cornerRadius="10dp"/>
 </LinearLayout>

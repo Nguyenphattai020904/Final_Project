@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/back_ground">
@@ -9,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add/Edit Address"
+        android:text="Thêm/Sửa địa chỉ nhận hàng"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/green_smoke"
@@ -41,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/border_edit_text"
-        android:hint="Enter street and house number"
+        android:hint="Nhập chi tiết số nhà hoặc đường,.."
         android:inputType="textPostalAddress"
         android:textColor="@color/black"
         android:padding="12dp"
@@ -51,8 +52,9 @@
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="Lưu địa chỉ"
         android:textSize="16sp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/green_smoke" />
+        android:backgroundTint="@color/green_smoke"
+        app:cornerRadius="10dp"/>
 </LinearLayout>
