@@ -1,4 +1,4 @@
-package com.example.final_project;
+package com.example.final_project.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.final_project.API_Controls.ApiService;
 import com.example.final_project.API_Controls.RetrofitClient;
 import com.example.final_project.API_Reponse.OrderDetailResponse;
+import com.example.final_project.Adapter.OrderDetailAdapter;
+import com.example.final_project.R;
 
 import java.text.NumberFormat;
 import java.util.Locale;

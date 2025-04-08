@@ -1,4 +1,4 @@
-package com.example.final_project;
+package com.example.final_project.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,7 +15,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.final_project.API_Controls.ApiService;
 import com.example.final_project.API_Controls.RetrofitClient;
+import com.example.final_project.Address.Address;
+import com.example.final_project.Address.District;
 import com.example.final_project.Log.LogInActivity;
+import com.example.final_project.Address.Province;
+import com.example.final_project.R;
+import com.example.final_project.Address.Ward;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -13,7 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.final_project.MainActivity;
+import com.example.final_project.Activity.MainActivity;
+import com.example.final_project.Adapter.CartAdapter;
 import com.example.final_project.Products.Product;
 import com.example.final_project.R;
 

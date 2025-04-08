@@ -1,4 +1,4 @@
-package com.example.final_project;
+package com.example.final_project.Activity;
 
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -30,8 +30,14 @@ import com.example.final_project.API_Reponse.OrderStatusResponse;
 import com.example.final_project.API_Reponse.VoucherResponse;
 import com.example.final_project.API_Requests.OrderRequest;
 import com.example.final_project.API_Requests.VoucherRequest;
-import com.example.final_project.Fragments.HomeFragment;
+import com.example.final_project.Adapter.VoucherSpinnerAdapter;
+import com.example.final_project.Address.Address;
+import com.example.final_project.Address.District;
 import com.example.final_project.Log.LogInActivity;
+import com.example.final_project.Address.Province;
+import com.example.final_project.R;
+import com.example.final_project.Voucher;
+import com.example.final_project.Address.Ward;
 
 import java.util.ArrayList;
 import java.util.HashMap;

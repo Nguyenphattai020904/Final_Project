@@ -1,4 +1,4 @@
-package com.example.final_project;
+package com.example.final_project.Activity;
 
 import android.app.AlarmManager;
 import android.app.Dialog;
@@ -12,9 +12,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +25,8 @@ import com.example.final_project.Fragments.HomeFragment;
 import com.example.final_project.Fragments.PaymentFragment;
 import com.example.final_project.Fragments.ProfileFragment;
 import com.example.final_project.Log.LogInActivity;
+import com.example.final_project.LuckyWheel;
+import com.example.final_project.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.badge.BadgeDrawable;
 import java.util.Calendar;

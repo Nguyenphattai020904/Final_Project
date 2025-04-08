@@ -1,6 +1,5 @@
 package com.example.final_project.Log;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,7 +18,7 @@ import com.example.final_project.API_Controls.ApiService;
 import com.example.final_project.API_Controls.RetrofitClient;
 import com.example.final_project.API_Reponse.UserResponse;
 import com.example.final_project.API_Requests.UserRequest;
-import com.example.final_project.MainActivity;
+import com.example.final_project.Activity.MainActivity;
 import com.example.final_project.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;

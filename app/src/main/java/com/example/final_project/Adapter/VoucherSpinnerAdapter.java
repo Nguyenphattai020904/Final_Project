@@ -1,4 +1,4 @@
-package com.example.final_project;
+package com.example.final_project.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.final_project.R;
+import com.example.final_project.Voucher;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;

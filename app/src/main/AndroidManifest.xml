@@ -20,7 +20,7 @@
         tools:targetApi="31"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,12 +35,12 @@
                     android:host="payment" />
             </intent-filter>
         </activity>
-        <activity android:name=".OnboardingActivity" />
+        <activity android:name=".Activity.OnboardingActivity" />
         <activity android:name=".Log.LogInActivity" />
         <activity android:name=".Log.RegisterActivity" />
         <activity android:name=".Log.ForgotPasswordActivity" />
         <activity android:name=".Log.NewPassWordActivity" />
-        <activity android:name=".SecurityUtils"/>
+        <activity android:name=".Utils.SecurityUtils"/>
         <activity android:name=".API_Reponse.MentionedProduct"/>
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
@@ -55,7 +55,7 @@
         <activity android:name=".API_Reponse.ProductResponse"/>
         <activity android:name=".Products.Product"/>
         <activity android:name=".Products.ProductAdapter"/>
-        <activity android:name=".Fragments.Message"/>
+        <activity android:name=".Utils.Message"/>
         <activity android:name=".API_Requests.UserRequest"/>
         <activity android:name=".API_Reponse.UserResponse"/>
         <activity android:name=".API_Requests.ChatRequest"/>
@@ -65,32 +65,32 @@
         <activity android:name=".API_Reponse.OrderListResponse"/>
         <activity android:name=".Products.ProductDetailFragment"/>
         <activity android:name=".Products.CarouselAdapter"/>
-        <activity android:name=".Fragments.CartAdapter"/>
+        <activity android:name=".Adapter.CartAdapter"/>
         <activity android:name=".Fragments.CartManager"/>
         <activity android:name=".Fragments.PaymentFragment"/>
         <activity android:name=".API_Reponse.OrderStatusResponse"/>
-        <activity android:name=".ProfileActivity"/>
-        <activity android:name=".OrderHistoryActivity"/>
-        <activity android:name=".OrderDetailActivity"/>
-        <activity android:name=".OrderHistoryAdapter"/>
-        <activity android:name=".OrderDetailAdapter"/>
+        <activity android:name=".Activity.ProfileActivity"/>
+        <activity android:name=".Activity.OrderHistoryActivity"/>
+        <activity android:name=".Activity.OrderDetailActivity"/>
+        <activity android:name=".Adapter.OrderHistoryAdapter"/>
+        <activity android:name=".Adapter.OrderDetailAdapter"/>
         <activity android:name=".API_Reponse.OrderDetailResponse"/>
-        <activity android:name=".CheckoutActivity"/>
-        <activity android:name=".Address"/>
-        <activity android:name=".Province"/>
-        <activity android:name=".District"/>
-        <activity android:name=".Ward"/>
-        <activity android:name=".AddressManagementActivity"/>
-        <activity android:name=".AddressAdapter"/>
-        <activity android:name=".AddEditAddressActivity"/>
-        <activity android:name=".FeedbackActivity"/>
+        <activity android:name=".Activity.CheckoutActivity"/>
+        <activity android:name=".Address.Address"/>
+        <activity android:name=".Address.Province"/>
+        <activity android:name=".Address.District"/>
+        <activity android:name=".Address.Ward"/>
+        <activity android:name=".Activity.AddressManagementActivity"/>
+        <activity android:name=".Adapter.AddressAdapter"/>
+        <activity android:name=".Activity.AddEditAddressActivity"/>
+        <activity android:name=".Activity.FeedbackActivity"/>
         <activity android:name=".API_Requests.FeedbackRequest"/>
         <activity android:name=".Voucher"/>
         <activity android:name=".API_Requests.VoucherRequest"/>
         <activity android:name=".API_Reponse.VoucherResponse"/>
-        <activity android:name=".VoucherSpinnerAdapter"/>
+        <activity android:name=".Adapter.VoucherSpinnerAdapter"/>
         <activity android:name=".Fragments.VoucherFragment"/>
-        <activity android:name=".VoucherAdapter"/>
+        <activity android:name=".Adapter.VoucherAdapter"/>
         <activity android:name=".Fragments.NotificationFragment"/>
         <activity android:name=".API_Reponse.NotificationResponse"/>
         <activity android:name=".Notification"/>

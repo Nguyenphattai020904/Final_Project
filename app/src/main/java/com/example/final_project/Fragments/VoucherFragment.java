@@ -13,7 +13,7 @@ import com.example.final_project.API_Controls.ApiService;
 import com.example.final_project.API_Controls.RetrofitClient;
 import com.example.final_project.R;
 import com.example.final_project.Voucher;
-import com.example.final_project.VoucherAdapter;
+import com.example.final_project.Adapter.VoucherAdapter;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;

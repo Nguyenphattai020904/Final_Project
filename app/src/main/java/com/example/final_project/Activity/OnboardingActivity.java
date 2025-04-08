@@ -1,4 +1,4 @@
-package com.example.final_project;
+package com.example.final_project.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.final_project.Log.LogInActivity;
+import com.example.final_project.R;
 
 public class OnboardingActivity extends AppCompatActivity {
 

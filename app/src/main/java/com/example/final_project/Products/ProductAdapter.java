@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.final_project.Fragments.CartFragment;
 import com.example.final_project.Fragments.CartManager;
-import com.example.final_project.MainActivity;
+import com.example.final_project.Activity.MainActivity;
 import com.example.final_project.R;
 import com.squareup.picasso.Picasso;
 

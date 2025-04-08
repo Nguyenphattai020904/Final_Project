@@ -13,18 +13,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.final_project.AddressManagementActivity;
-import com.example.final_project.FeedbackActivity;
+import com.example.final_project.Activity.AddressManagementActivity;
+import com.example.final_project.Activity.FeedbackActivity;
 import com.example.final_project.Log.LogInActivity;
-import com.example.final_project.OrderHistoryActivity;
-import com.example.final_project.ProfileActivity;
+import com.example.final_project.Activity.OrderHistoryActivity;
+import com.example.final_project.Activity.ProfileActivity;
 import com.example.final_project.R;
 
 public class ProfileFragment extends Fragment {
