@@ -3,6 +3,8 @@ package com.example.final_project.Fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -80,6 +82,7 @@ public class ChatBotFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_bot, container, false);
+        view.setBackgroundResource(R.drawable.rounded_background);
 
         if (getArguments() != null) {
             userId = getArguments().getString("userId", "");
@@ -149,9 +152,10 @@ public class ChatBotFragment extends DialogFragment {
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-            params.width = (int) (displayMetrics.widthPixels * 0.9);
-            params.height = (int) (displayMetrics.heightPixels * 0.7);
+            params.width = (int) (displayMetrics.widthPixels * 0.98);
+            params.height = (int) (displayMetrics.heightPixels * 0.85);
             getDialog().getWindow().setAttributes(params);
+            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
     }
 
@@ -223,7 +227,7 @@ public class ChatBotFragment extends DialogFragment {
 
     private boolean isNetworkStable() {
         try {
-            URL url = new URL("http://172.16.75.173:3000/api/ping");
+            URL url = new URL("http://192.168.1.3:3000/api/ping");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("HEAD");
             connection.setConnectTimeout(3000);
@@ -255,7 +259,7 @@ public class ChatBotFragment extends DialogFragment {
             message = formatBotResponse(message);
         }
         messageTextView.setText(Html.fromHtml(message));
-        messageTextView.setTextSize(16);
+        messageTextView.setTextSize(14);
         messageTextView.setTextColor(getResources().getColor(android.R.color.black));
         messageTextView.setPadding(16, 12, 16, 12);
 
@@ -263,7 +267,7 @@ public class ChatBotFragment extends DialogFragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        messageParams.setMargins(8, 8, 8, 16);
+        messageParams.setMargins(8, 8, 8, 20);
 
         if (isUser) {
             messageTextView.setBackgroundResource(R.drawable.user_message_background);

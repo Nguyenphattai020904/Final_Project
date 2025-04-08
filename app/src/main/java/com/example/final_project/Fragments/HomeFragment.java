@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -36,19 +37,21 @@ import com.example.final_project.Products.ProductAdapter;
 import com.example.final_project.Products.ProductDetailFragment;
 import com.example.final_project.R;
 
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements ProductAdapter.OnProductClickListener {
-    private RecyclerView recyclerView;
-    private ProductAdapter productAdapter;
+    private RecyclerView recyclerView, bestSellerRecyclerView;
+    private ProductAdapter productAdapter, bestSellerAdapter;
     private List<Product> productList = new ArrayList<>();
     private List<Product> fullProductList = new ArrayList<>();
+    private List<Product> bestSellerList = new ArrayList<>();
+    private List<Integer> bestSellerIds = new ArrayList<>();
     private ViewPager2 carouselViewPager;
     private CarouselAdapter carouselAdapter;
     private Handler handler = new Handler(Looper.getMainLooper());
@@ -63,14 +66,21 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        // RecyclerView cho tất cả sản phẩm
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        productAdapter = new ProductAdapter(getContext(), productList, this);
+        productAdapter = new ProductAdapter(getContext(), productList, this, bestSellerIds);
         recyclerView.setAdapter(productAdapter);
 
         int spacingInDp = 1;
         int spacingInPx = Math.round(spacingInDp * getResources().getDisplayMetrics().density);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(spacingInPx));
+
+        // RecyclerView cho Best Seller
+        bestSellerRecyclerView = view.findViewById(R.id.best_seller_recycler_view);
+        bestSellerRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        bestSellerAdapter = new ProductAdapter(getContext(), bestSellerList, this, bestSellerIds);
+        bestSellerRecyclerView.setAdapter(bestSellerAdapter);
 
         carouselViewPager = view.findViewById(R.id.carousel_view_pager);
         carouselAdapter = new CarouselAdapter(getContext());
@@ -86,16 +96,69 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         setupMenuButton();
         setupNotificationButton();
 
-        fetchProducts();
+        // Tải dữ liệu theo thứ tự: Best Seller -> Products
+        loadData();
+
         setupCarousel();
 
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        updateNotificationBadge();
+    private void loadData() {
+        ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
+
+        // Bước 1: Lấy danh sách Best Seller trước
+        Call<ProductResponse> bestSellerCall = apiService.getBestSellers();
+        bestSellerCall.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    bestSellerList.clear();
+                    bestSellerList.addAll(response.body().getBestSellers());
+                    bestSellerIds.clear();
+                    bestSellerIds.addAll(bestSellerList.stream().map(Product::getProductId).collect(Collectors.toList()));
+                    Log.d("HomeFragment", "BestSellerIds loaded: " + bestSellerIds);
+
+                    // Bước 2: Sau khi có Best Seller, lấy danh sách sản phẩm
+                    fetchProducts();
+                } else {
+                    Toast.makeText(getContext(), "Không tải được Best Seller: " + response.code(), Toast.LENGTH_LONG).show();
+                    fetchProducts(); // Vẫn tải sản phẩm nếu Best Seller lỗi
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Lỗi tải Best Seller: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                fetchProducts(); // Vẫn tải sản phẩm nếu lỗi
+            }
+        });
+    }
+
+    private void fetchProducts() {
+        ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
+        Call<ProductResponse> call = apiService.getProducts();
+        call.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    fullProductList.clear();
+                    fullProductList.addAll(response.body().getProducts());
+                    productList.clear();
+                    productList.addAll(fullProductList);
+                    productAdapter.notifyDataSetChanged();
+                    bestSellerAdapter.notifyDataSetChanged();
+                    Log.d("HomeFragment", "Products loaded, notifying adapters");
+                } else {
+                    Toast.makeText(getContext(), "Không tải được sản phẩm: " + response.code(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Lỗi: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void setupSearchListener() {
@@ -196,30 +259,6 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         productAdapter.notifyDataSetChanged();
     }
 
-    private void fetchProducts() {
-        ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
-        Call<ProductResponse> call = apiService.getProducts();
-        call.enqueue(new Callback<ProductResponse>() {
-            @Override
-            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    fullProductList.clear();
-                    fullProductList.addAll(response.body().getProducts());
-                    productList.clear();
-                    productList.addAll(fullProductList);
-                    productAdapter.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(getContext(), "Không tải được sản phẩm: " + response.code(), Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProductResponse> call, Throwable t) {
-                Toast.makeText(getContext(), "Lỗi: " + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
     private void setupCarousel() {
         if (carouselRunnable != null) {
             handler.removeCallbacks(carouselRunnable);
@@ -309,5 +348,10 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
                 outRect.top = spacing;
             }
         }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateNotificationBadge(); // Cập nhật badge mỗi khi fragment được hiển thị
     }
 }

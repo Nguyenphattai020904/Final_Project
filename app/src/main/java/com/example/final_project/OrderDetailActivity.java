@@ -23,7 +23,7 @@ import retrofit2.Response;
 
 public class OrderDetailActivity extends AppCompatActivity {
 
-    private TextView tvDetailOrderId, tvDetailOrderDate, tvDetailTotalPrice;
+    private TextView tvDetailOrderId, tvDetailOrderDate, tvDetailTotalPrice, tvDetailOrderStatus; // Thêm tvDetailOrderStatus
     private RecyclerView recyclerViewOrderProducts;
     private OrderDetailAdapter orderDetailAdapter;
     private Button btnReorder;
@@ -36,13 +36,13 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         tvDetailOrderId = findViewById(R.id.tvDetailOrderId);
         tvDetailTotalPrice = findViewById(R.id.tvDetailTotalPrice);
+        tvDetailOrderStatus = findViewById(R.id.tvDetailOrderStatus); // Khởi tạo
         recyclerViewOrderProducts = findViewById(R.id.recyclerViewOrderProducts);
         btnReorder = findViewById(R.id.btnReorder);
         recyclerViewOrderProducts.setLayoutManager(new LinearLayoutManager(this));
 
         orderId = getIntent().getStringExtra("orderId");
 
-        // Xử lý sự kiện nhấn nút "Mua lại"
         btnReorder.setOnClickListener(v -> {
             Intent intent = new Intent(OrderDetailActivity.this, CheckoutActivity.class);
             intent.putExtra("orderId", orderId);
@@ -66,6 +66,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
                     tvDetailOrderId.setText("Mã đơn hàng: " + order.getOrderId());
                     tvDetailTotalPrice.setText("Tổng giá: " + formatPrice(order.getTotalPrice()));
+                    tvDetailOrderStatus.setText("Trạng thái: " + formatStatus(order.getStatus())); // Hiển thị status
 
                     orderDetailAdapter = new OrderDetailAdapter(order.getItems());
                     recyclerViewOrderProducts.setAdapter(orderDetailAdapter);
@@ -84,5 +85,17 @@ public class OrderDetailActivity extends AppCompatActivity {
     private String formatPrice(double price) {
         NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         return formatter.format(price);
+    }
+
+    private String formatStatus(String status) {
+        if (status == null) return "Không xác định";
+        switch (status) {
+            case "pending": return "Đang xử lý";
+            case "confirmed": return "Đã xác nhận";
+            case "packing": return "Đang đóng gói";
+            case "shipping": return "Đang giao hàng";
+            case "delivered": return "Đã giao hàng";
+            default: return status;
+        }
     }
 }

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@color/back_ground">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Vòng Quay May Mắn"
+        android:textColor="#FF5722"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đăng nhập mỗi ngày nhận 1 lượt quay"
+        android:textSize="16sp"
+        android:textColor="#FF5722"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/spin_count_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lượt quay: 0"
+        android:textSize="16sp"
+        android:textColor="#4CAF50"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Thêm TextView để hiển thị thông báo lỗi -->
+    <TextView
+        android:id="@+id/error_message_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="16sp"
+        android:textColor="#FF0000"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:id="@+id/wheel_image"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:elevation="8dp"
+            android:src="@drawable/lucky_wheel" />
+
+        <ImageView
+            android:id="@+id/arrow_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/arrow"
+            android:layout_centerHorizontal="true"
+            android:layout_alignTop="@id/wheel_image"
+            android:elevation="10dp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/spin_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quay"
+        android:backgroundTint="#FF5722"
+        android:textColor="#FFFFFF"
+        android:paddingHorizontal="24dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="4dp"
+        app:cornerRadius="10dp" />
+
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quay về"
+        android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF"
+        android:paddingHorizontal="24dp"
+        android:elevation="4dp"
+        app:cornerRadius="10dp" />
+</LinearLayout>

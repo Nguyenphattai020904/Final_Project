@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:background="@color/white">
+        android:background="@drawable/border_vip">
 
         <ImageView
             android:id="@+id/voucher_image"

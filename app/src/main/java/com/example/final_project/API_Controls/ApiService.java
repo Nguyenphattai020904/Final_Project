@@ -25,6 +25,7 @@ import com.example.final_project.Ward;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -32,8 +33,10 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ApiService {
@@ -46,13 +49,23 @@ public interface ApiService {
     @POST("/api/users/register")
     Call<UserResponse> registerUser(@Body UserRequest request);
 
+    @POST("api/users/registerWithGoogle")
+    Call<UserResponse> registerWithGoogle(@Body UserRequest userRequest);
+
     // Lấy thông tin người dùng
     @GET("/api/users/user")
     Call<UserResponse> getUserInfo(@Header("Authorization") String token);
 
-    // Cập nhật thông tin người dùng
-    @PUT("/api/users/updateProfile")
-    Call<UserResponse> updateProfile(@Header("Authorization") String token, @Body UserRequest request);
+    @Multipart
+    @PUT("api/users/updateProfile")
+    Call<UserResponse> updateProfile(
+            @Header("Authorization") String token,
+            @Part("name") String name,
+            @Part("phone") String phone,
+            @Part("gender") String gender,
+            @Part("dateOfBirth") String dateOfBirth,
+            @Part MultipartBody.Part profileImg
+    );
 
     @POST("/api/users/sendOTP")
     Call<UserResponse> sendOTP(@Body UserRequest request);
@@ -76,6 +89,9 @@ public interface ApiService {
 
     @GET("/api/products/{id}")
     Call<Product> getProductById(@Header("Authorization") String token, @Path("id") int productId);
+
+    @GET("api/products/bestsellers")
+    Call<ProductResponse> getBestSellers();
 
     // Lấy danh sách sản phẩm
     @GET("/order/products")
@@ -134,4 +150,18 @@ public interface ApiService {
 
     @DELETE("notifications/{id}")
     Call<Void> deleteNotification(@Path("id") int id, @Header("Authorization") String token);
+
+    // Sửa endpoint để khớp với route trên server
+    @GET("/api/spin/count/{userId}")
+    Call<Map<String, Integer>> getSpinCount(
+            @Path("userId") int userId,
+            @Header("Authorization") String token
+    );
+
+    // Thêm /spin vào endpoint để khớp với route /api/spin/spin/:userId
+    @POST("/api/spin/spin/{userId}")
+    Call<Map<String, String>> spinWheel(
+            @Path("userId") int userId,
+            @Header("Authorization") String token
+    );
 }

@@ -14,21 +14,51 @@
         android:divider="@android:color/transparent"
         android:showDividers="middle"
         android:dividerPadding="8dp">
-
-        <!-- Personal Information -->
-        <TextView
-            android:id="@+id/txt_full_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/green_smoke"
-            android:text="TextView"
-            android:textSize="20sp"
-            android:textStyle="bold|italic" />
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/border_vip"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
+
+            <!-- Edit Personal Info -->
+            <LinearLayout
+                android:id="@+id/btn_show_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingVertical="12dp">
+
+                <ImageView
+                    android:id="@+id/img_avatar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/person"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:background="@drawable/circle_background_white" />
+
+                <!-- Personal Information -->
+                <TextView
+                    android:id="@+id/txt_full_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/green_smoke"
+                    android:text="TextView"
+                    android:textSize="20sp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Thông tin cá nhân"
+            android:text="Thông tin chi tiết"
             android:textStyle="bold"
             android:textSize="16sp"
             android:paddingVertical="12dp"
@@ -36,68 +66,39 @@
             android:textColor="@color/black"
             android:background="@color/back_ground" />
 
+        <!-- Accumulation -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/white"
-            android:paddingVertical="8dp"
-            android:paddingHorizontal="12dp"
             android:layout_marginBottom="12dp"
+            android:background="@drawable/border_vip"
             android:elevation="2dp"
-            android:backgroundTint="@color/white">
+            android:orientation="vertical"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
 
-            <!-- Edit Personal Info -->
+            <!-- Shipping Address -->
             <LinearLayout
-                android:id="@+id/btn_show_info"
+                android:id="@+id/btn_shipping_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingVertical="12dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/person" />
+                    android:src="@drawable/address" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chi tiết thông tin cá nhân"
                     android:layout_marginStart="12dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/black" />
+                    android:text="Địa chỉ giao hàng đã lưu"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray" />
-
-            <!-- Shipping Address -->
-            <!-- Trong phần Personal Information -->
-            <LinearLayout
-                android:id="@+id/btn_shipping_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingVertical="12dp">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/address" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Địa chỉ giao hàng đã lưu"
-                android:layout_marginStart="12dp"
-                android:textSize="14sp"
-                android:textColor="@color/black" />
-        </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -109,8 +110,8 @@
                 android:id="@+id/btn_purchase_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingVertical="12dp">
 
                 <ImageView
@@ -121,14 +122,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lịch sử đơn hàng"
                     android:layout_marginStart="12dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/black" />
+                    android:text="Lịch sử đơn hàng"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Accumulation -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/white"
+            android:background="@drawable/border_vip"
             android:paddingVertical="8dp"
             android:paddingHorizontal="12dp"
             android:layout_marginBottom="12dp"
@@ -172,7 +172,6 @@
                     android:textSize="14sp"
                     android:textColor="@color/black" />
             </LinearLayout>
-
         </LinearLayout>
 
         <!-- Customer Support -->
@@ -191,7 +190,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/white"
+            android:background="@drawable/border_vip"
             android:paddingVertical="8dp"
             android:paddingHorizontal="12dp"
             android:layout_marginBottom="16dp"
@@ -220,7 +219,6 @@
                     android:textColor="@color/black" />
             </LinearLayout>
         </LinearLayout>
-
 
         <Button
             android:id="@+id/btn_log_out"

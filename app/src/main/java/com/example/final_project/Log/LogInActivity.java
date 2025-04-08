@@ -206,12 +206,13 @@ public class LogInActivity extends AppCompatActivity {
                         userRequest.setEmail(email);
                         userRequest.setName(fullName);
 
-                        apiService.registerUser(userRequest).enqueue(new Callback<UserResponse>() {
+                        apiService.registerWithGoogle(userRequest).enqueue(new Callback<UserResponse>() {
                             @Override
                             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                                 if (response.isSuccessful() && response.body() != null) {
                                     String userId = response.body().getUserId();
                                     String token = response.body().getToken();
+                                    UserResponse.UserDetails userDetails = response.body().getUserDetails();
 
                                     if (userId == null || userId.isEmpty()) {
                                         Toast.makeText(LogInActivity.this, "Không thể lấy userId!", Toast.LENGTH_SHORT).show();
@@ -222,6 +223,12 @@ public class LogInActivity extends AppCompatActivity {
                                     editor.putString("access_token", token != null ? token : idToken);
                                     editor.putString("userId", userId);
                                     editor.putString("fullname", fullName);
+                                    if (userDetails != null) {
+                                        editor.putString("email", userDetails.getEmail());
+                                        editor.putString("phone", userDetails.getPhone());
+                                        editor.putString("gender", userDetails.getGender());
+                                        editor.putString("dateOfBirth", userDetails.getDateOfBirth());
+                                    }
                                     editor.putBoolean("isLoggedIn", true);
                                     editor.apply();
 
@@ -235,12 +242,21 @@ public class LogInActivity extends AppCompatActivity {
                                     finish();
                                 } else {
                                     Toast.makeText(LogInActivity.this, "Không thể đăng ký user Google!", Toast.LENGTH_SHORT).show();
+                                    Log.e("GoogleLogin", "Response Code: " + response.code());
+                                    if (response.errorBody() != null) {
+                                        try {
+                                            Log.e("GoogleLogin", "Error body: " + response.errorBody().string());
+                                        } catch (Exception e) {
+                                            Log.e("GoogleLogin", "Error reading error body: " + e.getMessage());
+                                        }
+                                    }
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<UserResponse> call, Throwable t) {
                                 Toast.makeText(LogInActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.e("GoogleLogin", "API call failed: " + t.getMessage());
                             }
                         });
                     } else {

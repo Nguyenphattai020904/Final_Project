@@ -39,10 +39,10 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         OrderListResponse.OrderItem order = orders.get(position);
         holder.tvOrderId.setText("Mã đơn hàng: " + order.getOrderId());
-        holder.tvOrderDate.setText(order.getOrderDate());
+        holder.tvOrderDate.setText("Ngày: " + order.getOrderDate());
         holder.tvOrderTotal.setText(String.valueOf(order.getTotalPrice()));
+        holder.tvOrderStatus.setText("Trạng thái: " + formatStatus(order.getStatus())); // Hiển thị status
 
-        // Load ảnh
         String imageUrl = order.getFirstProductImage();
         if (imageUrl != null && !imageUrl.isEmpty()) {
             Glide.with(holder.itemView.getContext())
@@ -54,10 +54,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             holder.ivFirstProduct.setImageResource(R.drawable.img);
         }
 
-        // Xử lý sự kiện nhấn vào item
         holder.itemView.setOnClickListener(v -> listener.onOrderClick(order));
-
-        // Xử lý sự kiện nhấn nút "Mua lại"
         holder.btnReorder.setOnClickListener(v -> reorderListener.onReorderClick(order.getOrderId()));
     }
 
@@ -67,7 +64,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     }
 
     static class OrderViewHolder extends RecyclerView.ViewHolder {
-        TextView tvOrderId, tvOrderDate, tvOrderTotal;
+        TextView tvOrderId, tvOrderDate, tvOrderTotal, tvOrderStatus; // Thêm tvOrderStatus
         ImageView ivFirstProduct;
         Button btnReorder;
 
@@ -76,6 +73,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             tvOrderId = itemView.findViewById(R.id.tvOrderId);
             tvOrderDate = itemView.findViewById(R.id.tvOrderDate);
             tvOrderTotal = itemView.findViewById(R.id.tvOrderTotal);
+            tvOrderStatus = itemView.findViewById(R.id.tvOrderStatus); // Khởi tạo
             ivFirstProduct = itemView.findViewById(R.id.ivFirstProduct);
             btnReorder = itemView.findViewById(R.id.btnReorder);
         }
@@ -87,5 +85,17 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     public interface OnReorderClickListener {
         void onReorderClick(String orderId);
+    }
+
+    private String formatStatus(String status) {
+        if (status == null) return "Không xác định";
+        switch (status) {
+            case "pending": return "Đang xử lý";
+            case "confirmed": return "Đã xác nhận";
+            case "packing": return "Đang đóng gói";
+            case "shipping": return "Đang giao hàng";
+            case "delivered": return "Đã giao hàng";
+            default: return status;
+        }
     }
 }

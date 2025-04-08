@@ -38,6 +38,15 @@ public class OrderDetailResponse {
         this.order = order;
     }
 
+    @Override
+    public String toString() {
+        return "OrderDetailResponse{" +
+                "success=" + success +
+                ", message='" + message + '\'' +
+                ", order=" + order +
+                '}';
+    }
+
     public static class Order {
         @SerializedName("orderId")
         private String orderId;
@@ -47,6 +56,9 @@ public class OrderDetailResponse {
 
         @SerializedName("totalPrice")
         private double totalPrice;
+
+        @SerializedName("status")
+        private String status; // Thêm trường status
 
         @SerializedName("items")
         private List<OrderItem> items;
@@ -75,6 +87,14 @@ public class OrderDetailResponse {
             this.totalPrice = totalPrice;
         }
 
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
         public List<OrderItem> getItems() {
             return items;
         }
@@ -89,6 +109,7 @@ public class OrderDetailResponse {
                     "orderId='" + orderId + '\'' +
                     ", orderDate='" + orderDate + '\'' +
                     ", totalPrice=" + totalPrice +
+                    ", status='" + status + '\'' +
                     ", items=" + items +
                     '}';
         }

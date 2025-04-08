@@ -26,6 +26,15 @@
         android:textColor="#333333"
         android:layout_marginBottom="8dp" />
 
+    <!-- Order Status -->
+    <TextView
+        android:id="@+id/tvDetailOrderStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trạng thái: Đang xử lý"
+        android:textSize="16sp"
+        android:textColor="#2196F3"
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:id="@+id/tvDetailTotalPrice"
@@ -37,16 +46,13 @@
         android:textStyle="bold"
         android:layout_marginBottom="16dp" />
 
-    <!-- Reorder Button -->
-
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewOrderProducts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
-    <!-- Product List -->
+
+    <!-- Reorder Button -->
     <Button
         android:id="@+id/btnReorder"
         android:layout_width="wrap_content"

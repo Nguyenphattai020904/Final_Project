@@ -1,6 +1,7 @@
 package com.example.final_project.Products;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.final_project.LuckyWheel;
 import com.example.final_project.R;
 
 public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.CarouselViewHolder> {
@@ -19,8 +22,9 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
             R.drawable.banner_one,
             R.drawable.banner_two,
             R.drawable.banner_three,
-            R.drawable.banner_four,
-            R.drawable.banner_five
+            R.drawable.banner_five,
+            R.drawable.banner_spin,
+
     };
 
     public CarouselAdapter(Context context) {
@@ -44,7 +48,17 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
         options.inSampleSize = 2; // Giảm kích thước ảnh xuống 1/2 (có thể điều chỉnh)
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), bannerImages[imageIndex], options);
         holder.productImage.setImageBitmap(bitmap);
+
+        // Thêm sự kiện click cho banner_spin
+        if (bannerImages[imageIndex] == R.drawable.banner_spin) {
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, LuckyWheel.class);
+                context.startActivity(intent);
+            });
+        }
     }
+
+
 
     @Override
     public int getItemCount() {

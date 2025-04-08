@@ -26,16 +26,23 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private Context context;
     private List<Product> productList;
     private OnProductClickListener listener;
-    Button addToCartButton;
+    private List<Integer> bestSellerIds; // Danh sách ID của Best Seller
 
     public interface OnProductClickListener {
         void onProductClick(Product product);
     }
 
+    // Constructor mặc định không có bestSellerIds
     public ProductAdapter(Context context, List<Product> productList, OnProductClickListener listener) {
+        this(context, productList, listener, null);
+    }
+
+    // Constructor đầy đủ có bestSellerIds
+    public ProductAdapter(Context context, List<Product> productList, OnProductClickListener listener, List<Integer> bestSellerIds) {
         this.context = context;
         this.productList = productList;
         this.listener = listener;
+        this.bestSellerIds = bestSellerIds;
     }
 
     @NonNull
@@ -54,7 +61,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         if (product.getDiscount() != null && product.getDiscount() > 0) {
             holder.originalPrice.setVisibility(View.VISIBLE);
             holder.originalPrice.setText(String.format("%.0f VND", product.getPrice()));
-            holder.originalPrice.setPaintFlags(holder.originalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); // Gạch ngang
+            holder.originalPrice.setPaintFlags(holder.originalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.productPrice.setText(String.format("%.0f VND", product.getFinalPrice()));
             holder.discountTag.setVisibility(View.VISIBLE);
             holder.discountTag.setText(String.format("-%d%%", Math.round(product.getDiscount())));
@@ -62,6 +69,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             holder.originalPrice.setVisibility(View.GONE);
             holder.productPrice.setText(String.format("%.0f VND", product.getPrice()));
             holder.discountTag.setVisibility(View.GONE);
+        }
+
+        // Kiểm tra và hiển thị tag Best Seller
+        if (bestSellerIds != null && bestSellerIds.contains(product.getProductId())) {
+            holder.bestSellerTag.setVisibility(View.VISIBLE);
+        } else {
+            holder.bestSellerTag.setVisibility(View.GONE);
         }
 
         String imageUrl = product.getImages();
@@ -105,7 +119,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
-        TextView productName, productPrice, discountTag, originalPrice;
+        TextView productName, productPrice, discountTag, originalPrice, bestSellerTag;
         Button addToCartButton;
 
         public ProductViewHolder(@NonNull View itemView) {
@@ -115,6 +129,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productPrice = itemView.findViewById(R.id.product_price);
             discountTag = itemView.findViewById(R.id.discount_tag);
             originalPrice = itemView.findViewById(R.id.original_price);
+            bestSellerTag = itemView.findViewById(R.id.best_seller_tag);
             addToCartButton = itemView.findViewById(R.id.add_to_cart_button);
         }
     }

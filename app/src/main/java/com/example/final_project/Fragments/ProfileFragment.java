@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,8 +19,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.final_project.AddressManagementActivity;
-import com.example.final_project.FeedbackActivity; // Thêm import
+import com.example.final_project.FeedbackActivity;
 import com.example.final_project.Log.LogInActivity;
 import com.example.final_project.OrderHistoryActivity;
 import com.example.final_project.ProfileActivity;
@@ -27,10 +29,10 @@ import com.example.final_project.R;
 
 public class ProfileFragment extends Fragment {
     private TextView txtFullName;
+    private ImageView imgAvatar;
     private Button btnLogout;
-    private LinearLayout btnShowInfo, btnPurchaseHistory, btnShippingAddress, btnFeedback, btnVouchers; // Thêm btnFeedback
+    private LinearLayout btnShowInfo, btnPurchaseHistory, btnShippingAddress, btnFeedback, btnVouchers;
     private SharedPreferences sharedPreferences;
-
 
     private ActivityResultLauncher<Intent> profileActivityLauncher;
 
@@ -43,7 +45,7 @@ public class ProfileFragment extends Fragment {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == getActivity().RESULT_OK) {
-                        updateFullName();
+                        updateFullNameAndAvatar();
                     }
                 }
         );
@@ -51,7 +53,8 @@ public class ProfileFragment extends Fragment {
         sharedPreferences = requireActivity().getSharedPreferences("userPrefs", Context.MODE_PRIVATE);
 
         txtFullName = view.findViewById(R.id.txt_full_name);
-        updateFullName();
+        imgAvatar = view.findViewById(R.id.img_avatar);
+        updateFullNameAndAvatar();
 
         btnShowInfo = view.findViewById(R.id.btn_show_info);
         btnShowInfo.setOnClickListener(v -> {
@@ -71,7 +74,6 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
         });
 
-        // Thêm sự kiện cho Feedback / Contact
         btnFeedback = view.findViewById(R.id.btn_feedback);
         btnFeedback.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), FeedbackActivity.class);
@@ -93,10 +95,21 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private void updateFullName() {
+    private void updateFullNameAndAvatar() {
         String fullName = sharedPreferences.getString("fullname", "User");
+        String profileImg = sharedPreferences.getString("profile_img", null);
         Log.d("ProfileFragment", "Retrieved Fullname: " + fullName);
         txtFullName.setText("Xin chào, " + fullName);
+
+        // Load ảnh đại diện
+        if (profileImg != null && !profileImg.isEmpty()) {
+            Glide.with(this)
+                    .load(profileImg)
+                    .circleCrop()
+                    .into(imgAvatar);
+        } else {
+            imgAvatar.setImageResource(R.drawable.person);
+        }
     }
 
     private void logoutUser() {
