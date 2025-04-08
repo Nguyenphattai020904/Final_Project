@@ -1,4 +1,4 @@
-package com.example.final_project.Fragments;
+package com.example.final_project.Adapter;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.final_project.Fragments.CartFragment;
+import com.example.final_project.Fragments.CartManager;
 import com.example.final_project.Products.Product;
 import com.example.final_project.R;
 import com.squareup.picasso.Picasso;

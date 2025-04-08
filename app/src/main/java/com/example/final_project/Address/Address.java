@@ -1,4 +1,4 @@
-package com.example.final_project;
+package com.example.final_project.Address;
 
 public class Address {
     private int id;

@@ -1,4 +1,4 @@
-package com.example.final_project;
+package com.example.final_project.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.final_project.R;
+import com.example.final_project.Voucher;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 

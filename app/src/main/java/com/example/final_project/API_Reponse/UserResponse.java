@@ -11,7 +11,7 @@ public class UserResponse {
     private String fullname;
 
     @SerializedName("userId")
-    private String userId; // Thêm trường userId
+    private String userId;
 
     @SerializedName("user")
     private UserDetails userDetails;
@@ -71,6 +71,9 @@ public class UserResponse {
         private String gender;
         private String dateOfBirth;
 
+        @SerializedName("profile_img")
+        private String profileImg;
+
         public String getName() {
             return name;
         }
@@ -109,6 +112,14 @@ public class UserResponse {
 
         public void setDateOfBirth(String dateOfBirth) {
             this.dateOfBirth = dateOfBirth;
+        }
+
+        public String getProfileImg() {
+            return profileImg;
+        }
+
+        public void setProfileImg(String profileImg) {
+            this.profileImg = profileImg;
         }
     }
 }

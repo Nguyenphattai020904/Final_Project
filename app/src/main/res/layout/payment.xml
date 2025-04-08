@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginBottom="16dp"
-            android:text="Payment Information"
+            android:text="Thông tin thanh toán"
             android:textColor="@color/green_smoke"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -90,7 +90,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="New Shipping Address:"
+                android:text="Nhập địa chỉ tạm thời:"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"

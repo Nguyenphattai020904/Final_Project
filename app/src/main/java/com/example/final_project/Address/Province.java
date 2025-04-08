@@ -1,8 +1,6 @@
-package com.example.final_project;
+package com.example.final_project.Address;
 
-import android.app.Activity;
-
-public class Ward {
+public class Province {
     private String name;
     private int code;
 
