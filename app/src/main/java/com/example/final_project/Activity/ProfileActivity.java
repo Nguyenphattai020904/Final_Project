@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -22,21 +23,27 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.final_project.API_Controls.ApiService;
 import com.example.final_project.API_Controls.RetrofitClient;
 import com.example.final_project.API_Reponse.UserResponse;
+import com.example.final_project.Log.LogInActivity;
 import com.example.final_project.R;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -154,6 +161,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void loadUserInfo() {
         String token = sharedPreferences.getString("access_token", "");
+        if (token.isEmpty()) {
+            Toast.makeText(this, "Session expired, please log in again", Toast.LENGTH_SHORT).show();
+            redirectToLogin();
+            return;
+        }
+
         ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
         Call<UserResponse> call = apiService.getUserInfo("Bearer " + token);
 
@@ -175,19 +188,29 @@ public class ProfileActivity extends AppCompatActivity {
                             if (profileImg != null && !profileImg.isEmpty()) {
                                 Glide.with(ProfileActivity.this)
                                         .load(profileImg)
+                                        .thumbnail(0.25f)
+                                        .apply(new RequestOptions()
+                                                .override(150, 150)
+                                                .diskCacheStrategy(DiskCacheStrategy.ALL))
                                         .circleCrop()
-                                        .error(R.drawable.person) // Ảnh mặc định nếu tải thất bại
+                                        .error(R.drawable.person)
                                         .listener(new RequestListener<Drawable>() {
                                             @Override
                                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                                Log.e("ProfileActivity", "Failed to load profile image: " + e.getMessage());
+                                                Log.e("ProfileActivity", "Failed to load profile image: " + profileImg);
+                                                if (e != null) {
+                                                    Log.e("ProfileActivity", "Glide error: " + e.getMessage());
+                                                    for (Throwable t : e.getCauses()) {
+                                                        Log.e("ProfileActivity", "Cause: " + t.getMessage());
+                                                    }
+                                                }
                                                 Toast.makeText(ProfileActivity.this, "Failed to load profile image", Toast.LENGTH_SHORT).show();
-                                                return false; // Cho phép Glide hiển thị ảnh mặc định
+                                                return false;
                                             }
 
                                             @Override
                                             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                                Log.d("ProfileActivity", "Profile image loaded successfully");
+                                                Log.d("ProfileActivity", "Profile image loaded successfully: " + profileImg);
                                                 return false;
                                             }
                                         })
@@ -207,7 +230,14 @@ public class ProfileActivity extends AppCompatActivity {
                             editor.apply();
                         });
                     } else {
-                        runOnUiThread(() -> Toast.makeText(ProfileActivity.this, "Failed to load user info", Toast.LENGTH_SHORT).show());
+                        if (response.code() == 401) {
+                            runOnUiThread(() -> {
+                                Toast.makeText(ProfileActivity.this, "Session expired, please log in again", Toast.LENGTH_SHORT).show();
+                                redirectToLogin();
+                            });
+                        } else {
+                            runOnUiThread(() -> Toast.makeText(ProfileActivity.this, "Failed to load user info", Toast.LENGTH_SHORT).show());
+                        }
                     }
                 }
 
@@ -217,6 +247,12 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+
+    private void redirectToLogin() {
+        Intent intent = new Intent(this, LogInActivity.class); // Thay LoginActivity bằng Activity đăng nhập của bạn
+        startActivity(intent);
+        finish();
     }
 
     private void showImagePickerDialog() {
@@ -332,7 +368,7 @@ public class ProfileActivity extends AppCompatActivity {
                     mimeType = "image/png";
                     break;
                 default:
-                    mimeType = "image/jpeg"; // Mặc định là JPEG nếu không xác định được
+                    mimeType = "image/jpeg";
             }
         }
         return mimeType;
@@ -343,7 +379,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (path != null) {
             return path.substring(path.lastIndexOf(".") + 1);
         }
-        return "jpg"; // Mặc định là .jpg nếu không lấy được đuôi file
+        return "jpg";
     }
 
     private String ensureFileExtension(String fileName, String defaultExtension) {
@@ -358,14 +394,20 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void saveProfile() {
+        String token = sharedPreferences.getString("access_token", "");
+        if (token.isEmpty()) {
+            Toast.makeText(this, "Session expired, please log in again", Toast.LENGTH_SHORT).show();
+            redirectToLogin();
+            return;
+        }
+
         String name = txtFullName.getText().toString();
         String gender = txtGender.getText().toString().replaceAll("^\"|\"$", "");
         String dob = txtDob.getText().toString().trim();
         String phone = txtPhone.getText().toString();
 
-        Log.d("ProfileActivity", "Raw dob before sending: " + dob); // Thêm log này
+        Log.d("ProfileActivity", "Raw dob before sending: " + dob);
 
-        String token = sharedPreferences.getString("access_token", "");
         ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
 
         String dobToSend = dob.equals("Not set") || dob.isEmpty() ? null : dob;
@@ -374,9 +416,8 @@ public class ProfileActivity extends AppCompatActivity {
         RequestBody genderBody = RequestBody.create(MediaType.parse("text/plain"), gender.equals("Not set") ? "" : gender);
         RequestBody dobBody = dobToSend == null ? null : RequestBody.create(MediaType.parse("text/plain"), dobToSend);
 
-        Log.d("ProfileActivity", "dobToSend: " + dobToSend); // Thêm log này
+        Log.d("ProfileActivity", "dobToSend: " + dobToSend);
 
-        // Chuẩn bị file ảnh (nếu có)
         MultipartBody.Part profileImgPart = null;
         if (selectedImageUri != null) {
             String filePath = getRealPathFromURI(selectedImageUri);
@@ -402,7 +443,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         }
 
-        // Gọi API để cập nhật thông tin
         Call<UserResponse> call = apiService.updateProfile(
                 "Bearer " + token,
                 name,
@@ -426,7 +466,6 @@ public class ProfileActivity extends AppCompatActivity {
                             btnEditDob.setVisibility(View.GONE);
                             btnEditPhone.setVisibility(View.GONE);
 
-                            // Cập nhật lại SharedPreferences
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("fullname", name);
                             editor.putString("phone", phone);
@@ -437,25 +476,29 @@ public class ProfileActivity extends AppCompatActivity {
                             }
                             editor.apply();
 
-                            // Đặt lại selectedImageUri sau khi lưu
                             selectedImageUri = null;
-
-                            // Kết thúc activity và trả về kết quả
                             setResult(RESULT_OK);
                             finish();
                         });
                     } else {
-                        runOnUiThread(() -> {
-                            Toast.makeText(ProfileActivity.this, "Failed to update profile: " + response.message(), Toast.LENGTH_SHORT).show();
-                            Log.e("ProfileActivity", "Response code: " + response.code());
-                            if (response.errorBody() != null) {
-                                try {
-                                    Log.e("ProfileActivity", "Error body: " + response.errorBody().string());
-                                } catch (Exception e) {
-                                    Log.e("ProfileActivity", "Error reading error body: " + e.getMessage());
+                        if (response.code() == 401) {
+                            runOnUiThread(() -> {
+                                Toast.makeText(ProfileActivity.this, "Session expired, please log in again", Toast.LENGTH_SHORT).show();
+                                redirectToLogin();
+                            });
+                        } else {
+                            runOnUiThread(() -> {
+                                Toast.makeText(ProfileActivity.this, "Failed to update profile: " + response.message(), Toast.LENGTH_SHORT).show();
+                                Log.e("ProfileActivity", "Response code: " + response.code());
+                                if (response.errorBody() != null) {
+                                    try {
+                                        Log.e("ProfileActivity", "Error body: " + response.errorBody().string());
+                                    } catch (Exception e) {
+                                        Log.e("ProfileActivity", "Error reading error body: " + e.getMessage());
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
 
@@ -470,17 +513,35 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    // Hàm lấy đường dẫn thực tế từ URI
     private String getRealPathFromURI(Uri uri) {
-        String[] projection = {MediaStore.Images.Media.DATA};
-        android.database.Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-        if (cursor != null) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            String path = cursor.getString(column_index);
-            cursor.close();
-            return path;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(uri);
+                File file = new File(getCacheDir(), "temp_image_" + System.currentTimeMillis() + ".jpg");
+                FileOutputStream outputStream = new FileOutputStream(file);
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+                inputStream.close();
+                outputStream.close();
+                return file.getAbsolutePath();
+            } catch (IOException e) {
+                Log.e("ProfileActivity", "Failed to copy file: " + e.getMessage());
+                return null;
+            }
+        } else {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            android.database.Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+            if (cursor != null) {
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                String path = cursor.getString(column_index);
+                cursor.close();
+                return path;
+            }
+            return null;
         }
-        return null;
     }
 }

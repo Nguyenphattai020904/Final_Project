@@ -227,7 +227,7 @@ public class ChatBotFragment extends DialogFragment {
 
     private boolean isNetworkStable() {
         try {
-            URL url = new URL("http://192.168.1.3:3000/api/ping");
+            URL url = new URL("http://172.16.65.119:3000/api/ping");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("HEAD");
             connection.setConnectTimeout(3000);
