@@ -16,11 +16,41 @@
         android:textColor="@color/green_smoke"
         android:layout_marginBottom="16dp" />
 
+    <!-- Container cho icon và message khi chưa có địa chỉ -->
+    <LinearLayout
+        android:id="@+id/empty_address_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/emty_cart_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/address"
+            android:tint="@color/red" />
+
+        <TextView
+            android:id="@+id/empty_cart_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Không có địa chỉ nào được thêm vào"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_addresses"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" /> <!-- Sử dụng layout_weight để chia sẻ không gian -->
+        android:layout_weight="1"
+        android:visibility="gone" /> <!-- Ban đầu ẩn RecyclerView -->
 
     <Button
         android:id="@+id/btn_add_new_address"

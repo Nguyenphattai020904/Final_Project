@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/back_ground">
@@ -13,69 +13,83 @@
         android:layout_height="wrap_content"
         android:text="Liên hệ"
         android:textColor="@color/green_smoke"
-        android:textSize="22sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <!-- Contact Information -->
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp"
-        android:background="@drawable/border_vip"
         android:layout_marginTop="16dp"
-        android:elevation="2dp">
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
 
-        <!-- Email -->
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email: freshfoodtuoisach2025@gmail.com"
-            android:textSize="16sp"
-            android:textColor="@color/red"
-            android:drawableLeft="@drawable/ic_email"
-            android:drawablePadding="8dp"
-            android:clickable="true"
-            android:focusable="true" />
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/border_vip">
 
-        <!-- Phone -->
-        <TextView
-            android:id="@+id/tv_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Phone: 0916303763"
-            android:textSize="16sp"
-            android:textColor="@color/red"
-            android:drawableLeft="@drawable/ic_phone"
-            android:drawablePadding="8dp"
-            android:layout_marginTop="8dp"
-            android:clickable="true"
-            android:focusable="true" />
-    </LinearLayout>
+            <!-- Email -->
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email: freshfoodtuoisach2025@gmail.com"
+                android:textSize="16sp"
+                android:textColor="@color/red"
+                android:drawableLeft="@drawable/ic_email"
+                android:drawablePadding="12dp"
+                android:drawableTint="@color/red"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Email Contact" />
+
+            <!-- Phone -->
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Phone: 0916303763"
+                android:textSize="16sp"
+                android:textColor="@color/red"
+                android:drawableLeft="@drawable/ic_phone"
+                android:drawablePadding="12dp"
+                android:drawableTint="@color/red"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Phone Contact" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <!-- Feedback Message -->
     <EditText
         android:id="@+id/etMessage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:hint="Viết nhận xét của bạn ở đây..."
-        android:background="@android:drawable/edit_text"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/edit_text_background"
         android:gravity="top|start"
+        android:hint="Viết nhận xét của bạn ở đây..."
+        android:padding="16dp"
         android:textColor="@color/black"
-        android:padding="12dp"
-        android:layout_marginTop="16dp"/>
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="16sp" />
 
     <!-- Send Button -->
     <Button
         android:id="@+id/btnSendFeedback"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/green_smoke"
         android:text="Gửi"
+        android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:backgroundTint="@color/green_smoke"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="12dp"
-        app:cornerRadius="10dp"/>
+        app:cornerRadius="12dp" />
 </LinearLayout>

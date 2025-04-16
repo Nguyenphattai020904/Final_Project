@@ -2,7 +2,9 @@ package com.example.final_project.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +29,7 @@ public class AddressManagementActivity extends AppCompatActivity {
     private RecyclerView recyclerViewAddresses;
     private Button btnAddNewAddress;
     private AddressAdapter addressAdapter;
+    private LinearLayout emptyAddressContainer; // Container cho icon và message
     private List<Address> addressList = new ArrayList<>();
 
     @Override
@@ -36,6 +39,7 @@ public class AddressManagementActivity extends AppCompatActivity {
 
         recyclerViewAddresses = findViewById(R.id.recycler_view_addresses);
         btnAddNewAddress = findViewById(R.id.btn_add_new_address);
+        emptyAddressContainer = findViewById(R.id.empty_address_container); // Khởi tạo container
 
         recyclerViewAddresses.setLayoutManager(new LinearLayoutManager(this));
         addressAdapter = new AddressAdapter(addressList, this::onEditAddress, this::onDeleteAddress);
@@ -66,6 +70,7 @@ public class AddressManagementActivity extends AppCompatActivity {
                     addressList.clear();
                     addressList.addAll(response.body());
                     addressAdapter.notifyDataSetChanged();
+                    updateUI(); // Cập nhật UI sau khi tải dữ liệu
                 } else {
                     Toast.makeText(AddressManagementActivity.this, "Lỗi tải địa chỉ: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
@@ -76,6 +81,16 @@ public class AddressManagementActivity extends AppCompatActivity {
                 Toast.makeText(AddressManagementActivity.this, "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void updateUI() {
+        if (addressList.isEmpty()) {
+            recyclerViewAddresses.setVisibility(View.GONE);
+            emptyAddressContainer.setVisibility(View.VISIBLE); // Hiển thị container khi không có địa chỉ
+        } else {
+            recyclerViewAddresses.setVisibility(View.VISIBLE);
+            emptyAddressContainer.setVisibility(View.GONE); // Ẩn container khi có địa chỉ
+        }
     }
 
     private void onEditAddress(Address address) {
@@ -94,6 +109,7 @@ public class AddressManagementActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     addressList.remove(address);
                     addressAdapter.notifyDataSetChanged();
+                    updateUI(); // Cập nhật UI sau khi xóa
                     Toast.makeText(AddressManagementActivity.this, "Xóa địa chỉ thành công", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(AddressManagementActivity.this, "Lỗi khi xóa địa chỉ: " + response.message(), Toast.LENGTH_SHORT).show();

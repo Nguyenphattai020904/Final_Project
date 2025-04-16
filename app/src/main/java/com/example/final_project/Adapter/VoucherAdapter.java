@@ -11,7 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.final_project.R;
 import com.example.final_project.Voucher;
 import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherViewHolder> {
     private List<Voucher> vouchers;
@@ -32,7 +36,18 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
     public void onBindViewHolder(VoucherViewHolder holder, int position) {
         Voucher voucher = vouchers.get(position);
         holder.voucherName.setText(voucher.getVoucherName());
-        holder.voucherDate.setText("Hết hạn: " + voucher.getVoucherDate());
+
+        // Định dạng ngày hết hạn
+        Date voucherDate = voucher.getVoucherDate();
+        String formattedDate = "Không xác định"; // Giá trị mặc định nếu có lỗi
+
+        if (voucherDate != null) {
+            // Định dạng Date thành chuỗi yyyy/MM/dd
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+            formattedDate = outputFormat.format(voucherDate);
+        }
+
+        holder.voucherDate.setText("Hết hạn: " + formattedDate);
         Picasso.get().load(voucher.getVoucherImage()).into(holder.voucherImage);
     }
 

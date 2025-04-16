@@ -20,8 +20,10 @@ import com.example.final_project.Products.Product;
 import com.example.final_project.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     private Context context;
@@ -56,7 +58,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         Log.d("CartAdapter", "Binding item at position " + position + ": " + product.getName());
 
         holder.productName.setText(product.getName());
-        holder.productPrice.setText(String.format("%.0f VND", product.getFinalPrice()));
+        holder.productPrice.setText(formatPrice(product.getPrice()));
         holder.quantityText.setText(String.valueOf(product.getQuantity()));
 
         String imageUrl = product.getImages();
@@ -172,4 +174,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             outRect.top = spacing;
         }
     }
+
+    private String formatPrice(double price) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        formatter.setMinimumFractionDigits(0); // Không hiển thị phần thập phân
+        return formatter.format(price);
+    }
+
 }

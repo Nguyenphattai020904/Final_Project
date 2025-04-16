@@ -197,7 +197,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         menuLayout.setBackgroundColor(Color.WHITE);
         menuLayout.setPadding(16, 16, 16, 16);
 
-        String[] categories = {"Tất Cả", "Thực Phẩm Tươi", "Đồ Uống", "Thực Phẩm Khô", "Gia Vị"};
+        String[] categories = {"Tất Cả", "Thực Phẩm Tươi", "Đồ Uống", "Thực Phẩm Khô", "Gia Vị", "Đặc Sản Việt"};
         for (String category : categories) {
             Button button = new Button(getContext());
             button.setText(category);

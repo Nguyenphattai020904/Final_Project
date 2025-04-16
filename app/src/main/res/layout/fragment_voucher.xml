@@ -13,11 +13,39 @@
         android:textColor="@color/green_smoke"
         android:textSize="22sp"
         android:textStyle="bold" />
+    <LinearLayout
+        android:id="@+id/empty_voucher_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/empty_voucher_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/discount"
+            android:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/empty_voucher_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Không có mã giảm giá nào"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/voucher_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/back_ground"/>
+        android:background="@color/back_ground"
+        android:visibility="gone"/>
 </LinearLayout>

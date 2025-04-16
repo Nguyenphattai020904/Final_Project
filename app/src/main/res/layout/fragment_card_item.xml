@@ -1,99 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="130dp"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:padding="8dp"
-    android:gravity="center_vertical"
-    android:background="@drawable/border_vip">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="4dp"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
 
-    <CheckBox
-        android:id="@+id/checkbox_select"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp" />
+        android:padding="12dp">
 
-    <ImageView
-        android:id="@+id/imgProduct"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:scaleType="centerCrop"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_cart" />
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/txtNameProduct"
+        <!-- Checkbox -->
+        <CheckBox
+            android:id="@+id/checkbox_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Ảnh sản phẩm -->
+        <ImageView
+            android:id="@+id/imgProduct"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/rounded_image_background"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_cart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/checkbox_select"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Tên và giá sản phẩm -->
+        <TextView
+            android:id="@+id/txtNameProduct"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
             android:text="Product Name"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/btnDelete"
+            app:layout_constraintStart_toEndOf="@id/imgProduct"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtPriceProduct"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="12dp"
             android:text="$0.00"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/btnDelete"
+            app:layout_constraintStart_toEndOf="@id/imgProduct"
+            app:layout_constraintTop_toBottomOf="@id/txtNameProduct" />
+
+        <!-- Bộ chọn số lượng -->
+        <ImageButton
+            android:id="@+id/btnDecrease"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/round_button_background"
+            android:contentDescription="Decrease Quantity"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_minus"
+            android:tint="@color/green_smoke"
+            app:layout_constraintStart_toEndOf="@id/imgProduct"
+            app:layout_constraintTop_toBottomOf="@id/txtPriceProduct" />
+
+        <TextView
+            android:id="@+id/txtQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/round_button_background"
+            android:gravity="center"
+            android:text="1"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:layout_marginTop="4dp" />
+            app:layout_constraintStart_toEndOf="@id/btnDecrease"
+            app:layout_constraintTop_toBottomOf="@id/txtPriceProduct" />
 
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/btnIncrease"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="8dp">
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/round_button_background"
+            android:contentDescription="Increase Quantity"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_plus"
+            android:tint="@color/green_smoke"
+            app:layout_constraintStart_toEndOf="@id/txtQuantity"
+            app:layout_constraintTop_toBottomOf="@id/txtPriceProduct" />
 
-            <ImageButton
-                android:id="@+id/btnDecrease"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="@drawable/bg_button_round"
-                android:src="@drawable/ic_minus"
-                android:scaleType="centerInside"
-                android:layout_marginLeft="2dp"
-                android:contentDescription="Decrease Quantity" />
+        <!-- Nút xóa -->
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/delete_button_background"
+            android:contentDescription="Delete Product"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_delete"
+            android:tint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/txtQuantity"
-                android:layout_width="60dp"
-                android:layout_height="32dp"
-                android:gravity="center"
-                android:text="1"
-                android:textSize="14sp"
-                android:textColor="@color/black"
-                android:layout_marginLeft="2dp"
-                android:background="@drawable/rounded_edittext"
-                android:layout_marginHorizontal="8dp" />
-
-            <ImageButton
-                android:id="@+id/btnIncrease"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="@drawable/bg_button_round"
-                android:src="@drawable/ic_plus"
-                android:scaleType="centerInside"
-                android:contentDescription="Increase Quantity" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/btnDelete"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="#ff5757"
-        android:src="@drawable/ic_delete"
-        android:tint="@android:color/white"
-        android:scaleType="centerInside"
-        android:contentDescription="Delete Product"
-        android:layout_marginStart="8dp" />
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

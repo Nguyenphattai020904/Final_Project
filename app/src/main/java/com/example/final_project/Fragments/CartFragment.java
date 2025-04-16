@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -24,7 +24,7 @@ import java.util.List;
 public class CartFragment extends Fragment implements CartAdapter.OnQuantityChangeListener {
     private RecyclerView recyclerView;
     private CartAdapter cartAdapter;
-    private TextView emptyCartMessage;
+    private LinearLayout emptyCartContainer; // Container cho icon và message
     private Button buyNowButton;
     private CheckBox selectAllCheckBox;
 
@@ -33,7 +33,7 @@ public class CartFragment extends Fragment implements CartAdapter.OnQuantityChan
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         recyclerView = view.findViewById(R.id.cart_recycler_view);
-        emptyCartMessage = view.findViewById(R.id.empty_cart_message);
+        emptyCartContainer = view.findViewById(R.id.empty_cart_container); // Khởi tạo container
         buyNowButton = view.findViewById(R.id.btnBuyNow);
         selectAllCheckBox = view.findViewById(R.id.checkbox_select_all);
 
@@ -96,12 +96,12 @@ public class CartFragment extends Fragment implements CartAdapter.OnQuantityChan
         List<Product> cartItems = CartManager.getInstance(getContext()).getCartItems();
         if (cartItems.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
-            emptyCartMessage.setVisibility(View.VISIBLE);
+            emptyCartContainer.setVisibility(View.VISIBLE); // Hiển thị container khi giỏ hàng trống
             buyNowButton.setVisibility(View.GONE);
             selectAllCheckBox.setVisibility(View.GONE);
         } else {
             recyclerView.setVisibility(View.VISIBLE);
-            emptyCartMessage.setVisibility(View.GONE);
+            emptyCartContainer.setVisibility(View.GONE); // Ẩn container khi giỏ hàng có sản phẩm
             buyNowButton.setVisibility(View.VISIBLE);
             selectAllCheckBox.setVisibility(View.VISIBLE);
         }

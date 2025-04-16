@@ -73,6 +73,7 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Edit Name"
                     android:src="@drawable/edit"
+                    android:visibility="gone"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
@@ -115,6 +116,7 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Edit Gender"
                     android:src="@drawable/edit"
+                    android:visibility="gone"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
@@ -157,6 +159,7 @@
                     android:layout_height="32dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Edit DOB"
+                    android:visibility="gone"
                     android:src="@drawable/edit"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
@@ -201,6 +204,7 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Edit Phone"
                     android:src="@drawable/edit"
+                    android:visibility="gone"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 

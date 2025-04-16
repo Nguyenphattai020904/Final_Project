@@ -8,19 +8,29 @@
     android:padding="16dp"
     android:background="@color/back_ground">
 
+    <!-- Title -->
     <TextView
+        android:id="@+id/title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:text="Vòng Quay May Mắn"
-        android:textColor="#FF5722"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textColor="@color/red"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
+        android:shadowColor="#80000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Đăng nhập mỗi ngày nhận 1 lượt quay"
+        android:text="Mỗi ngày nhận 1 lượt quay"
         android:textSize="16sp"
         android:textColor="#FF5722"
         android:layout_marginBottom="8dp" />
