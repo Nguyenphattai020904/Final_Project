@@ -16,10 +16,42 @@
         android:textSize="22sp"
         android:textStyle="bold" />
 
+    <!-- Container cho icon và message khi không có đơn hàng -->
+    <LinearLayout
+        android:id="@+id/empty_order_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/empty_order_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/history"
+            android:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/empty_order_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Không có đơn hàng nào"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <!-- Order List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewOrders"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" /> <!-- Ban đầu ẩn RecyclerView -->
 </LinearLayout>

@@ -14,7 +14,9 @@ import com.bumptech.glide.Glide;
 import com.example.final_project.API_Reponse.OrderListResponse;
 import com.example.final_project.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.OrderViewHolder> {
     private List<OrderListResponse.OrderItem> orders;
@@ -39,7 +41,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         OrderListResponse.OrderItem order = orders.get(position);
         holder.tvOrderId.setText("Mã đơn hàng: " + order.getOrderId());
         holder.tvOrderDate.setText("Ngày: " + order.getOrderDate());
-        holder.tvOrderTotal.setText(String.valueOf(order.getTotalPrice()));
+        holder.tvOrderTotal.setText(formatPrice(order.getTotalPrice()));
         holder.tvOrderStatus.setText("Trạng thái: " + formatStatus(order.getStatus())); // Hiển thị status
 
         String imageUrl = order.getFirstProductImage();
@@ -96,5 +98,10 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             case "delivered": return "Đã giao hàng";
             default: return status;
         }
+    }
+
+    private String formatPrice(double price) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        return formatter.format(price);
     }
 }

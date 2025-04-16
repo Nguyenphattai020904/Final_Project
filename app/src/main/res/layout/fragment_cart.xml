@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/back_ground">
+    android:background="@color/back_ground"
+    android:padding="16dp"> <!-- Thêm padding để giao diện thoáng hơn -->
 
     <!-- Checkbox Select All -->
     <LinearLayout
@@ -21,7 +22,6 @@
             android:text="Chọn tất cả"
             android:textSize="16sp"
             android:textColor="@color/black" />
-
     </LinearLayout>
 
     <!-- RecyclerView hiển thị danh sách sản phẩm trong giỏ hàng -->
@@ -32,18 +32,34 @@
         android:layout_weight="1"
         android:visibility="gone" />
 
-    <!-- Thông báo khi giỏ hàng trống -->
-    <TextView
-        android:id="@+id/empty_cart_message"
+    <!-- Container cho icon và message khi giỏ hàng trống -->
+    <LinearLayout
+        android:id="@+id/empty_cart_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
         android:gravity="center"
-        android:text="Không có sản phẩm nào trong giỏ hàng"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold|italic"
-        android:visibility="visible" />
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/emty_cart_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/emty_card_icon"
+            android:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/empty_cart_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Không có sản phẩm nào trong giỏ hàng"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <!-- Button Thanh toán -->
     <Button

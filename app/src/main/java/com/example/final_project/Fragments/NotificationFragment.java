@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.final_project.API_Controls.ApiService;
 import com.example.final_project.API_Controls.RetrofitClient;
 import com.example.final_project.API_Reponse.NotificationResponse;
-import com.example.final_project.Notification; // Import đúng lớp Notification
+import com.example.final_project.Notification;
 import com.example.final_project.R;
 
 import java.text.SimpleDateFormat;
@@ -31,6 +32,7 @@ import retrofit2.Response;
 public class NotificationFragment extends Fragment {
     private RecyclerView recyclerView;
     private NotificationAdapter adapter;
+    private LinearLayout emptyNotificationContainer; // Container cho icon và message
     private List<Notification> notificationList = new ArrayList<>();
 
     @Override
@@ -38,6 +40,8 @@ public class NotificationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
 
         recyclerView = view.findViewById(R.id.notification_recycler_view);
+        emptyNotificationContainer = view.findViewById(R.id.empty_notification_container); // Khởi tạo container
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new NotificationAdapter(notificationList, this::deleteNotification);
         recyclerView.setAdapter(adapter);
@@ -58,11 +62,13 @@ public class NotificationFragment extends Fragment {
             public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     notificationList.clear();
-                    List<Notification> fetchedNotifications = response.body().getNotifications(); // Sử dụng đúng kiểu
+                    List<Notification> fetchedNotifications = response.body().getNotifications();
                     if (fetchedNotifications != null) {
-                        notificationList.addAll(fetchedNotifications); // Thêm danh sách thông báo từ API
+                        notificationList.addAll(fetchedNotifications);
                         adapter.notifyDataSetChanged();
+                        updateUI(); // Cập nhật UI sau khi tải dữ liệu
                     } else {
+                        updateUI(); // Cập nhật UI ngay cả khi danh sách rỗng
                         Toast.makeText(getContext(), "Danh sách thông báo rỗng", Toast.LENGTH_SHORT).show();
                     }
                 } else {
@@ -77,6 +83,16 @@ public class NotificationFragment extends Fragment {
         });
     }
 
+    private void updateUI() {
+        if (notificationList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            emptyNotificationContainer.setVisibility(View.VISIBLE); // Hiển thị container khi không có thông báo
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyNotificationContainer.setVisibility(View.GONE); // Ẩn container khi có thông báo
+        }
+    }
+
     private void deleteNotification(int id) {
         String token = getActivity().getSharedPreferences("userPrefs", getContext().MODE_PRIVATE).getString("access_token", "");
         ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
@@ -88,6 +104,7 @@ public class NotificationFragment extends Fragment {
                 if (response.isSuccessful()) {
                     notificationList.removeIf(n -> n.getId() == id);
                     adapter.notifyDataSetChanged();
+                    updateUI(); // Cập nhật UI sau khi xóa
                     updateNotificationBadge();
                 }
             }
@@ -118,7 +135,7 @@ class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewH
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification, parent, false); // Sửa tên layout thành notification_item
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification, parent, false);
         return new ViewHolder(view);
     }
 
@@ -133,7 +150,7 @@ class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewH
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
             Date date = sdf.parse(notification.getCreatedAt());
-            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             String formattedDate = outputFormat.format(date);
             holder.timestampTextView.setText(formattedDate);
         } catch (Exception e) {

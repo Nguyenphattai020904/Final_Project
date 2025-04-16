@@ -17,6 +17,9 @@ import com.example.final_project.Activity.MainActivity;
 import com.example.final_project.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class ProductDetailFragment extends Fragment {
     private ImageView productImage;
     private TextView productName, productPrice, productBrand, productCategory, productIngredients, productNutrients, productMainCategory, discountTag;
@@ -40,7 +43,7 @@ public class ProductDetailFragment extends Fragment {
         Product product = (Product) getArguments().getSerializable("product");
         if (product != null) {
             productName.setText(product.getName());
-            productPrice.setText(String.format("%.0f VND", product.getFinalPrice()));
+            productPrice.setText(formatPrice(product.getPrice()));
             productBrand.setText("Thương hiệu: " + (product.getBrand() != null ? product.getBrand() : "N/A"));
             productCategory.setText("Loại sản phẩm: " + (product.getCategory() != null ? product.getCategory() : "N/A"));
             productIngredients.setText("Thành phần: " + (product.getIngredients() != null ? product.getIngredients() : "N/A"));
@@ -86,7 +89,11 @@ public class ProductDetailFragment extends Fragment {
                 }
             });
         }
-
         return view;
+    }
+    private String formatPrice(double price) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        formatter.setMinimumFractionDigits(0); // Không hiển thị phần thập phân
+        return formatter.format(price);
     }
 }

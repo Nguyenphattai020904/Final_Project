@@ -2,6 +2,8 @@ package com.example.final_project.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import retrofit2.Response;
 public class OrderHistoryActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewOrders;
+    private LinearLayout emptyOrderContainer; // Container cho icon và message
     private OrderHistoryAdapter orderHistoryAdapter;
     private String userId;
     private String accessToken;
@@ -33,6 +36,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history_order);
 
         recyclerViewOrders = findViewById(R.id.recyclerViewOrders);
+        emptyOrderContainer = findViewById(R.id.empty_order_container); // Khởi tạo container
         recyclerViewOrders.setLayoutManager(new LinearLayoutManager(this));
 
         // Khởi tạo adapter rỗng để tránh cảnh báo "No adapter attached"
@@ -95,13 +99,26 @@ public class OrderHistoryActivity extends AppCompatActivity {
                             }
                     );
                     recyclerViewOrders.setAdapter(orderHistoryAdapter);
+
+                    // Kiểm tra danh sách đơn hàng và cập nhật UI
+                    if (response.body().getOrders() == null || response.body().getOrders().isEmpty()) {
+                        recyclerViewOrders.setVisibility(View.GONE);
+                        emptyOrderContainer.setVisibility(View.VISIBLE); // Hiển thị container khi không có đơn hàng
+                    } else {
+                        recyclerViewOrders.setVisibility(View.VISIBLE);
+                        emptyOrderContainer.setVisibility(View.GONE); // Ẩn container khi có đơn hàng
+                    }
                 } else {
+                    recyclerViewOrders.setVisibility(View.GONE);
+                    emptyOrderContainer.setVisibility(View.VISIBLE); // Hiển thị container khi không tải được dữ liệu
                     Toast.makeText(OrderHistoryActivity.this, "Không thể tải lịch sử đơn hàng", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<OrderListResponse> call, Throwable t) {
+                recyclerViewOrders.setVisibility(View.GONE);
+                emptyOrderContainer.setVisibility(View.VISIBLE); // Hiển thị container khi có lỗi
                 Toast.makeText(OrderHistoryActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

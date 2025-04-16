@@ -47,8 +47,10 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,6 +68,7 @@ public class ChatBotFragment extends DialogFragment {
     private ImageButton sendButton;
     private boolean isFragmentAlive = true;
     private String userId;
+    private static final String PROCESSING_MESSAGE = "⏳ Đang xử lý...";
 
     public ChatBotFragment() {}
 
@@ -136,10 +139,11 @@ public class ChatBotFragment extends DialogFragment {
         protected void onPostExecute(Boolean isStable) {
             if (!isFragmentAlive) return;
 
-
             displayMessage(userMessage, true, null);
             messageInput.setText("");
-            displayMessage("⏳ Đang xử lý...", false, null);
+            // Xóa bất kỳ tin nhắn "Đang xử lý..." cũ trước khi thêm mới
+            removeProcessingMessage();
+            displayMessage(PROCESSING_MESSAGE, false, null);
             callChatApi(userMessage);
         }
     }
@@ -176,6 +180,7 @@ public class ChatBotFragment extends DialogFragment {
             public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {
                 if (!isFragmentAlive) return;
 
+                // Xóa "Đang xử lý..." trước khi xử lý phản hồi
                 removeProcessingMessage();
 
                 if (response.isSuccessful() && response.body() != null) {
@@ -183,7 +188,6 @@ public class ChatBotFragment extends DialogFragment {
                         String botReply = response.body().getMessage();
                         List<MentionedProduct> mentionedProducts = response.body().getMentionedProducts();
                         if (botReply != null && !botReply.isEmpty()) {
-                            // Hiển thị câu trả lời kèm sản phẩm nếu có
                             displayMessage(botReply, false, mentionedProducts);
                         } else {
                             displayMessage("⚠ AI không phản hồi. Vui lòng thử lại.", false, null);
@@ -196,7 +200,9 @@ public class ChatBotFragment extends DialogFragment {
                             displayMessage(errorMessage, false, null);
                             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                                 if (isFragmentAlive) {
-                                    displayMessage("⏳ Đang thử lại...", false, null);
+                                    // Xóa bất kỳ tin nhắn "Đang xử lý..." cũ trước khi thêm mới
+                                    removeProcessingMessage();
+                                    displayMessage(PROCESSING_MESSAGE, false, null);
                                     callChatApi(userMessage);
                                 }
                             }, retryAfter * 1000L);
@@ -213,6 +219,7 @@ public class ChatBotFragment extends DialogFragment {
             @Override
             public void onFailure(Call<ChatResponse> call, Throwable t) {
                 if (!isFragmentAlive) return;
+                // Xóa "Đang xử lý..." trước khi hiển thị lỗi
                 removeProcessingMessage();
                 displayMessage("❌ Lỗi kết nối: " + t.getMessage(), false, null);
             }
@@ -227,7 +234,7 @@ public class ChatBotFragment extends DialogFragment {
 
     private boolean isNetworkStable() {
         try {
-            URL url = new URL("http://172.16.65.119:3000/api/ping");
+            URL url = new URL("http://172.16.74.100:3000/api/ping");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("HEAD");
             connection.setConnectTimeout(3000);
@@ -255,19 +262,24 @@ public class ChatBotFragment extends DialogFragment {
         ));
 
         TextView messageTextView = new TextView(getContext());
-        if (!isUser) {
+        // Chỉ định dạng HTML cho tin nhắn bot, trừ "Đang xử lý..."
+        if (!isUser && !PROCESSING_MESSAGE.equals(message)) {
             message = formatBotResponse(message);
+            Log.d(TAG, "Formatted bot response: " + message);
         }
-        messageTextView.setText(Html.fromHtml(message));
-        messageTextView.setTextSize(14);
+        messageTextView.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
+        messageTextView.setTextSize(16);
         messageTextView.setTextColor(getResources().getColor(android.R.color.black));
-        messageTextView.setPadding(16, 12, 16, 12);
+        messageTextView.setPadding(16, 8, 16, 8); // Đồng bộ padding
+        // Giới hạn chiều rộng tối đa để tin nhắn bot và user đều nhau
+        messageTextView.setMaxWidth((int) (getResources().getDisplayMetrics().widthPixels * 0.75)); // 75% chiều rộng màn hình
 
         LinearLayout.LayoutParams messageParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        messageParams.setMargins(8, 8, 8, 20);
+        // Đồng bộ margin để căn chỉnh đều
+        messageParams.setMargins(8, 8, 8, 8);
 
         if (isUser) {
             messageTextView.setBackgroundResource(R.drawable.user_message_background);
@@ -282,7 +294,7 @@ public class ChatBotFragment extends DialogFragment {
         messageTextView.setLayoutParams(messageParams);
         messageLayout.addView(messageTextView);
 
-        // Hiển thị box sản phẩm chỉ cho các sản phẩm được nhắc trong answer
+        // Phần hiển thị sản phẩm (giữ nguyên)
         if (!isUser && mentionedProducts != null && !mentionedProducts.isEmpty()) {
             String normalizedMessage = message.toLowerCase().replaceAll("[^a-zA-Z0-9\\s]", "");
             for (MentionedProduct product : mentionedProducts) {
@@ -306,8 +318,8 @@ public class ChatBotFragment extends DialogFragment {
                     productLayout.setLayoutParams(productLayoutParams);
 
                     ImageView productImage = new ImageView(getContext());
-                    LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(120, 120);
-                    imageParams.setMargins(0, 0, 16, 0);
+                    LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(240, 240);
+                    imageParams.setMargins(16, 16, 16, 0);
                     productImage.setLayoutParams(imageParams);
                     productImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     try {
@@ -325,7 +337,6 @@ public class ChatBotFragment extends DialogFragment {
                             1.0f
                     ));
 
-                    // Tên sản phẩm
                     TextView productNameTextView = new TextView(getContext());
                     productNameTextView.setText(product.getName());
                     productNameTextView.setTextSize(16);
@@ -333,49 +344,12 @@ public class ChatBotFragment extends DialogFragment {
                     productNameTextView.setTypeface(null, android.graphics.Typeface.BOLD);
                     productInfoLayout.addView(productNameTextView);
 
-                    // Giá
                     TextView productPriceTextView = new TextView(getContext());
-                    productPriceTextView.setText(String.format("Giá: %.0f VND", product.getPrice()));
+                    productPriceTextView.setText(formatPrice(product.getPrice()));
                     productPriceTextView.setTextSize(14);
                     productPriceTextView.setTextColor(getResources().getColor(android.R.color.darker_gray));
                     productInfoLayout.addView(productPriceTextView);
 
-                    // Thương hiệu
-                    TextView productBrandTextView = new TextView(getContext());
-                    productBrandTextView.setText("Thương hiệu: " + (product.getBrand() != null ? product.getBrand() : "N/A"));
-                    productBrandTextView.setTextSize(14);
-                    productBrandTextView.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                    productInfoLayout.addView(productBrandTextView);
-
-                    // Danh mục
-                    TextView productCategoryTextView = new TextView(getContext());
-                    productCategoryTextView.setText("Danh mục: " + (product.getCategory() != null ? product.getCategory() : "N/A"));
-                    productCategoryTextView.setTextSize(14);
-                    productCategoryTextView.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                    productInfoLayout.addView(productCategoryTextView);
-
-                    // Thành phần
-                    TextView productIngredientsTextView = new TextView(getContext());
-                    productIngredientsTextView.setText("Thành phần: " + (product.getIngredients() != null ? product.getIngredients() : "N/A"));
-                    productIngredientsTextView.setTextSize(14);
-                    productIngredientsTextView.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                    productInfoLayout.addView(productIngredientsTextView);
-
-                    // Dinh dưỡng
-                    TextView productNutrientsTextView = new TextView(getContext());
-                    productNutrientsTextView.setText("Dinh dưỡng: " + (product.getNutrients() != null ? product.getNutrients() : "N/A"));
-                    productNutrientsTextView.setTextSize(14);
-                    productNutrientsTextView.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                    productInfoLayout.addView(productNutrientsTextView);
-
-                    // Danh mục chính
-                    TextView productMainCategoryTextView = new TextView(getContext());
-                    productMainCategoryTextView.setText("Danh mục chính: " + (product.getMainCategory() != null ? product.getMainCategory() : "N/A"));
-                    productMainCategoryTextView.setTextSize(14);
-                    productMainCategoryTextView.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                    productInfoLayout.addView(productMainCategoryTextView);
-
-                    // Nút xem chi tiết
                     Button detailButton = new Button(getContext());
                     detailButton.setText("Xem chi tiết");
                     detailButton.setTextSize(12);
@@ -398,8 +372,11 @@ public class ChatBotFragment extends DialogFragment {
         }
 
         messageContainer.addView(messageLayout);
-        messageList.add(new Message(message, isUser, mentionedProducts));
-        saveMessageHistory();
+        // Không lưu tin nhắn "Đang xử lý..." vào messageList
+        if (!PROCESSING_MESSAGE.equals(message)) {
+            messageList.add(new Message(message, isUser, mentionedProducts));
+            saveMessageHistory();
+        }
         scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
     }
 
@@ -460,10 +437,32 @@ public class ChatBotFragment extends DialogFragment {
     }
 
     private void removeProcessingMessage() {
-        if (!messageList.isEmpty() && "⏳ Đang xử lý...".equals(messageList.get(messageList.size() - 1).getText())) {
-            messageList.remove(messageList.size() - 1);
-            messageContainer.removeViewAt(messageContainer.getChildCount() - 1);
+        Log.d(TAG, "Attempting to remove processing message. messageList size: " + messageList.size() + ", messageContainer children: " + messageContainer.getChildCount());
+        // Duyệt qua messageContainer để tìm và xóa tin nhắn "Đang xử lý..."
+        for (int i = messageContainer.getChildCount() - 1; i >= 0; i--) {
+            View view = messageContainer.getChildAt(i);
+            if (view instanceof LinearLayout) {
+                LinearLayout layout = (LinearLayout) view;
+                if (layout.getChildCount() > 0 && layout.getChildAt(0) instanceof TextView) {
+                    TextView textView = (TextView) layout.getChildAt(0);
+                    String text = textView.getText().toString();
+                    // So sánh với chuỗi gốc, bỏ qua định dạng HTML
+                    if (text.contains(PROCESSING_MESSAGE)) {
+                        messageContainer.removeViewAt(i);
+                        Log.d(TAG, "Removed processing message at index: " + i);
+                        break;
+                    }
+                }
+            }
         }
+        // Đảm bảo không có tin nhắn "Đang xử lý..." trong messageList
+        for (int i = messageList.size() - 1; i >= 0; i--) {
+            if (PROCESSING_MESSAGE.equals(messageList.get(i).getText())) {
+                messageList.remove(i);
+                Log.d(TAG, "Removed processing message from messageList at index: " + i);
+            }
+        }
+        Log.d(TAG, "After removal, messageList size: " + messageList.size() + ", messageContainer children: " + messageContainer.getChildCount());
     }
 
     private String getUserToken() {
@@ -503,11 +502,56 @@ public class ChatBotFragment extends DialogFragment {
     }
 
     private String formatBotResponse(String message) {
-        message = message.replaceAll("\\*", "");
-        message = message.replace("\n", "<br>");
-        message = message.replaceAll("(?m)^[\\-•+]\\s*(.*)", "<li>$1</li>");
-        message = message.replaceAll("(?s)(<li>.*?</li>)", "<ul>$1</ul>");
-        return message;
+        // Loại bỏ ký tự không mong muốn
+        message = message.replaceAll("\\*+", "");
+
+        // Tách các đoạn văn bằng nhiều xuống dòng
+        String[] paragraphs = message.split("\n\\s*\n");
+        StringBuilder formattedMessage = new StringBuilder();
+
+        for (int i = 0; i < paragraphs.length; i++) {
+            String paragraph = paragraphs[i].trim();
+            if (paragraph.isEmpty()) continue;
+
+            // Xử lý danh sách (gạch đầu dòng)
+            String[] lines = paragraph.split("\n");
+            boolean isList = false;
+            StringBuilder paragraphHtml = new StringBuilder();
+
+            for (String line : lines) {
+                line = line.trim();
+                if (line.isEmpty()) continue;
+
+                // Kiểm tra nếu dòng bắt đầu bằng ký hiệu danh sách
+                if (line.matches("^[\\-•+*]\\s+.*")) {
+                    isList = true;
+                    String listItem = line.replaceFirst("^[\\-•+*]\\s+", "");
+                    paragraphHtml.append("<li>").append(listItem).append("</li>");
+                } else {
+                    // Nếu không phải danh sách, thêm dòng bình thường
+                    paragraphHtml.append(line).append("<br>");
+                }
+            }
+
+            // Bao danh sách trong <ul> nếu có
+            if (isList) {
+                formattedMessage.append("<ul>")
+                        .append(paragraphHtml)
+                        .append("</ul>");
+            } else {
+                // Định dạng đoạn văn với thụt đầu dòng
+                formattedMessage.append("<p style=\"margin-left: 10px;\">")
+                        .append(paragraphHtml)
+                        .append("</p>");
+            }
+
+            // Thêm khoảng cách giữa các đoạn
+            if (i < paragraphs.length - 1) {
+                formattedMessage.append("<br>");
+            }
+        }
+
+        return formattedMessage.toString();
     }
 
     @Override
@@ -538,5 +582,11 @@ public class ChatBotFragment extends DialogFragment {
         public List<MentionedProduct> getMentionedProducts() {
             return mentionedProducts != null ? new ArrayList<>(mentionedProducts) : null;
         }
+    }
+
+    private String formatPrice(double price) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        formatter.setMinimumFractionDigits(0);
+        return formatter.format(price);
     }
 }
